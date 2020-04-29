@@ -6,8 +6,6 @@
         <HomeOverlay />
       </div>
       <Signature />
-
-      <!-- <SlidingText text="work" /> -->
     </div>
     <transition v-if="signatureLoaded">
       <div class="fixed">
@@ -24,6 +22,15 @@
         </transition>
       </div>
     </transition>
+    <NavScreen v-if="navOpen" />
+    <div class="nav-curtains">
+      <transition appear name="left" v-if="navOpen">
+        <div class="leftpane" />
+      </transition>
+      <transition appear name="right" v-if="navOpen">
+        <div class="rightpane" />
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -51,7 +58,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["signatureLoaded"])
+    ...mapState(["signatureLoaded", "navOpen"])
   },
   mounted() {}
 };
@@ -159,5 +166,50 @@ body {
 }
 .bottom-enter-active {
   @include ease(all);
+}
+
+.left-enter,
+.right-enter,
+.left-leave-to,
+.right-leave-to {
+  max-height: 0% !important;
+}
+.left-enter-active,
+.right-enter-active,
+.left-leave-active,
+.right-leave-active {
+  @include ease(max-height);
+}
+.right-enter-active,
+.right-leave-active {
+  transition-delay: 100ms;
+}
+.back {
+  position: fixed;
+  right: 0;
+  margin-right: 3em;
+  margin-top: 3em;
+  h3 {
+    font-family: $suisse;
+    font-size: 60px;
+    font-weight: bold;
+    font-style: italic;
+    color: black;
+    margin: 0;
+  }
+}
+
+.leftpane,
+.rightpane {
+  background: $light;
+  height: 100%;
+  position: fixed;
+  width: 50%;
+  max-height: 100%;
+  bottom: 0;
+  z-index: 2;
+}
+.rightpane {
+  right: 0;
 }
 </style>

@@ -12,7 +12,7 @@
       </transition>
     </h1>
 
-    <transition appear name="left" v-if="showLeft">
+    <transition appear name="leftiamge" v-if="showLeft">
       <div class="left-image"></div>
     </transition>
 
@@ -24,7 +24,7 @@
       </transition>
     </h1>
 
-    <transition appear name="right" v-if="showRight">
+    <transition appear name="rightimage" v-if="showRight">
       <div class="right-image"></div>
     </transition>
 
@@ -94,27 +94,24 @@ export default {
   width: 100%;
 }
 
-.left-enter,
-.left-leave-to,
-.right-enter,
-.right-leave-to {
+.leftiamge-enter,
+.leftiamge-leave-to,
+.rightimage-enter,
+.rightimage-leave-to {
   width: 0px !important;
 }
-.left-enter-active,
-.left-leave-active,
-.right-enter-active,
-.right-leave-active {
+.leftiamge-enter-active,
+.leftiamge-leave-active,
+.rightimage-enter-active,
+.rightimage-leave-active {
   @include ease(width);
 }
-.left-enter-to,
-.right-enter-to {
+.leftiamge-enter-to,
+.rightimage-enter-to {
   width: 300px !important;
 }
 .left-image {
-  // width: 300px;
-  // width: 0;
   width: 300px;
-
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -134,28 +131,7 @@ export default {
   height: 300px;
   background: white;
 }
-.wave-link {
-  position: absolute;
-  cursor: pointer;
-  height: 100%;
-  width: 100%;
-  left: 0;
-  &:before {
-    position: absolute;
-    height: 2px;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    background: white;
-    content: "";
-    @include ease(width);
-  }
-  &:hover {
-    &:before {
-      width: 0%;
-    }
-  }
-}
+
 h1 {
   font-size: 60px;
   position: relative;
@@ -174,6 +150,7 @@ span {
   top: 50%;
   width: 100%;
   transform: translateY(-50%);
+  @include waveLink(white);
 }
 .overlay-bg {
   height: 300%;

@@ -1,20 +1,29 @@
 <template>
   <div class="nav">
     <Reb2Logo class="logo" />
-    <Hamburger class="menu" />
+    <Hamburger class="menu" @click.native="toggleNav" />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-  name: "Template",
+  name: "NavMenu",
   props: {
     msg: String
   },
   data() {
     return {};
   },
-  methods: {},
+  computed: {
+    ...mapState(["navOpen"])
+  },
+  methods: {
+    toggleNav() {
+      this.$store.commit("setNavOpen", true);
+    }
+  },
   mounted() {}
 };
 </script>
@@ -33,7 +42,7 @@ export default {
   top: 0;
   left: 0;
   position: fixed;
-  z-index: 5;
+  z-index: 1;
 
   height: 0%;
   width: 100%;

@@ -199,9 +199,9 @@ export default {
       //   this.intersecting();
       // }
       this.lerpMove();
-      if (!this.animFinished) {
-        requestAnimationFrame(this.animate);
-      }
+      // if (!this.animFinished) {
+      requestAnimationFrame(this.animate);
+      // }
     },
     lerpMove() {
       var limit = 0.4; //how far out the signature can move

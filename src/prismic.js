@@ -3,7 +3,7 @@ import Vue from "vue";
 
 class Prismic {
   constructor() {
-    this.api = "https://rebecca.cdn.prismic.io/api/v2";
+    this.api = "https://reb2.cdn.prismic.io/api/v2";
     this.prismic = require("prismic-javascript");
   }
   async fetchData() {
@@ -14,8 +14,8 @@ class Prismic {
           return api.query("");
         })
         .then((response) => {
-          this.resp = response;
-          console.log(this.resp);
+          this.res = response.results[0];
+          console.log(this.res);
           res();
         })
         //after everything is done

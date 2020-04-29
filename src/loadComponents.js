@@ -10,6 +10,8 @@ class LoadComponents {
       Vue.component("Reb2Logo", require("./components/Reb2Logo.vue").default);
       Vue.component("NavMenu", require("./components/NavMenu.vue").default);
       Vue.component("Hamburger", require("./components/Hamburger.vue").default);
+      Vue.component("NavScreen", require("./components/NavScreen.vue").default);
+
       Vue.component(
         "SlidingText",
         require("./components/SlidingText.vue").default
