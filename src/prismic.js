@@ -1,10 +1,21 @@
 import axios from "axios";
 
-export default class Prismic {
+class Prismic {
   constructor() {
-    this.api = "";
+    this.api = "https://rebecca.cdn.prismic.io/api/v2";
   }
-  fetchData() {
-    console.log(axios);
+  async fetchData() {
+    return new Promise((res) => {
+      axios
+        .get(this.api)
+        .then((r) => {
+          console.log("loading prismic", r);
+          this.res = r;
+        })
+        .then(() => {
+          res("prismic", this.res);
+        });
+    });
   }
 }
+export const prismic = new Prismic();

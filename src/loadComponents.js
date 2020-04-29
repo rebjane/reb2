@@ -2,7 +2,7 @@ import Vue from "vue";
 
 class LoadComponents {
   constructor() {}
-  loadTheComponents() {
+  async loadTheComponents() {
     return new Promise((res) => {
       Vue.prototype.$THREE = require("../node_modules/three/build/three.module.js");
       Vue.component("Template", require("./components/Template.vue").default);
@@ -24,8 +24,8 @@ class LoadComponents {
         "HomeOverlay",
         require("./components/HomeOverlay.vue").default
       );
-
-      res("all loaded!");
+      console.log("loading components");
+      res("loaded components!");
     });
   }
 }

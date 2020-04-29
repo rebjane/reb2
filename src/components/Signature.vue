@@ -133,7 +133,7 @@ export default {
       loader.load(
         signature,
         gltf => {
-          console.log(gltf);
+          // console.log(gltf);
 
           //set material properties
           gltf.scene.traverse(e => {
