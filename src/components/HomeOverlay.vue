@@ -3,9 +3,33 @@
     <transition appear name="bg">
       <div class="overlay-bg" />
     </transition>
+
     <p ref="wave" />
-    <h1 class="designer" ref="designer" />
-    <h1 ref="illustrator" />
+
+    <h1 class="designer" @mouseenter="showLeft = true" @mouseleave="showLeft=false" ref="designer">
+      <transition appear>
+        <a class="wave-link" />
+      </transition>
+    </h1>
+
+    <transition appear name="left" v-if="showLeft">
+      <div class="left-image"></div>
+    </transition>
+
+    <br />
+
+    <h1 ref="illustrator" @mouseenter="showRight = true" @mouseleave="showRight=false">
+      <transition appear>
+        <a class="wave-link" />
+      </transition>
+    </h1>
+
+    <transition appear name="right" v-if="showRight">
+      <div class="right-image"></div>
+    </transition>
+
+    <br />
+
     <h1 ref="popcorn" />
   </div>
 </template>
@@ -21,7 +45,9 @@ export default {
   data() {
     var intro;
     return {
-      intro
+      intro,
+      showLeft: false,
+      showRight: false
     };
   },
   methods: {},
@@ -35,12 +61,14 @@ export default {
       {
         string: "designer.", //designer.
         el: this.$refs.designer,
-        delay: 2000
+        delay: 2000,
+        link: true
       },
       {
         string: "illustrator.", //illustrator.
         el: this.$refs.illustrator,
-        delay: 2250
+        delay: 2250,
+        link: true
       },
       {
         string: "popcorn lover.", //popcorn lover.
@@ -57,9 +85,83 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
 
+.underline {
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  background: white;
+  width: 100%;
+}
+
+.left-enter,
+.left-leave-to,
+.right-enter,
+.right-leave-to {
+  width: 0px !important;
+}
+.left-enter-active,
+.left-leave-active,
+.right-enter-active,
+.right-leave-active {
+  @include ease(width);
+}
+.left-enter-to,
+.right-enter-to {
+  width: 300px !important;
+}
+.left-image {
+  // width: 300px;
+  // width: 0;
+  width: 300px;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: calc(100% - 300px);
+  height: 300px;
+  background: white;
+}
+.right-image {
+  // width: 300px;
+  // width: 0;
+  width: 300px;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(100% - 300px);
+  height: 300px;
+  background: white;
+}
+.wave-link {
+  position: absolute;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  &:before {
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background: white;
+    content: "";
+    @include ease(width);
+  }
+  &:hover {
+    &:before {
+      width: 0%;
+    }
+  }
+}
 h1 {
   font-size: 60px;
-  margin: 20px;
+  position: relative;
+  margin: 0;
+  margin-bottom: 20px;
+  display: inline-block;
 }
 .designer {
   margin-top: 40px;
@@ -74,11 +176,11 @@ span {
   transform: translateY(-50%);
 }
 .overlay-bg {
-  height: 208%;
+  height: 300%;
   width: 100%;
   background: #161616;
   position: absolute;
-  top: -54%;
+  top: -100%;
   left: 0;
   transform: translateY(0%);
   z-index: -1;

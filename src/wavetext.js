@@ -1,12 +1,15 @@
 export default class WaveText {
   constructor(arr) {
     this.strings = arr;
+
     this.strings.forEach(async (item) => {
       await this.doString(item);
     });
   }
 
   async doString(item) {
+    this.isLink = item.link || false;
+    console.log("islink", this.isLink);
     this.el = item.el;
     this.string = item.string;
     this.lerpTime = 0;
@@ -24,6 +27,9 @@ export default class WaveText {
 
   async inject(el, string) {
     return new Promise((res) => {
+      // if (this.isLink) {
+      //   el.innerHTML += '<a class="wave-link" />';
+      // }
       for (let i in string) {
         if (string[i] !== " ") {
           //if it's a letter
@@ -41,7 +47,11 @@ export default class WaveText {
     return new Promise((res) => {
       setTimeout(() => {
         for (let i in el.children) {
-          if (el.children[i].style && el.children[i].innerHTML !== " ") {
+          if (
+            el.children[i].style &&
+            el.children[i].innerHTML !== " " &&
+            el.children[i].nodeName !== "A"
+          ) {
             lerpTime += Math.abs((lerpTime - 1) / 50);
 
             setTimeout(() => {
@@ -52,6 +62,10 @@ export default class WaveText {
             `;
             }, lerpTime * 1000);
           }
+          // if (el.children[i].nodeName === "A") {
+          //   el.children[i].style = this.linkStyle;
+          //   console.log(el.children[i].style);
+          // }
         }
         res();
       }, delay);

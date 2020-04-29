@@ -2,20 +2,28 @@
   <div id="app" ref="app">
     <div class="scroll" ref="scroll">
       <div class="home-main" v-if="signatureLoaded">
-        <transition appear v-if="time.timeString" name="time">
-          <p class="time">{{ time.timeString }}</p>
-        </transition>
-        <NavMenu />
         <CursorThing />
         <HomeOverlay />
-        <transition appear name="line">
-          <div class="line" />
-        </transition>
       </div>
       <Signature />
 
       <!-- <SlidingText text="work" /> -->
     </div>
+    <transition v-if="signatureLoaded">
+      <div class="fixed">
+        <NavMenu />
+
+        <transition appear v-if="time.timeString" name="time">
+          <p class="time">{{ time.timeString }}</p>
+        </transition>
+        <transition appear name="line">
+          <div class="line" />
+        </transition>
+        <transition appear name="bottom">
+          <p class="bottom-text">Developed with love by myself.</p>
+        </transition>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -99,7 +107,14 @@ body {
   height: 100%;
   overflow: auto;
 }
-
+.bottom-text {
+  position: fixed;
+  color: white;
+  bottom: 0;
+  margin-bottom: 3em;
+  left: 50%;
+  transform: translateX(-50%);
+}
 // * {
 //   background-blend-mode: difference;
 // }
@@ -137,5 +152,12 @@ body {
 .time-enter {
   opacity: 0;
   transform: translateY(100%);
+}
+.bottom-enter {
+  opacity: 0;
+  transform: translateX(-50%) translateY(100%);
+}
+.bottom-enter-active {
+  @include ease(all);
 }
 </style>

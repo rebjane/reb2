@@ -35,7 +35,7 @@ export default {
   position: fixed;
   z-index: 5;
 
-  height: 100%;
+  height: 0%;
   width: 100%;
 }
 .menu {

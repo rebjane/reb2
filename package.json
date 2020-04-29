@@ -13,6 +13,8 @@
     "eslint-loader": "^4.0.2",
     "gsap": "^3.2.6",
     "node-sass": "^4.14.0",
+    "prismic-dom": "^2.2.3",
+    "prismic-javascript": "^2.7.1",
     "sass-loader": "^8.0.2",
     "vue": "^2.6.11",
     "vuex": "^3.3.0"

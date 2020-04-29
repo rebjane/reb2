@@ -5,7 +5,6 @@
 <script>
 import * as THREE from "../../node_modules/three/build/three.module.js";
 import { GLTFLoader } from "../../node_modules/three/examples/jsm/loaders/GLTFLoader.js";
-// import { OrbitControls } from "../../node_modules/three/examples/jsm/controls/OrbitControls.js";
 import { AnimationMixer } from "../../node_modules/three/src/animation/AnimationMixer.js";
 
 import signature from "../assets/reb2.o-animated-BAKED.gltf";
@@ -39,17 +38,21 @@ export default {
       allChildren: [],
       animFinished: false,
       mousePos: { x: null, y: null },
-      mouseMoveX: 0,
-      mouseMoveY: 0
+      animX: 0,
+      animY: 0,
+      when: performance.now()
     };
   },
   methods: {
     mouseListener() {
-      this.$refs.signature.addEventListener("mousemove", e => {
+      window.addEventListener("mousemove", e => {
         this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
         this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        // this.when = performance.now();
+        // console.log("x: ", this.mouse.x, " y: ", this.mouse.y);
       });
     },
+
     init() {
       //CAMERA
       this.camera = new THREE.PerspectiveCamera(
@@ -88,7 +91,6 @@ export default {
       plane.rotation.x = -45;
       plane.position.y = -30;
       this.scene.add(plane);
-      // console.log("plane", plane);
     },
     lights() {
       var spotight = new THREE.SpotLight(0xffffff, 2, 100);
@@ -133,8 +135,6 @@ export default {
       loader.load(
         signature,
         gltf => {
-          // console.log(gltf);
-
           //set material properties
           gltf.scene.traverse(e => {
             if (e.isMesh) {
@@ -174,9 +174,10 @@ export default {
           this.signature = gltf.scene.children[0].children;
           // this.allChildren.push(gltf.scene.children[0].children[0]);
 
+          //when signature finishes animating
           mixer.addEventListener("finished", () => {
             this.animFinished = true;
-            // this.mouseListener();
+            this.mouseListener();
             cancelAnimationFrame(this.animate);
             this.$store.commit("setSignatureLoaded", true);
           });
@@ -188,49 +189,33 @@ export default {
         }
       );
     },
-    distort() {
-      // let size = 64;
-      // let waterProps = {
-      //   size: size,
-      //   radius: size * 0.1,
-      //   width: size,
-      //   height: size
-      // };
-      // // console.log(waterProps);
-    },
+
     animate() {
       this.objs.forEach(({ mixer }) => {
         mixer.update(this.clock.getDelta());
       });
       this.renderer.render(this.scene, this.camera);
-      if (this.animFinished) {
-        this.intersecting();
-      }
-      // this.lerpMove();
+      // if (this.animFinished) {
+      //   this.intersecting();
+      // }
+      this.lerpMove();
       if (!this.animFinished) {
         requestAnimationFrame(this.animate);
       }
     },
     lerpMove() {
+      var limit = 0.4; //how far out the signature can move
       if (this.animFinished) {
-        // console.log(this.mouse.x);
-        this.mouseMoveX += (this.mouse.x - this.mouseMoveX) / 100000000000000;
-        this.mouseMoveY += (this.mouse.y - this.mouseMoveY) / 100000000000000;
-        // console.log(this.mouseMoveY);
-        if (this.mouse.x > 0) {
-          this.mouseMoveX = Math.max(this.mouseMoveX, this.mouse.x) / 4;
-        } else {
-          this.mouseMoveX = Math.min(this.mouseMoveX, this.mouse.x) / 4;
-        }
-        if (this.mouse.y > 0) {
-          this.mouseMoveY = Math.max(this.mouseMoveY, this.mouse.y) / 4;
-        } else {
-          this.mouseMoveY = Math.min(this.mouseMoveY, this.mouse.y) / 4;
-        }
-        this.signature[0].position.x = this.mouseMoveX * 1.5;
-        this.signature[0].position.y = this.mouseMoveY * 1.5;
-        this.signature[0].rotation.y = this.mouseMoveX / 4;
-        this.signature[0].rotation.x = -this.mouseMoveY / 4;
+        this.animX += this.mouse.x * 0.01;
+        this.animY += this.mouse.y * 0.01;
+        this.animX = Math.max(Math.min(this.animX, limit), -limit);
+        this.animY = Math.max(Math.min(this.animY, limit), -limit);
+
+        this.signature[0].position.x = this.animX;
+        this.signature[0].position.y = this.animY;
+
+        this.signature[0].rotation.x = -this.animY / 10;
+        this.signature[0].rotation.y = this.animX / 10;
       }
     },
     intersecting() {
