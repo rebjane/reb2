@@ -3,18 +3,30 @@
 </template>
 
 <script>
+import { TimelineMax, Power4 } from "gsap";
+
 export default {
   name: "Template",
   props: {
     msg: String
   },
   data() {
-    return {};
+    return {
+      timeline: new TimelineMax()
+    };
   },
   methods: {
     cursorMove() {
       window.addEventListener("mousemove", e => {
-        this.$refs.cursor.style = `transform: translate3d(${e.clientX}px, ${e.clientY}px, 0px);`;
+        this.timeline.to(this.$refs.cursor, 0.01, {
+          css: {
+            x: e.clientX,
+            y: e.clientY
+          },
+          ease: Power4.easeOut
+        });
+
+        // this.$refs.cursor.style = `transform: translate3d(${e.clientX}px, ${e.clientY}px, 0px);`;
       });
     }
   },
@@ -27,8 +39,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .cursor {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   // background: white;
   border: 1px solid white;
   // opacity: 0.2;
@@ -39,7 +51,7 @@ export default {
   border-radius: 500px;
   position: fixed;
   z-index: 10;
-  top: -100px;
-  left: -100px;
+  top: -50px;
+  left: -50px;
 }
 </style>

@@ -31,6 +31,7 @@
         <div class="rightpane" />
       </transition>
     </div>
+    <Loading />
   </div>
 </template>
 
@@ -38,7 +39,6 @@
 import { mapState } from "vuex";
 import Scrolly from "./scrolly.js";
 import Time from "./time.js";
-
 export default {
   name: "App",
   watch: {
@@ -51,6 +51,7 @@ export default {
       }
     }
   },
+  beforeMounted() {},
   components: {},
   data() {
     return {
@@ -80,7 +81,6 @@ img {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background: $bg;
   /* margin-top: 60px; */
   overflow: hidden;
   height: 100vh;
@@ -183,20 +183,6 @@ body {
 .right-enter-active,
 .right-leave-active {
   transition-delay: 100ms;
-}
-.back {
-  position: fixed;
-  right: 0;
-  margin-right: 3em;
-  margin-top: 3em;
-  h3 {
-    font-family: $suisse;
-    font-size: 60px;
-    font-weight: bold;
-    font-style: italic;
-    color: black;
-    margin: 0;
-  }
 }
 
 .leftpane,

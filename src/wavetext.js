@@ -30,6 +30,7 @@ export default class WaveText {
       // if (this.isLink) {
       //   el.innerHTML += '<a class="wave-link" />';
       // }
+      el.innerHTML = null;
       for (let i in string) {
         if (string[i] !== " ") {
           //if it's a letter

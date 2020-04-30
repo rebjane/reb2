@@ -16,6 +16,7 @@ export default new Vuex.Store({
     // 	height: window.innerHeight,
     // 	isMobile: window.innerWidth < 800
     // }
+    loadPct: 0,
     signatureLoaded: false,
     navOpen: false,
   },
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     setNavOpen(state, navOpen) {
       Vue.set(state, "navOpen", navOpen);
     },
+    setLoadPct(state, loadPct) {
+      Vue.set(state, "loadPct", loadPct);
+    },
   },
 
   actions: {
@@ -35,6 +39,9 @@ export default new Vuex.Store({
     },
     setNavOpen(context, navOpen) {
       context.commit("setNavOpen", navOpen);
+    },
+    setLoadPct(context, loadPct) {
+      context.commit("setLoadPct", loadPct);
     },
   },
 });

@@ -1,5 +1,6 @@
 var PrismicDOM = require("prismic-dom");
 import Vue from "vue";
+import store from "./store.js";
 
 class Prismic {
   constructor() {
@@ -15,12 +16,18 @@ class Prismic {
         })
         .then((response) => {
           this.res = response.results[0];
-          console.log(this.res);
-          res();
         })
         //after everything is done
         .then(() => {
-          res("prismic all loaded");
+          setTimeout(() => {
+            console.log(this.res);
+            store.commit(
+              "setLoadPct",
+              Vue.prototype.$loadPct((Vue.prototype.$loaded += 1))
+            );
+
+            res("prismic all loaded");
+          }, 2000);
         });
     });
   }

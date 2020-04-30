@@ -3,44 +3,61 @@
     <div class="nav" v-if="navOpen">
       <div class="back">
         <h3 ref="back" @click="toggleNav">
-          <a class="wave-link" />
+          <transition appear name="wavelink">
+            <a class="wave-link" />
+          </transition>
         </h3>
       </div>
 
       <div class="main">
         <h2 ref="work">
-          <a class="wave-link" />
+          <transition appear name="wavelink">
+            <a class="wave-link" />
+          </transition>
           <p class="sup">1</p>
         </h2>
         <br />
 
         <h2 ref="about">
-          <a class="wave-link" />
+          <transition appear name="wavelink">
+            <a class="wave-link" />
+          </transition>
+
           <p class="sup">2</p>
         </h2>
         <br />
         <h2 ref="contact">
-          <a class="wave-link" />
+          <transition appear name="wavelink">
+            <a class="wave-link" />
+          </transition>
           <p class="sup">3</p>
         </h2>
       </div>
       <div class="socials">
         <h3 ref="creativemarket">
-          <a class="wave-link" />
+          <transition appear name="wavelink">
+            <a class="wave-link" />
+          </transition>
         </h3>
         <br />
         <h3 ref="behance">
-          <a class="wave-link" />
+          <transition appear name="wavelink">
+            <a class="wave-link" />
+          </transition>
         </h3>
         <br />
 
         <h3 ref="dribbble">
-          <a class="wave-link" />
+          <transition appear name="wavelink">
+            <a class="wave-link" />
+          </transition>
         </h3>
         <br />
 
         <h3 ref="instagram">
-          <a class="wave-link" />
+          <transition appear name="wavelink">
+            <a class="wave-link" />
+          </transition>
         </h3>
       </div>
     </div>
