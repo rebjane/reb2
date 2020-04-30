@@ -10,12 +10,17 @@
       </div>
 
       <div class="main">
+        <transition appear name="line">
+          <div class="sep" />
+        </transition>
+
         <h2 ref="work">
           <transition appear name="wavelink">
             <a class="wave-link" />
           </transition>
           <p class="sup">1</p>
         </h2>
+
         <br />
 
         <h2 ref="about">
@@ -91,8 +96,15 @@ export default {
   },
   methods: {
     toggleNav() {
-      this.$store.commit("setNavOpen", false);
+      new WaveText(this.opts, "exit");
+      setTimeout(() => {
+        this.$store.commit("setNavOpen", false);
+      }, 1500);
     }
+  },
+  beforeDestroy() {
+    console.log("wave text die down");
+    new WaveText(this.opts, "exit");
   },
   mounted() {
     this.opts = [
@@ -114,30 +126,30 @@ export default {
       {
         string: "creative market", //popcorn lover.
         el: this.$refs.creativemarket,
-        delay: 600
+        delay: 500
       },
       {
         string: "behance", //popcorn lover.
         el: this.$refs.behance,
-        delay: 700
+        delay: 600
       },
       {
         string: "dribbble", //popcorn lover.
         el: this.$refs.dribbble,
-        delay: 800
+        delay: 700
       },
       {
         string: "instagram", //popcorn lover.
         el: this.$refs.instagram,
-        delay: 900
+        delay: 800
       },
       {
         string: "back", //popcorn lover.
         el: this.$refs.back,
-        delay: 1000
+        delay: 900
       }
     ];
-    new WaveText(this.opts);
+    new WaveText(this.opts, "enter");
   }
 };
 </script>
@@ -215,5 +227,23 @@ h2 {
     margin: 0;
     margin-bottom: 1em;
   }
+}
+.sep {
+  left: 50%;
+  max-height: 200px;
+  bottom: 0;
+  margin-bottom: 2em;
+  width: 1px;
+  height: 50%;
+  border-right: 1px solid #979797;
+  position: fixed;
+}
+.line-enter-active,
+.line-leave-active {
+  @include ease(max-height);
+}
+.line-enter,
+.line-leave-to {
+  max-height: 0px;
 }
 </style>
