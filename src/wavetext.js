@@ -1,13 +1,14 @@
 export default class WaveText {
   constructor(arr) {
     this.strings = arr;
-
+    this.removePrev = arr.removePrev || false;
     this.strings.forEach(async (item) => {
       await this.doString(item);
     });
   }
 
   async doString(item) {
+    this.removePrev = item.removePrev || false;
     this.isLink = item.link || false;
     console.log("islink", this.isLink);
     this.el = item.el;
@@ -30,7 +31,9 @@ export default class WaveText {
       // if (this.isLink) {
       //   el.innerHTML += '<a class="wave-link" />';
       // }
-      el.innerHTML = null;
+      if (this.removePrev) {
+        el.innerHTML = null;
+      }
       for (let i in string) {
         if (string[i] !== " ") {
           //if it's a letter

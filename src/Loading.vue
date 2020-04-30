@@ -16,6 +16,7 @@ export default {
         new WaveText([
           {
             string: `${e}%`, //Welcome to the creative archives of Rebecca Jane.
+            removePrev: true,
             el: this.$refs.load,
             delay: 0
           }
@@ -38,6 +39,7 @@ export default {
     new WaveText([
       {
         string: `${0}%`, //Welcome to the creative archives of Rebecca Jane.
+        removePrev: true,
         el: this.$refs.load,
         delay: 0
       }

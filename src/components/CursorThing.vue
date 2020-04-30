@@ -1,5 +1,5 @@
 <template>
-  <div class="cursor" ref="cursor"></div>
+  <div class="cursor" v-show="!outOfBounds" ref="cursor"></div>
 </template>
 
 <script>
@@ -12,12 +12,24 @@ export default {
   },
   data() {
     return {
-      timeline: new TimelineMax()
+      timeline: new TimelineMax(),
+      outOfBounds: false
     };
   },
   methods: {
     cursorMove() {
       window.addEventListener("mousemove", e => {
+        if (
+          e.clientX <= 10 ||
+          e.clientX >= window.innerWidth - 10 ||
+          e.clientY <= 10 ||
+          e.clientY >= window.innerHeight - 10
+        ) {
+          this.outOfBounds = true;
+        } else {
+          this.outOfBounds = false;
+        }
+
         this.timeline.to(this.$refs.cursor, 0.01, {
           css: {
             x: e.clientX,
