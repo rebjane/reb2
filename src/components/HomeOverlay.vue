@@ -7,9 +7,7 @@
     <p ref="wave" />
 
     <h1 class="designer" @mouseenter="showLeft = true" @mouseleave="showLeft=false" ref="designer">
-      <transition appear name="wavelink">
-        <a class="wave-link" />
-      </transition>
+      <a class="wave-link" />
     </h1>
 
     <transition appear name="leftiamge" v-if="showLeft">
@@ -19,9 +17,7 @@
     <br />
 
     <h1 ref="illustrator" @mouseenter="showRight = true" @mouseleave="showRight=false">
-      <transition appear name="wavelink">
-        <a class="wave-link" />
-      </transition>
+      <a class="wave-link" />
     </h1>
 
     <transition appear name="rightimage" v-if="showRight">

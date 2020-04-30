@@ -66,11 +66,11 @@ export default class WaveText {
             `;
             }, lerpTime * 1000);
           }
-          // if (el.children[i].nodeName === "A") {
-          //   el.children[i].style = this.linkStyle;
-          //   console.log(el.children[i].style);
-          // }
+          if (el.children[i].nodeName === "A") {
+            var a = el.children[i];
+          }
         }
+        a.style = "width: 100%; transition-delay: 100ms;";
         res();
       }, delay);
     });

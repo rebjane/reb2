@@ -189,11 +189,11 @@ body {
 
 .leftpane,
 .rightpane {
+  max-height: 100%;
   background: $light;
   height: 100%;
   position: fixed;
   width: 50%;
-  max-height: 100%;
   bottom: 0;
   z-index: 2;
 }

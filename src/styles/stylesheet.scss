@@ -44,28 +44,12 @@ $light: #f2e3e3;
 }
 
 @mixin waveLink($color) {
-  .wavelink-enter,
-  .wavelink-leave-to,
-  .wavelink-enter,
-  .wavelink-leave-to {
-    width: 0% !important;
-  }
-  .wavelink-enter-active,
-  .wavelink-leave-active,
-  .wavelink-enter-active,
-  .wavelink-leave-active {
-    @include ease(width);
-  }
-  .wavelink-enter-to,
-  .wavelink-enter-to {
-    width: 100% !important;
-  }
   .wave-link {
     @include ease(width);
     position: absolute;
     cursor: pointer;
     height: 100%;
-    width: 100% !important;
+    width: 0%;
     left: 0;
     &:before {
       position: absolute;
