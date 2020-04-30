@@ -1,50 +1,6 @@
 <template>
   <div class="workpage">
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
-    <p>workpage</p>
+    <SlidingText text="work" />
   </div>
 </template>
 
@@ -67,5 +23,8 @@ export default {
 @import "./styles/stylesheet.scss";
 .workpage {
   height: 100%;
+}
+p {
+  color: white;
 }
 </style>

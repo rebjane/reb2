@@ -79,9 +79,7 @@ export default {
   },
 
   mounted() {
-    window.addEventListener("load", () => {
-      this.getAmt();
-    });
+    this.getAmt();
   }
 };
 </script>

@@ -5,7 +5,7 @@
     <div class="scroll" ref="scroll">
       <router-view v-if="loaded" />
     </div>
-    <NavMenu v-if="loaded" />
+    <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
     <NavScreen v-if="navOpen" />
     <div class="nav-curtains">
       <transition appear name="left" v-if="navOpen">
@@ -43,13 +43,16 @@ export default {
   },
   data() {
     return {
-      time: 0
+      time: 0,
+      showNav: false
     };
   },
   computed: {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
   },
-  mounted() {}
+  mounted() {
+    this.showNav = window.location.pathname !== "/";
+  }
 };
 </script>
 
@@ -99,9 +102,5 @@ export default {
 }
 .rightpane {
   right: 0;
-}
-p {
-  color: white;
-  overflow: hidden;
 }
 </style>
