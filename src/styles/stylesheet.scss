@@ -43,6 +43,13 @@ $light: #f2e3e3;
   font-style: normal;
 }
 
+.wavetext {
+  &:hover {
+    transition: color 0.5s ease;
+    color: #f2e3e3;
+  }
+}
+
 @mixin waveLink($color) {
   .wave-link {
     @include ease(width);

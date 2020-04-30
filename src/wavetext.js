@@ -16,12 +16,13 @@ export default class WaveText {
     this.el = item.el;
     this.string = item.string;
     this.lerpTime = 0;
+
     if (this.mode !== "exit") {
       this.breakApart()
         .then(this.inject(item.el, item.string))
-        .then(this.transition(item.el, item.string, 0, item.delay));
+        .then(this.transition(item.el, 0, item.delay));
     } else {
-      this.transitionOut(this.el, this.string, 0, item.delay);
+      this.transitionOut(this.el, 0, item.delay);
     }
   }
 
@@ -55,7 +56,7 @@ export default class WaveText {
     });
   }
 
-  async transition(el, string, lerpTime, delay) {
+  async transition(el, lerpTime, delay) {
     return new Promise((res) => {
       setTimeout(() => {
         for (let i in el.children) {
@@ -85,7 +86,7 @@ export default class WaveText {
       }, delay);
     });
   }
-  async transitionOut(el, string, lerpTime, delay) {
+  async transitionOut(el, lerpTime, delay) {
     return new Promise((res) => {
       setTimeout(() => {
         for (let i = el.children.length - 1; i >= 0; i--) {
@@ -99,7 +100,7 @@ export default class WaveText {
             setTimeout(() => {
               el.children[i].style = `
             display: inline-block;
-            transition: opacity 1s ease, transform .5s ease;
+            transition: opacity .5s ease, transform .5s ease;
             opacity: 0;
             transform: translateY(100%);
             `;

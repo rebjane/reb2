@@ -6,17 +6,27 @@
 
     <p ref="wave" />
 
-    <h1 class="designer" @mouseenter="showLeft = true" @mouseleave="showLeft=false" ref="designer">
+    <h1
+      class="designer wavetext"
+      @mouseenter="showLeft = true"
+      @mouseleave="showLeft=false"
+      ref="designer"
+    >
       <a class="wave-link" />
     </h1>
 
-    <transition appear name="leftiamge" v-if="showLeft">
+    <transition appear name="leftimage" v-if="showLeft">
       <div class="left-image"></div>
     </transition>
 
     <br />
 
-    <h1 ref="illustrator" @mouseenter="showRight = true" @mouseleave="showRight=false">
+    <h1
+      class="wavetext"
+      ref="illustrator"
+      @mouseenter="showRight = true"
+      @mouseleave="showRight=false"
+    >
       <a class="wave-link" />
     </h1>
 
@@ -90,19 +100,19 @@ export default {
   width: 100%;
 }
 
-.leftiamge-enter,
-.leftiamge-leave-to,
+.leftimage-enter,
+.leftimage-leave-to,
 .rightimage-enter,
 .rightimage-leave-to {
   width: 0px !important;
 }
-.leftiamge-enter-active,
-.leftiamge-leave-active,
+.leftimage-enter-active,
+.leftimage-leave-active,
 .rightimage-enter-active,
 .rightimage-leave-active {
   @include ease(width);
 }
-.leftiamge-enter-to,
+.leftimage-enter-to,
 .rightimage-enter-to {
   width: 300px !important;
 }

@@ -11,7 +11,7 @@
 
       <div class="main">
         <transition appear name="line">
-          <div class="sep" />
+          <div :class="`sep ${lineLeaveStyle}`" />
         </transition>
 
         <h2 ref="work">
@@ -88,7 +88,8 @@ export default {
   },
   data() {
     return {
-      opts: null
+      opts: null,
+      lineLeaveStyle: ""
     };
   },
   computed: {
@@ -97,14 +98,11 @@ export default {
   methods: {
     toggleNav() {
       new WaveText(this.opts, "exit");
+      this.lineLeaveStyle = "line-leave-to line-leave-active";
       setTimeout(() => {
         this.$store.commit("setNavOpen", false);
       }, 1500);
     }
-  },
-  beforeDestroy() {
-    console.log("wave text die down");
-    new WaveText(this.opts, "exit");
   },
   mounted() {
     this.opts = [

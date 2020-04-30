@@ -1,8 +1,10 @@
 import Vue from "vue";
-import App from "./App.vue";
-// import Index from "./Index.vue";
+// import App from "./App.vue";
+import Index from "./Index.vue";
 import { loader } from "./loadComponents.js";
 import store from "./store.js";
+import router from "./router.js";
+
 import { prismic } from "./prismic.js";
 
 Vue.prototype.$loadPct = (prog) => (prog / 2) * 100;
@@ -11,7 +13,8 @@ Vue.prototype.$loaded = 0;
 Vue.use(store);
 new Vue({
   store,
-  render: (h) => h(App),
+  router,
+  render: (h) => h(Index),
 }).$mount("#app");
 
 preLoading();
