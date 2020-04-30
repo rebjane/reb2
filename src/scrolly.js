@@ -18,7 +18,6 @@ export default class Scrolly {
       this.dir = Math.abs(e.deltaY) / e.deltaY;
       // this.scrollTo = Math.floor(this.pos + e.deltaY) + 10;
       this.scrollTo += e.deltaY;
-
       this.scrollTo = this.limit(this.scrollTo, this.max);
       e.stopPropagation();
     });

@@ -92,3 +92,13 @@ h5,
 h6 {
   font-weight: normal;
 }
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: auto;
+}
