@@ -1,6 +1,6 @@
 <template>
   <div class="workpage">
-    <SlidingText text="work" />
+    <CarouselVertical />
   </div>
 </template>
 
@@ -22,7 +22,8 @@ export default {
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
 .workpage {
-  height: 100%;
+  padding-top: 100px;
+  // height: 100%;
 }
 p {
   color: white;

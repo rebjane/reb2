@@ -5,6 +5,8 @@
     <div class="scroll" ref="scroll">
       <router-view v-if="loaded" />
     </div>
+    <SlidingText v-if="title && loaded" class="title" :text="title" />
+
     <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
     <NavScreen v-if="navOpen" />
     <div class="nav-curtains">
@@ -22,6 +24,7 @@
 import { mapState } from "vuex";
 import Loading from "./Loading.vue";
 import NavMenu from "./components/NavMenu.vue";
+import SlidingText from "./components/SlidingText.vue";
 //
 // import Index from "./Index.vue";
 import Scrolly from "./scrolly.js";
@@ -38,13 +41,18 @@ export default {
   beforeMounted() {},
   components: {
     Loading,
-    NavMenu
+    NavMenu,
+    SlidingText
     // Index
   },
   data() {
     return {
       time: 0,
-      showNav: false
+      showNav: false,
+      title:
+        window.location.pathname === "/"
+          ? null
+          : window.location.pathname.split("/").join("")
     };
   },
   computed: {
@@ -102,5 +110,12 @@ export default {
 }
 .rightpane {
   right: 0;
+}
+.title {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
 }
 </style>

@@ -16,6 +16,7 @@ export default new Vuex.Store({
     // 	height: window.innerHeight,
     // 	isMobile: window.innerWidth < 800
     // }
+    scroll: null,
     loaded: false,
     loadPct: 0,
     signatureLoaded: false,
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     setLoaded(state, loaded) {
       Vue.set(state, "loaded", loaded);
     },
+    setScroll(state, scroll) {
+      Vue.set(state, "scroll", scroll);
+    },
   },
 
   actions: {
@@ -49,6 +53,9 @@ export default new Vuex.Store({
     },
     setLoaded(context, loaded) {
       context.commit("setLoaded", loaded);
+    },
+    setScroll(context, scroll) {
+      context.commit("setScroll", scroll);
     },
   },
 });

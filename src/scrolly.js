@@ -1,3 +1,5 @@
+import store from "./store.js";
+
 export default class Scrolly {
   constructor(el) {
     this.elParent = el;
@@ -27,6 +29,8 @@ export default class Scrolly {
     requestAnimationFrame(this.scroll);
 
     this.pos += (this.scrollTo - this.pos) / 20;
+    store.commit("setScroll", this.pos.toFixed(2));
+
     this.el.style.transform = `translate3d(0,${-1 * this.pos}px,0)`;
   }
   limit(min, max) {
