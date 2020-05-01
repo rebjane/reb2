@@ -13,6 +13,11 @@ class LoadComponents {
       Vue.component("Hamburger", require("./components/Hamburger.vue").default);
       Vue.component("NavScreen", require("./components/NavScreen.vue").default);
       Vue.component(
+        "RippleImage",
+        require("./components/RippleImage.vue").default
+      );
+
+      Vue.component(
         "CarouselVertical",
         require("./components/CarouselVertical.vue").default
       );

@@ -30,7 +30,7 @@ export default {
           this.outOfBounds = false;
         }
 
-        this.timeline.to(this.$refs.cursor, 0.01, {
+        this.timeline.to(this.$refs.cursor, 0.008, {
           css: {
             x: e.clientX,
             y: e.clientY

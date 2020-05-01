@@ -1,6 +1,7 @@
 <template>
   <div class="workpage">
     <CarouselVertical />
+    <!-- <RippleImage /> -->
   </div>
 </template>
 
