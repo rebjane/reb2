@@ -12,6 +12,8 @@ class LoadComponents {
       Vue.component("NavMenu", require("./components/NavMenu.vue").default);
       Vue.component("Hamburger", require("./components/Hamburger.vue").default);
       Vue.component("NavScreen", require("./components/NavScreen.vue").default);
+      Vue.component("Scrollbar", require("./components/Scrollbar.vue").default);
+
       Vue.component(
         "RippleImage",
         require("./components/RippleImage.vue").default

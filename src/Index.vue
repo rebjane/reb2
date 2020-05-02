@@ -7,7 +7,7 @@
     </div>
     <SlidingText v-if="title && loaded" class="title" :text="title" />
     <CursorThing />
-
+    <Scrollbar />
     <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
     <NavScreen v-if="navOpen" />
     <div class="nav-curtains">
@@ -27,7 +27,7 @@ import Loading from "./Loading.vue";
 import NavMenu from "./components/NavMenu.vue";
 import SlidingText from "./components/SlidingText.vue";
 import CursorThing from "./components/CursorThing.vue";
-
+import Scrollbar from "./components/Scrollbar.vue";
 //
 // import Index from "./Index.vue";
 import Scrolly from "./scrolly.js";
@@ -46,7 +46,8 @@ export default {
     Loading,
     NavMenu,
     SlidingText,
-    CursorThing
+    CursorThing,
+    Scrollbar
     // Index
   },
   data() {
