@@ -21,6 +21,8 @@ export default new Vuex.Store({
     loadPct: 0,
     signatureLoaded: false,
     navOpen: false,
+    scrollBarHeight: 0,
+    scrollBarPos: 0,
   },
 
   mutations: {
@@ -39,6 +41,12 @@ export default new Vuex.Store({
     setScroll(state, scroll) {
       Vue.set(state, "scroll", scroll);
     },
+    setScrollBarHeight(state, scrollBarHeight) {
+      Vue.set(state, "scrollBarHeight", scrollBarHeight);
+    },
+    setScrollBarPos(state, scrollBarPos) {
+      Vue.set(state, "scrollBarPos", scrollBarPos);
+    },
   },
 
   actions: {
@@ -56,6 +64,12 @@ export default new Vuex.Store({
     },
     setScroll(context, scroll) {
       context.commit("setScroll", scroll);
+    },
+    setScrollBarHeight(context, scrollBarHeight) {
+      context.commit("setScrollBarHeight", scrollBarHeight);
+    },
+    setScrollBarPos(context, scrollBarPos) {
+      context.commit("setScrollBarPos", scrollBarPos);
     },
   },
 });

@@ -4,7 +4,6 @@
 <template>
   <div id="app" ref="appofficial">
     <div class="home-main" v-if="signatureLoaded">
-      <CursorThing />
       <HomeOverlay />
     </div>
 

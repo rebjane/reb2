@@ -7,7 +7,7 @@
     </div>
     <SlidingText v-if="title && loaded" class="title" :text="title" />
     <CursorThing />
-    <Scrollbar />
+    <Scrollbar @scrollPos="handleScrollBarFunction" />
     <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
     <NavScreen v-if="navOpen" />
     <div class="nav-curtains">
@@ -37,7 +37,7 @@ export default {
   watch: {
     loaded() {
       this.$nextTick(() => {
-        new Scrolly(this.$refs.app);
+        this.scroll = new Scrolly(this.$refs.app);
       });
     }
   },
@@ -53,12 +53,19 @@ export default {
   data() {
     return {
       time: 0,
+      scroll: null,
       showNav: false,
+      scrollIndex: 0,
       title:
         window.location.pathname === "/"
           ? null
           : window.location.pathname.split("/").join("")
     };
+  },
+  methods: {
+    handleScrollBarFunction(scroll) {
+      this.scroll.scrollFromScrollBar(scroll);
+    }
   },
   computed: {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
