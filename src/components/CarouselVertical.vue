@@ -1,18 +1,11 @@
 <template>
   <div class="carousel-vertical">
     <div ref="carousel" class="carousel">
-      <!-- <transition v-for="(item, i) in items" :key="i">
-        <div class="image-wrap">
-          <div :ref="`image-${i}`" class="image" :style="`background-image: url(${item.url});`">
-            <img style="opacity: 0;" :src="item.url" />
-          </div>
-        </div>
-      </transition>-->
       <transition v-for="(item, i) in items" :key="i">
         <div class="image-wrap">
           <div :ref="`image-${i}`" class="image" :style="`background-image: url(${item.url});`">
             <img style="opacity: 0;" :src="item.url" v-if="key !== i" />
-            <RippleImage :img="item.url" v-if="key === i" :resize="resizeObj" />
+            <RippleImage :key="i" :img="item.url" v-if="key === i" :resize="resizeObj" />
           </div>
         </div>
       </transition>
@@ -47,50 +40,26 @@ export default {
         {
           url:
             "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-          width: 981, // i expect these values to come with prismic asutomaticallt
-          height: 736
+          width: 981, // i expect these values to come with prismic automatically
+          height: 736,
+          title: "Raptors",
+          date: "0.ss"
         },
         {
           url:
             "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-          width: 981, // i expect these values to come with prismic asutomaticallt
-          height: 736
+          width: 981, // i expect these values to come with prismic automatically
+          height: 736,
+          title: "Raptors2",
+          date: "0.ss"
         },
         {
           url:
             "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-          width: 981, // i expect these values to come with prismic asutomaticallt
-          height: 736
-        },
-        {
-          url:
-            "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-          width: 981, // i expect these values to come with prismic asutomaticallt
-          height: 736
-        },
-        {
-          url:
-            "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-          width: 981, // i expect these values to come with prismic asutomaticallt
-          height: 736
-        },
-        {
-          url:
-            "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-          width: 981, // i expect these values to come with prismic asutomaticallt
-          height: 736
-        },
-        {
-          url:
-            "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-          width: 981, // i expect these values to come with prismic asutomaticallt
-          height: 736
-        },
-        {
-          url:
-            "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-          width: 981, // i expect these values to come with prismic asutomaticallt
-          height: 736
+          width: 981, // i expect these values to come with prismic automatically
+          height: 736,
+          title: "Raptors3",
+          date: "0.ss"
         }
       ]
     };
@@ -114,7 +83,7 @@ export default {
     },
 
     canvasTop(divHeight, imgHeightResize) {
-      return (divHeight - imgHeightResize) / 1.9;
+      return (divHeight - imgHeightResize) / 1.95;
     },
     imgResizeHeight(iW, iH, divWidth) {
       return (iH / iW) * divWidth;
@@ -170,6 +139,11 @@ export default {
 
         if (opacity > 0.9) {
           this.key = i;
+          this.$emit("info", {
+            title: this.items[i].title,
+            date: this.items[i].date,
+            key: i
+          });
           this.resizeObj = {
             canvasWidth: divWidth,
             canvasHeight: divHeight,
@@ -191,6 +165,10 @@ export default {
     // this.$nextTick(() => {
     this.imagePos();
     // });
+    this.$emit("info", {
+      title: this.items[0].title,
+      date: this.items[0].date
+    });
     window.addEventListener("resize", this.imageSizing);
   }
 };
@@ -201,6 +179,7 @@ export default {
 @import "../styles/stylesheet.scss";
 .carousel-vertical {
   //   max-height: 100vh;
+  padding-bottom: 200px;
   margin: auto;
 }
 .image {

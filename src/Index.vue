@@ -2,12 +2,9 @@
   <div id="index" ref="app">
     <Loading v-if="!loaded" />
 
-    <div class="scroll" ref="scroll">
-      <router-view v-if="loaded" />
-    </div>
+    <router-view v-if="loaded" />
     <SlidingText v-if="title && loaded" class="title" :text="title" />
     <CursorThing />
-    <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" />
     <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
     <NavScreen v-if="navOpen" />
     <div class="nav-curtains">
@@ -27,27 +24,17 @@ import Loading from "./Loading.vue";
 import NavMenu from "./components/NavMenu.vue";
 import SlidingText from "./components/SlidingText.vue";
 import CursorThing from "./components/CursorThing.vue";
-import Scrollbar from "./components/Scrollbar.vue";
-//
-// import Index from "./Index.vue";
-import Scrolly from "./scrolly.js";
 
 export default {
   name: "App",
-  watch: {
-    loaded() {
-      this.$nextTick(() => {
-        this.scroll = new Scrolly(this.$refs.app);
-      });
-    }
-  },
+
   beforeMounted() {},
   components: {
     Loading,
     NavMenu,
     SlidingText,
-    CursorThing,
-    Scrollbar
+    CursorThing
+    // Scrollbar
     // Index
   },
   data() {
@@ -62,11 +49,7 @@ export default {
           : window.location.pathname.split("/").join("")
     };
   },
-  methods: {
-    handleScrollBarFunction(scroll) {
-      this.scroll.scrollFromScrollBar(scroll);
-    }
-  },
+  methods: {},
   computed: {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
   },
@@ -77,10 +60,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* canvas {
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
-} */
 @import "./styles/stylesheet.scss";
 #index {
   overflow: hidden;

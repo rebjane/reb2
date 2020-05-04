@@ -83,7 +83,7 @@ export default {
   position: fixed;
   color: white;
   bottom: 0;
-  margin-bottom: 3em;
+  margin-bottom: 2em;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -97,7 +97,7 @@ export default {
   right: 0;
   margin-right: 3em;
   max-height: 200px;
-  margin-bottom: 3em;
+  margin-bottom: 2em;
   height: 200px;
   border-right: 1px solid white;
 }
@@ -116,7 +116,7 @@ export default {
   opacity: 1;
   transform: translateY(0%);
   margin-left: 3em;
-  margin-bottom: 3em;
+  margin-bottom: 2em;
 }
 .time-enter-active {
   @include ease(all);
@@ -135,5 +135,6 @@ export default {
 p {
   color: white;
   overflow: hidden;
+  font-size: 14px;
 }
 </style>

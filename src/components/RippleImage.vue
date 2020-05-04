@@ -1,7 +1,5 @@
 <template>
-  <div ref="image" class="ripple-image">
-    <!-- <img :src="img" /> -->
-  </div>
+  <div ref="image" class="ripple-image"></div>
 </template>
 
 <script>
@@ -51,6 +49,9 @@ export default {
       image: null
     };
   },
+  beforeDestroy() {
+    PIXI.utils.clearTextureCache();
+  },
   methods: {
     init() {
       //   this.renderer.backgroundColor = "0xffffff";
@@ -97,7 +98,9 @@ export default {
       this.stage.addChild(this.image);
 
       //Add mouse listener
-      this.$refs.image.addEventListener("mousemove", this.doRipple);
+      if (this.$refs.image) {
+        this.$refs.image.addEventListener("mousemove", this.doRipple);
+      }
 
       //Render frames
       this.render();

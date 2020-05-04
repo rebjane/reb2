@@ -16,7 +16,7 @@
 
         <h2 ref="work">
           <transition appear name="wavelink">
-            <a class="wave-link" />
+            <router-link class="wave-link" to="/work" />
           </transition>
           <p class="sup">1</p>
         </h2>

@@ -1,12 +1,11 @@
 <template>
   <div ref="page" class="workpage">
     <div class="scroll" ref="scroll">
-      <CarouselVertical @info="handleInfo" />
+      <CarouselVertical />
 
       <!-- <RippleImage /> -->
     </div>
-    <CarouselTitle :info="info" />
-
+    <CarouselTitle />
     <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" />
   </div>
 </template>
@@ -26,11 +25,7 @@ export default {
   },
   data() {
     return {
-      scroll: null,
-      info: {
-        title: "default",
-        date: "default"
-      }
+      scroll: null
     };
   },
   computed: {
@@ -39,9 +34,6 @@ export default {
   methods: {
     handleScrollBarFunction(scroll) {
       this.scroll.scrollFromScrollBar(scroll);
-    },
-    handleInfo(e) {
-      this.info = e;
     }
   },
   mounted() {
