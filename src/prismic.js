@@ -19,15 +19,15 @@ class Prismic {
         })
         //after everything is done
         .then(() => {
-          setTimeout(() => {
-            console.log(this.res);
-            store.commit(
-              "setLoadPct",
-              Vue.prototype.$loadPct((Vue.prototype.$loaded += 1))
-            );
+          // setTimeout(() => {
+          console.log(this.res);
+          store.commit(
+            "setLoadPct",
+            Vue.prototype.$loadPct((Vue.prototype.$loaded += 1))
+          );
 
-            res("prismic all loaded");
-          }, 2000);
+          res("prismic all loaded");
+          // }, 2000);
         });
     });
   }

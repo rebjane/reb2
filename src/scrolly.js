@@ -18,7 +18,6 @@ export default class Scrolly {
     this.eventListeners();
     this.scroll();
 
-    // store.commit("setScrollBarIdx", this.scrollBarScrollIdx);
   }
   scrollFromScrollBar(scrollPos) {
     this.scrollTo = this.limit(scrollPos * this.scrollBarScrollIdx, this.max);

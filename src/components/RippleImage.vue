@@ -23,13 +23,15 @@ export default {
         // console.log(obj.width);
         if (this.renderer) {
           this.renderer.resize(obj.canvasWidth, obj.canvasHeight);
-          this.renderer.view.style = `transform: scale(${obj.scale}); transform-origin: top left; position:absolute; top: 0; left: 0;`;
+          this.renderer.view.style = `transform: scale(${obj.scale}); transform-origin: top left; position:absolute; top: ${obj.canvasTop}px;left: ${obj.canvasLeft}px;`;
+          // obj.canvasLeft
         }
         if (this.image) {
-          this.image.height = obj.canvasHeight;
+          this.image.height = obj.imgHeight;
           this.image.width = obj.imgWidth;
         }
-      }
+      },
+      immediate: true
     }
   },
   data() {
@@ -66,8 +68,7 @@ export default {
       //set Main image
       var imagePrev = PIXI.Texture.from(this.img);
       this.image = new PIXI.Sprite(imagePrev);
-      this.image.anchor.x = 0;
-      this.image.anchor.y = 0;
+      // this.image.anchor.x = 0;
       this.image.height = this.resize.canvasHeight;
       this.image.width = this.resize.imgWidth;
 

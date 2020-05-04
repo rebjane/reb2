@@ -25,7 +25,7 @@ class LoadComponents {
       );
 
       // Vue.component("Loading", require("./components/Loading.vue").default),
-      setTimeout(() => {}, 2000);
+      // setTimeout(() => {}, 2000);
       Vue.component(
         "SlidingText",
         require("./components/SlidingText.vue").default
@@ -41,13 +41,13 @@ class LoadComponents {
         require("./components/HomeOverlay.vue").default
       );
 
-      setTimeout(() => {
-        store.commit(
-          "setLoadPct",
-          Vue.prototype.$loadPct((Vue.prototype.$loaded += 1))
-        );
-        res();
-      }, 1000);
+      // setTimeout(() => {
+      store.commit(
+        "setLoadPct",
+        Vue.prototype.$loadPct((Vue.prototype.$loaded += 1))
+      );
+      res();
+      // }, 1000);
     });
   }
 }

@@ -31,7 +31,6 @@ export default {
   watch: {
     scroll: {
       handler() {
-        // console.log(e);
         this.imageSizing();
       }
     }
@@ -110,6 +109,19 @@ export default {
         });
       });
     },
+    canvasLeft(imgWidthResize, divWidth) {
+      return (divWidth - imgWidthResize) / 2;
+    },
+
+    canvasTop(divHeight, imgHeightResize) {
+      return (divHeight - imgHeightResize) / 1.9;
+    },
+    imgResizeHeight(iW, iH, divWidth) {
+      return (iH / iW) * divWidth;
+    },
+    imgResizeWidth(iW, iH, divHeight) {
+      return (iW * divHeight) / iH;
+    },
     imageSizing() {
       this.$refs.carousel.children.forEach((item, i) => {
         //where its middle y coordinate is located, relative to the page
@@ -127,22 +139,59 @@ export default {
         size = Math.max(size, 0.7);
 
         item.style = `transform: scale(${size}); opacity: ${opacity};`;
+
+        //-----------
+        let iW = this.items[i].width;
+        let iH = this.items[i].height;
+        let canvasLeft = 0;
+        let iRatio = iW / iH;
+        let divWidth = item.children[0].getBoundingClientRect().width;
+        let divHeight = item.children[0].getBoundingClientRect().height;
+        let divRatio = divWidth / divHeight;
+        let imgHeightResize = divHeight;
+        let imgWidthResize = divWidth;
+
+        if (divRatio > iRatio) {
+          // resize image width
+          imgWidthResize = this.imgResizeWidth(iW, iH, divHeight);
+          canvasLeft = this.canvasLeft(imgWidthResize, divWidth);
+          // canvasLeft = 40;
+        } else {
+          //resize image height
+          imgHeightResize = Math.min(
+            divHeight,
+            this.imgResizeHeight(iW, iH, divWidth)
+          );
+        }
+
+        let canvasTop = this.canvasTop(divHeight, imgHeightResize);
+
+        //-----------
+
         if (opacity > 0.9) {
-          let imgWidth = this.items[i].width / this.items[i].height;
-          imgWidth = imgWidth * item.children[0].getBoundingClientRect().height;
           this.key = i;
           this.resizeObj = {
-            canvasWidth: item.children[0].getBoundingClientRect().width,
-            canvasHeight: item.children[0].getBoundingClientRect().height,
+            canvasWidth: divWidth,
+            canvasHeight: divHeight,
             scale: 1 + (1 - size),
-            imgWidth: imgWidth
+            imgWidth: imgWidthResize,
+            imgHeight: imgHeightResize,
+            canvasLeft: canvasLeft,
+            canvasTop: canvasTop
           };
+          if (opacity < 0.8) {
+            opacity = 0;
+            item.style = `display: none;`;
+          }
         }
       });
     }
   },
   mounted() {
+    // this.$nextTick(() => {
     this.imagePos();
+    // });
+    window.addEventListener("resize", this.imageSizing);
   }
 };
 </script>
@@ -156,16 +205,20 @@ export default {
 }
 .image {
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   max-width: 60%;
-  height: 600px;
+  background-position: center;
+  // height: 736px;
   // height: 100%;
-  // width: 100%;
+  width: 100%;
+  height: 600px;
   margin: auto;
   overflow: hidden;
 }
 .image-wrap {
   margin-bottom: -3em;
+  width: 100%;
+
   &:last-child {
     margin-bottom: 5em;
   }

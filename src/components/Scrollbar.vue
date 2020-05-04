@@ -30,7 +30,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["scroll", "scrollBarIdx", "scrollBarHeight", "scrollBarPos"])
+    ...mapState(["scroll", "scrollBarHeight", "scrollBarPos"])
   },
   methods: {
     doScroll(e) {

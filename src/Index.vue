@@ -7,7 +7,7 @@
     </div>
     <SlidingText v-if="title && loaded" class="title" :text="title" />
     <CursorThing />
-    <Scrollbar @scrollPos="handleScrollBarFunction" />
+    <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" />
     <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
     <NavScreen v-if="navOpen" />
     <div class="nav-curtains">
