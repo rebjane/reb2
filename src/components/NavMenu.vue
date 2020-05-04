@@ -1,6 +1,8 @@
 <template>
   <div class="nav">
-    <Reb2Logo class="logo" />
+    <router-link to="/">
+      <Reb2Logo class="logo" />
+    </router-link>
     <Hamburger class="menu" @click.native="toggleNav" />
     <!-- <transition v-if="signatureLoaded"> -->
     <transition appear v-if="time.timeString" name="time">
@@ -9,9 +11,9 @@
     <transition appear name="line">
       <div class="line" />
     </transition>
-    <transition appear name="bottom">
+    <!-- <transition appear name="bottom">
       <p class="bottom-text">Developed with love by myself.</p>
-    </transition>
+    </transition>-->
     <!-- </transition> -->
   </div>
 </template>

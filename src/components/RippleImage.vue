@@ -51,11 +51,11 @@ export default {
   },
   beforeDestroy() {
     PIXI.utils.clearTextureCache();
+    this.$refs.image.removeEventListener("mousemove", this.doRipple);
+    cancelAnimationFrame(this.render);
   },
   methods: {
     init() {
-      //   this.renderer.backgroundColor = "0xffffff";
-      //   this.renderer.transparent = true;
       this.$refs.image.appendChild(this.renderer.view);
       this.app.interactive = true;
       this.app.stage.addChild(this.stage);
@@ -100,6 +100,7 @@ export default {
       //Add mouse listener
       if (this.$refs.image) {
         this.$refs.image.addEventListener("mousemove", this.doRipple);
+        this.$refs.image.addEventListener("mouseleave", this.stopRipple);
       }
 
       //Render frames
@@ -119,7 +120,11 @@ export default {
 
       this.stage.filters = [this.displacementFilter];
       this.renderer.render(this.stage);
-      requestAnimationFrame(this.render);
+      if (this.mouseOff) {
+        cancelAnimationFrame(this.render);
+      } else {
+        requestAnimationFrame(this.render);
+      }
     },
 
     doRipple(e) {
@@ -134,8 +139,7 @@ export default {
       });
       this.displacementSprite.scale.x = 0.5;
       this.displacementSprite.scale.y = 0.5;
-    },
-    map() {}
+    }
   },
   mounted() {
     this.$nextTick(() => {

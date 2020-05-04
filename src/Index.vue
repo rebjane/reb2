@@ -3,7 +3,6 @@
     <Loading v-if="!loaded" />
 
     <router-view v-if="loaded" />
-    <SlidingText v-if="title && loaded" class="title" :text="title" />
     <CursorThing />
     <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
     <NavScreen v-if="navOpen" />
@@ -22,7 +21,6 @@
 import { mapState } from "vuex";
 import Loading from "./Loading.vue";
 import NavMenu from "./components/NavMenu.vue";
-import SlidingText from "./components/SlidingText.vue";
 import CursorThing from "./components/CursorThing.vue";
 
 export default {
@@ -32,7 +30,6 @@ export default {
   components: {
     Loading,
     NavMenu,
-    SlidingText,
     CursorThing
     // Scrollbar
     // Index

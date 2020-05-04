@@ -88,11 +88,13 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
 .sliding-text {
-  //   padding-top: 25%;
-  position: relative;
+  padding-top: 1em;
+  // position: relative;
+  z-index: 1;
+  pointer-events: none;
 }
 .viewport {
-  width: 50%;
+  width: 65%;
   overflow: hidden;
   position: relative;
 
@@ -110,8 +112,9 @@ export default {
     background: rgb(22, 22, 22);
     background: linear-gradient(
       90deg,
-      rgba(22, 22, 22, 1) 9%,
-      rgba(22, 22, 22, 0) 100%
+      rgba(22, 22, 22, 1) 0%,
+      rgba(22, 22, 22, 0.6208858543417367) 11%,
+      rgba(22, 22, 22, 0) 18%
     );
   }
   &:after {
@@ -126,8 +129,9 @@ export default {
     background: rgb(22, 22, 22);
     background: linear-gradient(
       270deg,
-      rgba(22, 22, 22, 1) 9%,
-      rgba(22, 22, 22, 0) 100%
+      rgba(22, 22, 22, 1) 0%,
+      rgba(22, 22, 22, 0.6208858543417367) 11%,
+      rgba(22, 22, 22, 0) 18%
     );
   }
 }

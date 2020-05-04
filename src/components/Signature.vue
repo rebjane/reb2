@@ -198,10 +198,10 @@ export default {
       // if (this.animFinished) {
       //   this.intersecting();
       // }
-      // this.lerpMove();
-      if (!this.animFinished) {
-        requestAnimationFrame(this.animate);
-      }
+      this.lerpMove();
+      // if (!this.animFinished) {
+      requestAnimationFrame(this.animate);
+      // }
     },
     lerpMove() {
       var limit = 0.4; //how far out the signature can move
@@ -214,8 +214,8 @@ export default {
         this.signature[0].position.x = this.animX;
         this.signature[0].position.y = this.animY;
 
-        this.signature[0].rotation.x = -this.animY / 10;
-        this.signature[0].rotation.y = this.animX / 10;
+        this.signature[0].rotation.x = -this.animY / 8;
+        this.signature[0].rotation.y = this.animX / 8;
       }
     },
     intersecting() {

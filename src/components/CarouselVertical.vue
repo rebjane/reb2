@@ -3,8 +3,19 @@
     <div ref="carousel" class="carousel">
       <transition v-for="(item, i) in items" :key="i">
         <div class="image-wrap">
-          <div :ref="`image-${i}`" class="image" :style="`background-image: url(${item.url});`">
+          <div
+            @mouseover="key === i ? showHover = true : null"
+            @mouseleave="key === i ?  showHover = false : null"
+            :ref="`image-${i}`"
+            class="image"
+            :style="`background-image: url(${item.url});`"
+          >
             <img style="opacity: 0;" :src="item.url" v-if="key !== i" />
+            <transition appear name="hover">
+              <div class="hover" v-if="showHover">
+                <h3>View.</h3>
+              </div>
+            </transition>
             <RippleImage :key="i" :img="item.url" v-if="key === i" :resize="resizeObj" />
           </div>
         </div>
@@ -34,6 +45,7 @@ export default {
   data() {
     return {
       midPos: [],
+      showHover: false,
       key: 0,
       resizeObj: {},
       items: [
@@ -189,6 +201,9 @@ export default {
   background-position: center;
   // height: 736px;
   // height: 100%;
+  position: relative;
+  cursor: pointer;
+
   width: 100%;
   height: 600px;
   margin: auto;
@@ -202,10 +217,42 @@ export default {
     margin-bottom: 5em;
   }
 }
+.hover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: $bg;
+  z-index: 1;
+  opacity: 0.8;
+  pointer-events: none;
+  h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 2;
+    color: white;
+    font-size: 10em;
+    margin: 0;
+    font-family: $suisse;
+    font-weight: bold;
+  }
+}
 img {
   width: 100%;
 }
 .carousel {
   margin: auto;
+}
+.hover-enter,
+.hover-leave-to {
+  opacity: 0;
+}
+.hover-enter-active,
+.hover-leave-active {
+  @include ease(opacity);
+}
+.hover-enter-to {
+  opacity: 0.8;
 }
 </style>

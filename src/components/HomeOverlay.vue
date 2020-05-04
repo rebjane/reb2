@@ -6,33 +6,23 @@
 
     <p ref="wave" />
 
-    <h1
-      class="designer wavetext"
-      @mouseenter="showLeft = true"
-      @mouseleave="showLeft=false"
-      ref="designer"
-    >
+    <h1 class="designer wavetext" ref="designer">
       <a class="wave-link" />
     </h1>
 
-    <transition appear name="leftimage" v-if="showLeft">
+    <!-- <transition appear name="leftimage" v-if="showLeft">
       <div class="left-image"></div>
-    </transition>
+    </transition>-->
 
     <br />
 
-    <h1
-      class="wavetext"
-      ref="illustrator"
-      @mouseenter="showRight = true"
-      @mouseleave="showRight=false"
-    >
+    <h1 class="wavetext" ref="illustrator">
       <a class="wave-link" />
     </h1>
 
-    <transition appear name="rightimage" v-if="showRight">
+    <!-- <transition appear name="rightimage" v-if="showRight">
       <div class="right-image"></div>
-    </transition>
+    </transition>-->
 
     <br />
 
@@ -51,9 +41,7 @@ export default {
   data() {
     var intro;
     return {
-      intro,
-      showLeft: false,
-      showRight: false
+      intro
     };
   },
   methods: {},
