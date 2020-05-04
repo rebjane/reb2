@@ -6,13 +6,11 @@
         v-on:enter="enter"
       v-on:leave="leave"-->
       <transition :key="title" appear v-if="loaded" name="up">
-        <div>
-          <router-view class="view" />
-        </div>
+        <router-view class="view" />
       </transition>
     </keep-alive>
 
-    <CursorThing />
+    <CursorThing v-if="loaded" />
     <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
     <NavScreen v-if="navOpen" />
     <div class="nav-curtains">

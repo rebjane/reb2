@@ -2,25 +2,23 @@
   <div ref="page" class="workpage">
     <div class="scroll" ref="scroll">
       <CarouselVertical @info="handleInfo" />
-
-      <!-- <RippleImage /> -->
     </div>
     <CarouselTitle :info="info" />
     <SlidingText class="title" :text="'work'" />
 
-    <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" />
+    <!-- <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" /> -->
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import Scrolly from "./scrolly.js";
-import Scrollbar from "./components/Scrollbar.vue";
+// import Scrolly from "./scrolly.js";
+// import Scrollbar from "./components/Scrollbar.vue";
 
 export default {
   name: "Template",
   components: {
-    Scrollbar
+    // Scrollbar
   },
   props: {
     msg: String
@@ -47,9 +45,9 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      this.scroll = new Scrolly(this.$refs.page);
-    });
+    // this.$nextTick(() => {
+    //   this.scroll = new Scrolly(this.$refs.page);
+    // });
   }
 };
 </script>
@@ -65,7 +63,7 @@ p {
   color: white;
 }
 .title {
-  position: fixed;
+  position: absolute;
   top: 0;
   z-index: 3;
   width: 100%;

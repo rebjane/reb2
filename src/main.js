@@ -23,7 +23,6 @@ async function preLoading() {
   Promise.all([loader.loadTheComponents(), prismic.fetchData()]).then(() => {
     console.log("STOP looading anim here!");
     store.commit("setLoaded", true);
-
     // setTimeout(() => {
     //   store.commit("setLoaded", true);
     // }, 500);

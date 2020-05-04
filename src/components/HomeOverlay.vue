@@ -71,6 +71,9 @@ export default {
       }
     ];
     new WaveText(opts);
+    setTimeout(() => {
+      this.$emit("canScroll", true);
+    }, opts[opts.length - 1].delay + 1000);
   }
 };
 </script>

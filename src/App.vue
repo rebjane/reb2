@@ -3,28 +3,55 @@
 
 <template>
   <div id="app" ref="appofficial">
-    <div class="home-main" v-if="signatureLoaded">
-      <HomeOverlay />
+    <!-- <div class="home-main" v-if="signatureLoaded">
+    <HomeOverlay class="el" />-->
+    <div>
+      <div class="home">
+        <Signature class="el" />
+        <HomeOverlay @canScroll="canScroll = true" class="el" v-if="signatureLoaded" />
+      </div>
+      <WorkPage class="el" />
     </div>
 
-    <Signature />
+    <!-- </div> -->
+
+    <Scrollbar @scrollPos="handleScrollBarFunction" v-if="canScroll & !navOpen" />
   </div>
 </template>
 
 <script>
+import Scrolly from "./scrolly.js";
+import Scrollbar from "./components/Scrollbar.vue";
 import { mapState } from "vuex";
 export default {
   name: "Index",
-
+  watch: {
+    canScroll: {
+      handler(e) {
+        if (e) {
+          this.scroll = new Scrolly(this.$refs.appofficial);
+        }
+      }
+    }
+  },
   beforeMounted() {},
-  components: {},
+  components: {
+    Scrollbar
+  },
   data() {
     return {
-      time: 0
+      time: 0,
+      scroll: null,
+      canScroll: false
     };
   },
   computed: {
     ...mapState(["signatureLoaded", "navOpen"])
+  },
+  methods: {
+    handleScrollBarFunction(scroll) {
+      this.scroll.scrollFromScrollBar(scroll);
+    }
   },
   mounted() {}
 };
@@ -54,6 +81,7 @@ p {
   color: white;
   overflow: hidden;
 }
+
 p,
 h1,
 h2,
@@ -66,5 +94,12 @@ h6 {
 
 .intro {
   overflow: hidden;
+}
+.el {
+  position: relative;
+}
+.home {
+  position: relative;
+  height: 100vh;
 }
 </style>
