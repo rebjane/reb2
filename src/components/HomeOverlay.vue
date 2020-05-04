@@ -7,7 +7,7 @@
     <p ref="wave" />
 
     <h1 class="designer wavetext" ref="designer">
-      <a class="wave-link" />
+      <router-link exact to="/work" class="wave-link" />
     </h1>
 
     <!-- <transition appear name="leftimage" v-if="showLeft">
@@ -17,7 +17,7 @@
     <br />
 
     <h1 class="wavetext" ref="illustrator">
-      <a class="wave-link" />
+      <router-link exact to="/work" class="wave-link" />
     </h1>
 
     <!-- <transition appear name="rightimage" v-if="showRight">

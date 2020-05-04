@@ -28,6 +28,7 @@ export default {
       scroll: null
     };
   },
+  beforeDestroy() {},
   computed: {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <router-link to="/">
+    <router-link exact to="/">
       <Reb2Logo class="logo" />
     </router-link>
     <Hamburger class="menu" @click.native="toggleNav" />

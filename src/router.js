@@ -11,19 +11,23 @@ const router = new VueRouter({
   mode: "history",
   routes: [
     {
-      path: "/",
+      path: "",
+      name: "app",
       component: () => import("./App.vue"),
     },
     {
       path: "/about",
+      name: "about",
       component: () => import("./AboutPage.vue"),
     },
     {
       path: "/work",
+      name: "work",
       component: () => import("./WorkPage.vue"),
     },
     {
       path: "/project*",
+      name: "project",
       component: () => import("./ProjectPage.vue"),
     },
   ],

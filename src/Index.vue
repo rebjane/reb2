@@ -1,8 +1,17 @@
 <template>
   <div id="index" ref="app">
     <Loading v-if="!loaded" />
+    <keep-alive>
+      <!-- v-on:beforeEnter="beforeEnter"
+        v-on:enter="enter"
+      v-on:leave="leave"-->
+      <transition :key="title" appear v-if="loaded" name="up">
+        <div>
+          <router-view class="view" />
+        </div>
+      </transition>
+    </keep-alive>
 
-    <router-view v-if="loaded" />
     <CursorThing />
     <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
     <NavScreen v-if="navOpen" />
@@ -24,7 +33,7 @@ import NavMenu from "./components/NavMenu.vue";
 import CursorThing from "./components/CursorThing.vue";
 
 export default {
-  name: "App",
+  name: "Index",
 
   beforeMounted() {},
   components: {
@@ -38,15 +47,29 @@ export default {
     return {
       time: 0,
       scroll: null,
+      transitionStyle:
+        "transition: transform 750ms cubic-bezier(0.91, 0.02, 0.275, 1);",
       showNav: false,
       scrollIndex: 0,
       title:
         window.location.pathname === "/"
-          ? null
+          ? "home"
           : window.location.pathname.split("/").join("")
     };
   },
-  methods: {},
+  methods: {
+    // beforeEnter(el) {
+    //   el.style = `transform: translateX(-100%); ${this.transitionStyle}`;
+    // },
+    // enter(el, done) {
+    //   el.style = "transform: translateX(0%)";
+    //   done();
+    // },
+    // leave(el, done) {
+    //   el.style = `transform: translateX(100%); ${this.transitionStyle}`;
+    //   setTimeout(() => done(), 750);
+    // }
+  },
   computed: {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
   },
@@ -106,4 +129,20 @@ export default {
   transform: translateX(-50%);
   width: 100%;
 }
+.view {
+  transform: translateY(0%);
+}
+// .up-enter {
+//   transform: translateY(100%);
+// }
+// .up-leave-to {
+//   transform: translateY(-100%);
+// }
+// .up-enter-to {
+//   transform: translateY(0%);
+// }
+// .up-leave-active,
+// .up-enter-active {
+//   @include ease(transform);
+// }
 </style>

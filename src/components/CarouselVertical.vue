@@ -131,7 +131,6 @@ export default {
         let divRatio = divWidth / divHeight;
         let imgHeightResize = divHeight;
         let imgWidthResize = divWidth;
-
         if (divRatio > iRatio) {
           // resize image width
           imgWidthResize = this.imgResizeWidth(iW, iH, divHeight);
