@@ -12,11 +12,11 @@
       :text="'work'"
     />
 
-    <SlidingText
+    <!-- <SlidingText
       :style="`transform: translateY(${fixedTitlePos}px);`"
       class="title"
       :text="'work'"
-    />
+    />-->
 
     <!-- <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" /> -->
   </div>

@@ -39,54 +39,58 @@ export default {
   },
   data() {
     return {
-      // app: new PIXI.Application(),
-      // ripple: require("../assets/ripple.jpg"),
-      // amt: 0,
-      // displacementSprite: null,
-      // displacementFilter: null,
-      // stage: new PIXI.Container(),
-      // renderer: PIXI.autoDetectRenderer({ transparent: true }),
-      // posX: 0,
-      // posY: 0,
-      // amtX: 0,
-      // amtY: 0,
-      // ripples: [],
-      // image: null
-      app: null,
-      ripple: null,
-      amt: null,
+      app: new PIXI.Application(),
+      ripple: require("../assets/ripple.jpg"),
+      amt: 0,
       displacementSprite: null,
       displacementFilter: null,
-      stage: null,
-      renderer: null,
+      stage: new PIXI.Container(),
+      renderer: PIXI.autoDetectRenderer({ transparent: true }),
       posX: 0,
       posY: 0,
       amtX: 0,
       amtY: 0,
       ripples: [],
-      image: null,
-      toggleRipple: true
+      image: null
+      // app: null,
+      // ripple: null,
+      // amt: null,
+      // displacementSprite: null,
+      // displacementFilter: null,
+      // stage: null,
+      // renderer: null,
+      // posX: 0,
+      // posY: 0,
+      // amtX: 0,
+      // amtY: 0,
+      // ripples: [],
+      // image: null,
+      // toggleRipple: true
     };
   },
   beforeMount() {
-    this.app = new PIXI.Application();
-    this.ripple = require("../assets/ripple.jpg");
-    this.amt = 0;
-    this.displacementSprite = null;
-    this.displacementFilter = null;
-    this.stage = new PIXI.Container();
-    this.renderer = PIXI.autoDetectRenderer({ transparent: true });
-    this.posX = 0;
-    this.posY = 0;
-    this.amtX = 0;
-    this.amtY = 0;
-    this.ripples = [];
-    this.image = null;
+    // this.app = new PIXI.Application();
+    // this.ripple = require("../assets/ripple.jpg");
+    // this.amt = 0;
+    // this.displacementSprite = null;
+    // this.displacementFilter = null;
+    // this.stage = new PIXI.Container();
+    // this.renderer = PIXI.autoDetectRenderer({ transparent: true });
+    // this.posX = 0;
+    // this.posY = 0;
+    // this.amtX = 0;
+    // this.amtY = 0;
+    // this.ripples = [];
+    // this.image = null;
+    // this.$nextTick(() => {
+    //   this.init();
+    // });
+  },
+  mounted() {
     this.$nextTick(() => {
       this.init();
     });
   },
-  mounted() {},
 
   beforeDestroy() {
     this.destroy();
@@ -114,7 +118,6 @@ export default {
       this.$refs.image.appendChild(this.renderer.view);
       this.app.interactive = true;
       this.app.stage.addChild(this.stage);
-
       this.app.loader
         .add(this.ripple)
         .add(this.img)
@@ -154,10 +157,10 @@ export default {
 
       //Add mouse listener
       if (this.$refs.image.children[0]) {
-        this.$refs.image.children[0].addEventListener("mouseover", () => {
-          this.toggleRipple = true;
-          this.render();
-        });
+        // this.$refs.image.children[0].addEventListener("mouseover", () => {
+        //   this.toggleRipple = true;
+        //   this.render();
+        // });
         this.$refs.image.children[0].addEventListener(
           "mousemove",
           this.doRipple
@@ -169,7 +172,7 @@ export default {
       }
 
       //Render frames
-      // this.render();
+      this.render();
     },
     stopRipple() {
       cancelAnimationFrame(this.render);
@@ -179,27 +182,27 @@ export default {
     },
     render() {
       //   console.log(this.amtX);
-      if (
-        this.stage &&
-        this.renderer &&
-        this.displacementSprite &&
-        this.displacementFilter &&
-        this.toggleRipple
-      ) {
-        this.amtX = this.posX;
-        this.amtY = this.posY;
-        this.displacementSprite.x = this.amtX;
-        this.displacementSprite.y = this.amtY;
-        this.displacementSprite.scale.x += 0.01;
-        this.displacementSprite.x -= 1;
+      // if (
+      //   this.stage &&
+      //   this.renderer &&
+      //   this.displacementSprite &&
+      //   this.displacementFilter &&
+      //   this.toggleRipple
+      // ) {
+      this.amtX = this.posX;
+      this.amtY = this.posY;
+      this.displacementSprite.x = this.amtX;
+      this.displacementSprite.y = this.amtY;
+      this.displacementSprite.scale.x += 0.01;
+      this.displacementSprite.x -= 1;
 
-        this.displacementSprite.scale.y += 0.01;
-        this.displacementSprite.y -= 1;
+      this.displacementSprite.scale.y += 0.01;
+      this.displacementSprite.y -= 1;
 
-        this.stage.filters = [this.displacementFilter];
-        this.renderer.render(this.stage);
-        requestAnimationFrame(this.render);
-      }
+      this.stage.filters = [this.displacementFilter];
+      this.renderer.render(this.stage);
+      requestAnimationFrame(this.render);
+      // }
     },
 
     doRipple(e) {

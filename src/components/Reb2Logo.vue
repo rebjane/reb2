@@ -56,7 +56,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@import "../styles/stylesheet.scss";
+
 svg {
-  fill: white;
+  fill: $bg;
 }
 </style>

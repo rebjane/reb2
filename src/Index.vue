@@ -83,7 +83,8 @@ export default {
   overflow: hidden;
   height: 100vh;
   width: 100%;
-  background: $bg;
+  // background: $bg;
+  background: white;
 }
 .scroll {
   position: relative;

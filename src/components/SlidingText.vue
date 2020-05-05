@@ -1,11 +1,11 @@
 <template>
-  <div class="sliding-text">
+  <div class="sliding-text" :style="`transform: rotate(${rotateVal}deg);`">
     <div class="viewport" ref="viewport" :style="`height: ${spanHeight}px;`">
-      <h2 class="h2_0" id="h2_0" ref="h2_0" :style="`height: ${spanHeight}px;`">
+      <h2 class="h2_0" id="h2_0" ref="h2_0" :style="`font-size: ${fs}px; height: ${spanHeight}px;`">
         <span :id="`span_${i}`" :ref="`span_${i}`">{{text}}</span>
       </h2>
       <h2
-        :style="`height: ${spanHeight}px; left: ${totalSpansWidth + (qty * 20)}px;`"
+        :style="`font-size: ${fs}px; height: ${spanHeight}px; left: ${totalSpansWidth + (qty * 20)}px;`"
         class="h2_1"
         id="h2_1"
         ref="h2_1"
@@ -26,6 +26,18 @@ export default {
     text: {
       type: String,
       default: "work "
+    },
+    fs: {
+      type: Number,
+      default: 20
+    },
+    speed: {
+      type: Number,
+      default: 20
+    },
+    rotate: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -37,7 +49,8 @@ export default {
       spanHeight: 0,
       i: 0,
       timelines: [],
-      totalSpansWidth: 0
+      totalSpansWidth: 0,
+      rotateVal: 0
     };
   },
   methods: {
@@ -60,11 +73,13 @@ export default {
         var el = document.getElementById(`h2_${i}`);
         this.slide(el, i);
       }
+      //do rotation after all is calcualted, to prevent from messing up with it beforehand
+      this.rotateVal = this.rotate;
     },
     slide(el, i) {
       this.timelines.push(new TimelineMax({ repeat: -1 }));
       this.timelines[i]
-        .to(el, 20, {
+        .to(el, this.speed, {
           css: {
             x: -this.totalSpansWidth - this.qty * 20
           },
@@ -100,51 +115,52 @@ export default {
 
   margin-left: auto;
   margin-right: auto;
-  &:before {
-    content: "";
+  // &:before {
+  //   content: "";
 
-    width: 200px;
-    height: 100%;
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    background: rgb(22, 22, 22);
-    background: linear-gradient(
-      90deg,
-      rgba(22, 22, 22, 1) 0%,
-      rgba(22, 22, 22, 0.6208858543417367) 11%,
-      rgba(22, 22, 22, 0) 18%
-    );
-  }
-  &:after {
-    content: "";
+  //   width: 200px;
+  //   height: 100%;
+  //   position: absolute;
+  //   z-index: 1;
+  //   left: 0;
+  //   top: 0;
+  //   background: rgb(22, 22, 22);
+  //   background: linear-gradient(
+  //     90deg,
+  //     rgba(22, 22, 22, 1) 0%,
+  //     rgba(22, 22, 22, 0.6208858543417367) 11%,
+  //     rgba(22, 22, 22, 0) 18%
+  //   );
+  // }
+  // &:after {
+  //   content: "";
 
-    width: 200px;
-    height: 100%;
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    top: 0;
-    background: rgb(22, 22, 22);
-    background: linear-gradient(
-      270deg,
-      rgba(22, 22, 22, 1) 0%,
-      rgba(22, 22, 22, 0.6208858543417367) 11%,
-      rgba(22, 22, 22, 0) 18%
-    );
-  }
+  //   width: 200px;
+  //   height: 100%;
+  //   position: absolute;
+  //   z-index: 1;
+  //   right: 0;
+  //   top: 0;
+  //   background: rgb(22, 22, 22);
+  //   background: linear-gradient(
+  //     270deg,
+  //     rgba(22, 22, 22, 1) 0%,
+  //     rgba(22, 22, 22, 0.6208858543417367) 11%,
+  //     rgba(22, 22, 22, 0) 18%
+  //   );
+  // }
 }
 h2 {
   display: inline-block;
   margin: 0;
   overflow: visible;
 
-  color: white;
+  // color: white;
+  color: $bg;
   font-family: $acumin;
   font-style: italic;
-  font-size: 100px;
-  font-weight: bold;
+  // font-size: 100px;
+  // font-weight: bold;
   text-align: center;
   width: 100%;
   position: absolute;

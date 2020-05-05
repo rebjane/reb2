@@ -239,4 +239,9 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.signature {
+  filter: grayscale(100%);
+  opacity: 0.3;
+}
+</style>

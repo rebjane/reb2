@@ -15,11 +15,7 @@ const router = new VueRouter({
       name: "app",
       component: () => import("./App.vue"),
     },
-    {
-      path: "/about",
-      name: "about",
-      component: () => import("./AboutPage.vue"),
-    },
+
     {
       path: "/work",
       name: "work",

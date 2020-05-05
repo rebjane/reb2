@@ -14,6 +14,7 @@ class LoadComponents {
       Vue.component("NavScreen", require("./components/NavScreen.vue").default);
       Vue.component("Scrollbar", require("./components/Scrollbar.vue").default);
       Vue.component("WorkPage", require("./WorkPage.vue").default);
+      Vue.component("AboutSection", require("./AboutSection.vue").default);
 
       Vue.component(
         "CarouselTitle",

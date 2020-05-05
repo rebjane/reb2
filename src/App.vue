@@ -10,7 +10,8 @@
         <Signature class="el" />
         <HomeOverlay @canScroll="canScroll = true" class="el" v-if="signatureLoaded" />
       </div>
-      <WorkPage class="el" />
+      <AboutSection />
+      <!-- <WorkPage class="el" /> -->
     </div>
 
     <!-- </div> -->
@@ -70,6 +71,7 @@ img {
   height: 100%;
 }
 #app {
+  margin: 0 124px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -81,7 +83,7 @@ img {
   position: relative;
 }
 p {
-  color: white;
+  color: $bg;
   overflow: hidden;
 }
 
