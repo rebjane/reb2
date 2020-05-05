@@ -3,23 +3,25 @@
     <div ref="carousel" class="carousel">
       <transition v-for="(item, i) in items" :key="i">
         <div class="image-wrap">
-          <div
-            @mouseover="key === i ? showHover = true : null"
-            @mouseleave="key === i ?  showHover = false : null"
-            :ref="`image-${i}`"
-            class="image"
-            :style="`background-image: url(${item.url});`"
-          >
-            <img style="opacity: 0;" :src="item.url" v-if="key !== i" />
-            <transition appear name="hover">
-              <div class="hover" v-if="showHover">
-                <h3>View.</h3>
-              </div>
-            </transition>
-            <RippleImage :key="i" :img="item.url" v-if="key === i" :resize="resizeObj" />
-          </div>
+          <transition appear name="hover">
+            <div
+              @mouseover="key === i ? showHover = true : null"
+              @mouseleave=" key === i ?  showHover = false : null"
+              :ref="`image-${i}`"
+              class="image"
+              :style="`background-image: url(${item.url}); opacity: ${showHover && key === i ? 0.5 : 1};`"
+            >
+              <img style="opacity: 0;" :src="item.url" v-if="key !== i" />
+
+              <!-- <RippleImage :key="key" :img="item.url" v-if="key === i" :resize="resizeObj" /> -->
+            </div>
+          </transition>
+          <transition appear name="h3" v-if="showHover && key === i">
+            <h3>View.</h3>
+          </transition>
         </div>
       </transition>
+      <!-- <RippleImage :key="key" :img="items[key].url" v-if="key" :resize="resizeObj" /> -->
     </div>
   </div>
 </template>
@@ -40,13 +42,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(["signatureLoaded", "navOpen", "scroll"])
+    ...mapState(["signatureLoaded", "navOpen", "scroll", "scrollForce"])
   },
   data() {
     return {
       midPos: [],
       showHover: false,
       key: 0,
+      ripple: false,
       resizeObj: {},
       items: [
         {
@@ -77,6 +80,12 @@ export default {
     };
   },
   methods: {
+    isHovering(isHover) {
+      this.ripple = isHover;
+      if (this.ripple) {
+        this.imageSizing;
+      }
+    },
     imagePos() {
       this.$refs.carousel.children.forEach((item, i) => {
         var midPos = Math.abs(
@@ -85,7 +94,7 @@ export default {
         );
         this.midPos.push({
           midPos: midPos,
-          key: i + 1,
+          key: i,
           isRipple: false
         });
       });
@@ -148,7 +157,7 @@ export default {
 
         //-----------
 
-        if (opacity > 0.9) {
+        if (opacity > 0.7) {
           this.key = i;
           this.$emit("info", {
             title: this.items[i].title,
@@ -157,17 +166,13 @@ export default {
           });
           this.resizeObj = {
             canvasWidth: divWidth,
-            canvasHeight: divHeight,
+            canvasHeight: imgHeightResize,
             scale: 1 + (1 - size),
             imgWidth: imgWidthResize,
             imgHeight: imgHeightResize,
             canvasLeft: canvasLeft,
             canvasTop: canvasTop
           };
-          if (opacity < 0.8) {
-            opacity = 0;
-            item.style = `display: none;`;
-          }
         }
       });
     }
@@ -200,6 +205,7 @@ export default {
   background-position: center;
   // height: 736px;
   // height: 100%;
+  @include ease(opacity);
   position: relative;
   cursor: pointer;
 
@@ -222,20 +228,22 @@ export default {
   height: 100%;
   background: $bg;
   z-index: 1;
-  opacity: 0.8;
+  opacity: 0.3;
   pointer-events: none;
-  h3 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    z-index: 2;
-    color: white;
-    font-size: 10em;
-    margin: 0;
-    font-family: $suisse;
-    font-weight: bold;
-  }
+}
+h3 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 3;
+  color: white;
+  opacity: 1;
+  font-size: 10em;
+  margin: 0;
+  font-family: $suisse;
+  font-weight: bold;
+  pointer-events: none;
 }
 img {
   width: 100%;
@@ -252,6 +260,18 @@ img {
   @include ease(opacity);
 }
 .hover-enter-to {
-  opacity: 0.8;
+  opacity: 0.3;
+}
+
+.h3-enter,
+.h3-leave-to {
+  opacity: 0;
+}
+.h3-enter-active,
+.h3-leave-active {
+  @include ease(opacity);
+}
+.h3-enter-to {
+  opacity: 1;
 }
 </style>

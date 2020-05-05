@@ -17,7 +17,6 @@ export default class Scrolly {
     this.scroll = this.scroll.bind(this);
     this.eventListeners();
     this.scroll();
-
   }
   scrollFromScrollBar(scrollPos) {
     this.scrollTo = this.limit(scrollPos * this.scrollBarScrollIdx, this.max);
@@ -27,6 +26,7 @@ export default class Scrolly {
     window.addEventListener("mousewheel", (e) => {
       this.dir = Math.abs(e.deltaY) / e.deltaY;
       this.scrollTo += e.deltaY;
+      store.commit("setScrollForce", Math.abs(e.deltaY));
       this.scrollTo = this.limit(this.scrollTo, this.max);
       e.stopPropagation();
     });

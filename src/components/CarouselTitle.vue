@@ -34,13 +34,12 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
 .title {
-  position: fixed;
+  position: absolute;
   top: 50vh;
   transform: translateY(-100%);
-  left: 0;
+  left: 3em;
   color: white;
   font-family: $acumin;
-  margin-left: 3em;
 }
 // .line {
 //   position: fixed;
@@ -48,22 +47,24 @@ export default {
 //   width: 100%;
 //   border-bottom: 1px solid white;
 //   opacity: 0.3;
+//   z-index: 0;
 // }
 .date {
-  position: fixed;
+  position: absolute;
   top: 50vh;
   transform: translateY(-100%);
-  right: 0;
+  right: 3em;
   color: white;
-  margin-right: 3em;
   opacity: 1;
   font-family: $acumin;
 }
 .carousel-title {
-  position: fixed;
+  position: absolute;
   top: 0;
   height: 0;
+  max-width: 100%;
   z-index: 0;
+  left: 0;
 }
 .next-enter {
   opacity: 0;

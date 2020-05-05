@@ -29,7 +29,9 @@ export default {
     canScroll: {
       handler(e) {
         if (e) {
-          this.scroll = new Scrolly(this.$refs.appofficial);
+          this.$nextTick(() => {
+            this.scroll = new Scrolly(this.$refs.appofficial);
+          });
         }
       }
     }
@@ -76,6 +78,7 @@ img {
   /* margin-top: 60px; */
   overflow: hidden;
   height: 100vh;
+  position: relative;
 }
 p {
   color: white;

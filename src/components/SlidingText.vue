@@ -25,7 +25,7 @@ export default {
   props: {
     text: {
       type: String,
-      default: "work"
+      default: "work "
     }
   },
   data() {
@@ -143,8 +143,8 @@ h2 {
   color: white;
   font-family: $acumin;
   font-style: italic;
-  font-size: 60px;
-  font-weight: lighter;
+  font-size: 100px;
+  font-weight: bold;
   text-align: center;
   width: 100%;
   position: absolute;

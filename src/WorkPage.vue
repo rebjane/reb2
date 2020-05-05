@@ -1,10 +1,22 @@
 <template>
   <div ref="page" class="workpage">
-    <div class="scroll" ref="scroll">
-      <CarouselVertical @info="handleInfo" />
-    </div>
-    <CarouselTitle :info="info" />
-    <SlidingText class="title" :text="'work'" />
+    <!-- <div class="scroll" ref="scroll"> -->
+    <div class="line" :style="`transform: translateY(${fixedTitlePos}px) translateX(-50%); `" />
+
+    <CarouselVertical @info="handleInfo" />
+    <!-- </div> -->
+    <CarouselTitle
+      :info="info"
+      :style="`transform: translateY(${fixedTitlePos}px);`"
+      class="title"
+      :text="'work'"
+    />
+
+    <SlidingText
+      :style="`transform: translateY(${fixedTitlePos}px);`"
+      class="title"
+      :text="'work'"
+    />
 
     <!-- <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" /> -->
   </div>
@@ -17,6 +29,16 @@ import { mapState } from "vuex";
 
 export default {
   name: "Template",
+  watch: {
+    scroll: {
+      handler(e) {
+        if (e >= window.innerHeight) {
+          this.fixedTitlePos = e - window.innerHeight;
+          this.fixedCTitlePos = e - window.innerHeight;
+        }
+      }
+    }
+  },
   components: {
     // Scrollbar
   },
@@ -25,7 +47,8 @@ export default {
   },
   data() {
     return {
-      scroll: null,
+      fixedTitlePos: 0,
+      fixedCTitlePos: 0,
       info: {
         title: "default",
         date: "default",
@@ -34,7 +57,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
+    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen", "scroll"])
   },
   methods: {
     handleScrollBarFunction(scroll) {
@@ -57,7 +80,6 @@ export default {
 @import "./styles/stylesheet.scss";
 .workpage {
   padding-top: 100px;
-  // height: 100%;
 }
 p {
   color: white;
@@ -67,5 +89,15 @@ p {
   top: 0;
   z-index: 3;
   width: 100%;
+}
+.line {
+  position: absolute;
+  top: 50vh;
+  width: 100%;
+  border-bottom: 1px solid white;
+  opacity: 0.3;
+  z-index: -1;
+  width: 65%;
+  left: 50%;
 }
 </style>

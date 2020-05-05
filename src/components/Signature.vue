@@ -122,9 +122,9 @@ export default {
         wireframe: false,
         map: this.texture,
         side: THREE.DoubleSide,
-        opacity: 1,
-        specular: 0x050505,
-        shininess: 20
+        opacity: 1
+        // specular: 0x050505,
+        // shininess: 20
       });
       this.material.skinning = true;
       this.material.morphTargets = true;
