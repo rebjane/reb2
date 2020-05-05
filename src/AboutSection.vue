@@ -1,6 +1,6 @@
 <template>
   <div ref="about" class="about">
-    <div class="col col-1">
+    <div ref="imgCol" class="col col-1">
       <RippleImage v-if="reb" :img="reb" :resize="resizeObj" />
     </div>
     <div class="col col-2">
@@ -55,11 +55,15 @@ export default {
     return {
       reb: require("./assets/reb.jpg"),
       resizeObj: {
-        canvasWidth: this.$aboutImg.width,
-        canvasHeight: this.$aboutImg.height,
+        canvasWidth: this.getSize(this.$aboutImg.width, this.$aboutImg.height)
+          .width,
+        canvasHeight: this.getSize(this.$aboutImg.width, this.$aboutImg.height)
+          .height,
         scale: 1,
-        imgWidth: this.$aboutImg.width,
-        imgHeight: this.$aboutImg.height,
+        imgWidth: this.getSize(this.$aboutImg.width, this.$aboutImg.height)
+          .width,
+        imgHeight: this.getSize(this.$aboutImg.width, this.$aboutImg.height)
+          .height,
         canvasLeft: 0,
         canvasTop: 0
       },
@@ -72,20 +76,21 @@ export default {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen", "scroll"])
   },
   methods: {
-    async loadImg() {
-      var img = new Image();
-      img.src = this.reb;
-
-      // await img.onload(e => {
-      //   // var height = e.height;
-      //   // var width = e.width;
-      // });
+    getSize(width, height) {
+      var colWidth = Math.min(window.innerWidth / 2, 400);
+      var newHeight = (colWidth / width) * height;
+      var newWidth = colWidth;
+      return {
+        width: newWidth,
+        height: newHeight
+      };
     }
   },
   mounted() {
+    console.log(this.getSize(this.$aboutImg.width, this.$aboutImg.height));
+
     this.refTop =
       this.$refs.about.getBoundingClientRect().top - window.innerHeight / 2;
-    console.log(this.$aboutImg);
   }
 };
 </script>
