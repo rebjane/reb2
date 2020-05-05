@@ -2,20 +2,21 @@
 
 
 <template>
-  <div id="app" ref="appofficial">
-    <!-- <div class="home-main" v-if="signatureLoaded">
-    <HomeOverlay class="el" />-->
-    <div>
-      <div class="home">
-        <Signature class="el" />
-        <HomeOverlay @canScroll="canScroll = true" class="el" v-if="signatureLoaded" />
+  <div id="app-wrapper">
+    <div id="app" ref="appofficial">
+      <!-- <div class="home-main" v-if="signatureLoaded">
+      <HomeOverlay class="el" />-->
+      <div>
+        <div class="home">
+          <Signature class="el" />
+          <HomeOverlay @canScroll="canScroll = true" class="el" v-if="signatureLoaded" />
+        </div>
+        <AboutSection />
+        <!-- <WorkPage class="el" /> -->
       </div>
-      <AboutSection />
-      <!-- <WorkPage class="el" /> -->
+
+      <!-- </div> -->
     </div>
-
-    <!-- </div> -->
-
     <Scrollbar @scrollPos="handleScrollBarFunction" v-if="canScroll & !navOpen" />
   </div>
 </template>
@@ -31,7 +32,7 @@ export default {
       handler(e) {
         if (e) {
           this.$nextTick(() => {
-            this.scroll = new Scrolly(this.$refs.appofficial);
+            this.scroll = new Scrolly(document.getElementById("app"));
           });
         }
       }

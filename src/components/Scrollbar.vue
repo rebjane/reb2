@@ -69,7 +69,7 @@ export default {
   width: 10px;
   border-radius: 100px;
   opacity: 0.5;
-  background-color: white;
+  background-color: $bg;
 }
 .scroll {
   position: fixed;
@@ -78,6 +78,12 @@ export default {
   height: 100%;
   top: 0;
   opacity: 0.05;
-  background-color: white;
+  background-color: $bg;
+}
+.scrollbar-div {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
 }
 </style>

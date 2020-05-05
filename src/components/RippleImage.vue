@@ -20,7 +20,6 @@ export default {
   watch: {
     resize: {
       handler(obj) {
-        // console.log(obj.width);
         if (this.renderer) {
           this.renderer.resize(obj.canvasWidth, obj.canvasHeight);
           this.renderer.view.style = `transform: scale(${obj.scale}); transform-origin: top left; position:absolute; top: ${obj.canvasTop}px;left: ${obj.canvasLeft}px;`;
@@ -31,7 +30,7 @@ export default {
           this.image.width = obj.imgWidth;
         }
       },
-      immediate: true
+      deep: true
     }
   },
   computed: {
@@ -209,13 +208,7 @@ export default {
       this.toggleRipple = true;
       this.posX = e.clientX;
       this.posY = e.clientY;
-      // console.log(this.displacementSprite);
-      // console.log(this.posX);
-      this.ripples.push({
-        timeStart: performance.now(),
-        x: e.clientX,
-        y: e.clientY
-      });
+
       this.displacementSprite.scale.x = 0.5;
       this.displacementSprite.scale.y = 0.5;
     }

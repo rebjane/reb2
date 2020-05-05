@@ -4,9 +4,9 @@ import Index from "./Index.vue";
 import { loader } from "./loadComponents.js";
 import store from "./store.js";
 import router from "./router.js";
+import { imageLoader } from "./imageLoader.js";
 
 import { prismic } from "./prismic.js";
-
 Vue.prototype.$loadPct = (prog) => (prog / 2) * 100;
 Vue.prototype.$loaded = 0;
 
@@ -17,11 +17,29 @@ new Vue({
   render: (h) => h(Index),
 }).$mount("#app");
 
+async function LoadAllImages() {
+  //load all these images here!
+
+  return new Promise((res) => {
+    Promise.all([imageLoader.getObj(require("./assets/reb.jpg"))]).then(
+      (resolved) => {
+        Vue.prototype.$aboutImg = resolved[0];
+        // console.log(resolved[0]);
+        res(resolved);
+      }
+    );
+  });
+}
+
 preLoading();
 
 async function preLoading() {
-  Promise.all([loader.loadTheComponents(), prismic.fetchData()]).then(() => {
-    console.log("STOP looading anim here!");
+  Promise.all([
+    loader.loadTheComponents(),
+    prismic.fetchData(),
+    LoadAllImages(),
+  ]).then((res) => {
+    console.log("res", res);
     store.commit("setLoaded", true);
     // setTimeout(() => {
     //   store.commit("setLoaded", true);
