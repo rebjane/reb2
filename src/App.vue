@@ -8,10 +8,11 @@
       <HomeOverlay class="el" />-->
       <div>
         <div class="home">
-          <Signature class="el" />
+          <Signature class="sig" />
           <HomeOverlay @canScroll="canScroll = true" class="el" v-if="signatureLoaded" />
         </div>
         <AboutSection />
+        <BackgroundSection />
         <!-- <WorkPage class="el" /> -->
       </div>
 
@@ -72,7 +73,7 @@ img {
   height: 100%;
 }
 #app {
-  margin: 0 124px;
+  margin: 0 $pad;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -101,11 +102,15 @@ h6 {
 .intro {
   overflow: hidden;
 }
-.el {
+.el,
+.sig {
   position: relative;
 }
 .home {
   position: relative;
   height: 100vh;
+}
+.sig {
+  left: -$pad;
 }
 </style>

@@ -1,14 +1,28 @@
 <template>
   <div ref="about" class="about">
-    <div ref="imgCol" class="col col-1">
-      <RippleImage v-if="reb" :img="reb" :resize="resizeObj" />
+    <div ref="imgCol" :style="`height: ${newHeight}px;`" class="col col-1">
+      <RippleImage
+        :style="`transform: translateY(${parallaxTransform}px);`"
+        v-if="reb"
+        :img="reb"
+        :resize="resizeObj"
+      />
     </div>
     <div class="col col-2">
       <div class="horiz-line" />
       <p>My name’s Rebecca and I’m a:</p>
-      <h3 ref="des"></h3>
-      <h3 ref="ill"></h3>
-      <h3 ref="pop"></h3>
+      <h3 ref="des">
+        <router-link exact to="/work" class="wave-link" />
+      </h3>
+      <br />
+      <h3 ref="ill">
+        <router-link exact to="/work" class="wave-link" />
+      </h3>
+      <br />
+
+      <h3 ref="pop">
+        <router-link exact to="/work" class="wave-link" />
+      </h3>
     </div>
   </div>
 </template>
@@ -22,6 +36,7 @@ export default {
   watch: {
     scroll: {
       handler(e) {
+        this.transform();
         if (e >= this.refTop && !this.waveText) {
           let opts = [
             {
@@ -65,10 +80,14 @@ export default {
         imgHeight: this.getSize(this.$aboutImg.width, this.$aboutImg.height)
           .height,
         canvasLeft: 0,
-        canvasTop: 0
+        canvasTop: 0,
+        midPos: null
       },
       refTop: null,
-      waveText: false
+      waveText: false,
+      newHeight: this.getSize(this.$aboutImg.width, this.$aboutImg.height)
+        .height,
+      parallaxTransform: 0
     };
   },
   beforeDestroy() {},
@@ -76,8 +95,19 @@ export default {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen", "scroll"])
   },
   methods: {
+    getMidPos() {
+      var top = this.$refs.imgCol.getBoundingClientRect().top;
+      var height = this.$refs.imgCol.getBoundingClientRect().height;
+      this.midPos = Math.abs((window.innerHeight - height) / 2 - top);
+    },
+    transform() {
+      this.parallaxTransform = this.parallax(this.midPos, this.scroll);
+    },
+    parallax(midPos, scrollPos) {
+      return (midPos - scrollPos) * 0.7;
+    },
     getSize(width, height) {
-      var colWidth = Math.min(window.innerWidth / 2, 400);
+      var colWidth = Math.min(window.innerWidth / 2, 400); //that hundred value's sorta random for now
       var newHeight = (colWidth / width) * height;
       var newWidth = colWidth;
       return {
@@ -87,10 +117,11 @@ export default {
     }
   },
   mounted() {
-    console.log(this.getSize(this.$aboutImg.width, this.$aboutImg.height));
-
     this.refTop =
       this.$refs.about.getBoundingClientRect().top - window.innerHeight / 2;
+    this.$nextTick(() => {
+      this.getMidPos();
+    });
   }
 };
 </script>
@@ -112,8 +143,11 @@ p {
 h3 {
   font-family: $acumin;
   font-size: 60px;
-  margin: 0.5em 0;
+  margin: 0.25em 0;
   font-style: italic;
+  position: relative;
+  @include waveLink($bg);
+  display: inline-block;
 }
 .col {
   width: 50%;

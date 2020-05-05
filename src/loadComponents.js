@@ -15,6 +15,10 @@ class LoadComponents {
       Vue.component("Scrollbar", require("./components/Scrollbar.vue").default);
       Vue.component("WorkPage", require("./WorkPage.vue").default);
       Vue.component("AboutSection", require("./AboutSection.vue").default);
+      Vue.component(
+        "BackgroundSection",
+        require("./BackgroundSection.vue").default
+      );
 
       Vue.component(
         "CarouselTitle",
