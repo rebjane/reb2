@@ -1,13 +1,18 @@
 <template>
   <div class="sliding-text" :style="`transform: rotate(${rotateVal}deg);`">
     <div class="viewport" ref="viewport" :style="`height: ${spanHeight}px;`">
-      <h2 class="h2_0" id="h2_0" ref="h2_0" :style="`font-size: ${fs}px; height: ${spanHeight}px;`">
+      <h2
+        class="h2_0"
+        :id="`h2_0_${uniquekey}`"
+        ref="h2_0"
+        :style="`color: ${col}; font-size: ${fs}px; height: ${spanHeight}px;`"
+      >
         <span :id="`span_${i}`" :ref="`span_${i}`">{{text}}</span>
       </h2>
       <h2
-        :style="`font-size: ${fs}px; height: ${spanHeight}px; left: ${totalSpansWidth + (qty * 20)}px;`"
+        :style="`color: ${col}; font-size: ${fs}px; height: ${spanHeight}px; left: ${totalSpansWidth + (qty * 20)}px;`"
         class="h2_1"
-        id="h2_1"
+        :id="`h2_1_${uniquekey}`"
         ref="h2_1"
       >
         <span :id="`span_${i}`" :ref="`span_${i}`">{{text}}</span>
@@ -38,6 +43,14 @@ export default {
     rotate: {
       type: Number,
       default: 0
+    },
+    uniquekey: {
+      type: Number,
+      default: 0
+    },
+    col: {
+      type: String,
+      default: "white"
     }
   },
   data() {
@@ -70,7 +83,7 @@ export default {
       }
       //   console.log(this.totalSpansWidth);
       for (let i = 0; i < 2; i++) {
-        var el = document.getElementById(`h2_${i}`);
+        var el = document.getElementById(`h2_${i}_${this.uniquekey}`);
         this.slide(el, i);
       }
       //do rotation after all is calcualted, to prevent from messing up with it beforehand
@@ -156,7 +169,7 @@ h2 {
   overflow: visible;
 
   // color: white;
-  color: $bg;
+  // color: white;
   font-family: $acumin;
   font-style: italic;
   // font-size: 100px;

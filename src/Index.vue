@@ -13,14 +13,14 @@
     <CursorThing v-if="loaded" />
     <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
     <NavScreen v-if="navOpen" />
-    <div class="nav-curtains">
+    <!-- <div class="nav-curtains">
       <transition appear name="left" v-if="navOpen">
         <div class="leftpane" />
       </transition>
       <transition appear name="right" v-if="navOpen">
         <div class="rightpane" />
       </transition>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -91,36 +91,36 @@ export default {
   min-height: 100%;
 }
 
-.left-enter,
-.right-enter,
-.left-leave-to,
-.right-leave-to {
-  max-height: 0% !important;
-}
-.left-enter-active,
-.right-enter-active,
-.left-leave-active,
-.right-leave-active {
-  @include ease(max-height);
-}
-.right-enter-active,
-.right-leave-active {
-  transition-delay: 100ms;
-}
+// .left-enter,
+// .right-enter,
+// .left-leave-to,
+// .right-leave-to {
+//   max-height: 0% !important;
+// }
+// .left-enter-active,
+// .right-enter-active,
+// .left-leave-active,
+// .right-leave-active {
+//   @include ease(max-height);
+// }
+// .right-enter-active,
+// .right-leave-active {
+//   transition-delay: 100ms;
+// }
 
-.leftpane,
-.rightpane {
-  max-height: 100%;
-  background: $light;
-  height: 100%;
-  position: fixed;
-  width: 50%;
-  bottom: 0;
-  z-index: 2;
-}
-.rightpane {
-  right: 0;
-}
+// .leftpane,
+// .rightpane {
+//   max-height: 100%;
+//   background: $light;
+//   height: 100%;
+//   position: fixed;
+//   width: 50%;
+//   bottom: 0;
+//   z-index: 2;
+// }
+// .rightpane {
+//   right: 0;
+// }
 .title {
   position: fixed;
   top: 0;

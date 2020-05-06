@@ -92,6 +92,7 @@ export default {
   overflow: visible;
   height: 0%;
   width: 100%;
+  mix-blend-mode: difference;
 }
 .menu {
   position: fixed;
@@ -123,7 +124,7 @@ export default {
   max-height: 200px;
   margin-bottom: 2em;
   height: 200px;
-  border-right: 1px solid $bg;
+  border-right: 1px solid white;
 }
 .line-enter-active {
   @include ease(max-height);
@@ -141,7 +142,7 @@ export default {
   transform: translateY(0%);
   margin-right: 3em;
   margin-top: 2em;
-  color: $bg;
+  color: white;
 }
 .time-enter-active {
   @include ease(all);
@@ -169,6 +170,7 @@ p {
   top: 2em;
   a {
     font-family: $suisse;
+    color: white;
     padding-right: 4em;
   }
 }

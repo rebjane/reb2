@@ -59,6 +59,7 @@ export default {
 @import "../styles/stylesheet.scss";
 
 svg {
-  fill: $bg;
+  // fill: $bg;
+  fill: white;
 }
 </style>

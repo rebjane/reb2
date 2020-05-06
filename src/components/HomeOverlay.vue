@@ -141,7 +141,7 @@ h1 {
   margin: 0;
   margin-bottom: 20px;
   display: inline-block;
-  @include outline;
+  @include outline($bg);
 }
 .designer {
   // margin-top: 40px;

@@ -32,18 +32,28 @@ async function LoadAllImages() {
 }
 
 preLoading();
+async function loadingPct() {
+  return new Promise((res) => {
+    var loading = setInterval(() => {
+      if (store.state.loadPct === 99) {
+        clearInterval(loading);
+        res();
+      } else {
+        store.commit("setLoadPct", store.state.loadPct + 1);
+      }
+    }, 25);
+  });
+}
 
 async function preLoading() {
   Promise.all([
     loader.loadTheComponents(),
     prismic.fetchData(),
     LoadAllImages(),
+    loadingPct(),
   ]).then((res) => {
     console.log("res", res);
-    store.commit("setLoaded", true);
-    // setTimeout(() => {
-    //   store.commit("setLoaded", true);
-    // }, 500);
+    // store.commit("setLoaded", true);
   });
   // return new Promise((res) => {
   //   //chaining helps to keep track of thr loading progress, but isn't ideal for load time...

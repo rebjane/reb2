@@ -134,6 +134,7 @@ export default {
   position: relative;
   height: 100vh;
   // height: 100%;
+  margin: 0 $pad;
 }
 p {
   color: $bg;

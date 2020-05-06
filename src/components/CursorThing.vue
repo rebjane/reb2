@@ -55,6 +55,7 @@ export default {
   height: 100px;
   // background: white;
   border: 1px solid white;
+  mix-blend-mode: difference;
   // opacity: 0.2;
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);

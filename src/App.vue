@@ -73,7 +73,6 @@ img {
   height: 100%;
 }
 #app {
-  margin: 0 $pad;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -110,7 +109,7 @@ h6 {
   position: relative;
   height: 100vh;
 }
-.sig {
-  left: -$pad;
-}
+// .sig {
+//   left: -$pad;
+// }
 </style>
