@@ -5,14 +5,13 @@ import { GLTFLoader } from "../node_modules/three/examples/jsm/loaders/GLTFLoade
 class ThreeGLTFLoader {
   constructor() {}
   async loadGLTF(gltf) {
-    this.gltf = gltf;
     return new Promise((res) => {
+      this.gltf = gltf;
       var loader = new GLTFLoader();
 
       loader.load(this.gltf, (gltf) => {
-        console.log(gltf);
         Vue.prototype.$gltf = gltf;
-        res(gltf);
+        res(`gltf took ${performance.now()}`);
       });
     });
   }

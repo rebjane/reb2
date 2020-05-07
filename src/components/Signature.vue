@@ -4,10 +4,10 @@
 
 <script>
 import * as THREE from "../../node_modules/three/build/three.module.js";
-import { GLTFLoader } from "../../node_modules/three/examples/jsm/loaders/GLTFLoader.js";
+// import { GLTFLoader } from "../../node_modules/three/examples/jsm/loaders/GLTFLoader.js";
 import { AnimationMixer } from "../../node_modules/three/src/animation/AnimationMixer.js";
 
-import signature from "../assets/reb2.o-animated-BAKED.gltf";
+// import signature from "../assets/reb2.o-animated-BAKED.gltf";
 import texMap from "../assets/reb-gradient.jpg";
 import bumpmap from "../assets/frosted-glass-texture.jpg";
 import envmap from "../assets/studio-envMap.jpg";

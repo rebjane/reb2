@@ -36,30 +36,33 @@ async function LoadAllImages() {
 preLoading();
 async function loadingPct() {
   return new Promise((res) => {
-    var loading = setInterval(() => {
+    var loading = setInterval(async () => {
       if (store.state.loadPct === 99) {
         clearInterval(loading);
         res();
       } else {
         store.commit("setLoadPct", store.state.loadPct + 1);
       }
-    }, 25);
+    }, 20);
   });
 }
 
 async function preLoading() {
-  Promise.all([
-    loader.loadTheComponents(),
-    prismic.fetchData(),
-    LoadAllImages(),
-    threeLoader.loadGLTF(signature),
-    loadingPct(),
-  ]).then((res) => {
-    console.log("res", res);
-    setTimeout(() => {
-      store.commit("setLoaded", true);
-    }, 800); //to allow for loading to transition out
+  await threeLoader.loadGLTF(signature).then(() => {
+    store.commit("setLoadedGLTFs", true);
+    Promise.all([
+      loadingPct(),
+      loader.loadTheComponents(),
+      prismic.fetchData(),
+      LoadAllImages(),
+    ]).then((res) => {
+      console.log("res", res);
+      setTimeout(() => {
+        store.commit("setLoaded", true);
+      }, 800); //to allow for loading to transition out
+    });
   });
+
   // return new Promise((res) => {
   //   //chaining helps to keep track of thr loading progress, but isn't ideal for load time...
   //   loader

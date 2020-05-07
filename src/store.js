@@ -13,6 +13,7 @@ export default new Vuex.Store({
     scrollBarHeight: 0,
     scrollBarPos: 0,
     scrollForce: 0,
+    gltfsLoaded: false,
   },
 
   mutations: {
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     setScrollForce(state, scrollForce) {
       Vue.set(state, "scrollForce", scrollForce);
     },
+    setLoadedGLTFs(state, gltfsLoaded) {
+      Vue.set(state, "gltfsLoaded", gltfsLoaded);
+    },
   },
 
   actions: {
@@ -66,6 +70,9 @@ export default new Vuex.Store({
     },
     setScrollForce(context, scrollForce) {
       context.commit("scrollForce", scrollForce);
+    },
+    setLoadedGLTFs(context, gltfsLoaded) {
+      context.commit("gltfsLoaded", gltfsLoaded);
     },
   },
 });

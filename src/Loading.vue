@@ -8,10 +8,15 @@
       </div>
       <div class="pct-eyes">{{`${pct[0]} ${pct[1]}`}}</div>
     </div>
-    <div :class="`cover bottom ${slideOut ? 'bottom-out' : null}`">
-      <SlidingText col="white" :uniquekey="0" :rotate="90" class="loading zero" text="LOADING" />
-      <SlidingText col="white" :uniquekey="1" :rotate="90" class="loading one" text="LOADING" />
-      <SlidingText col="white" :uniquekey="2" :rotate="90" class="loading two" text="LOADING" />
+    <div
+      :class="`cover bottom ${showSlidingText ? 'slidetext' : null} ${slideOut ? 'bottom-out' : null}`"
+    >
+      <div class="sliding-texts">
+        <SlidingText col="white" :uniquekey="0" :rotate="90" class="loading zero" text="LOADING" />
+        <SlidingText col="white" :uniquekey="1" :rotate="90" class="loading one" text="LOADING" />
+        <SlidingText col="white" :uniquekey="2" :rotate="90" class="loading two" text="LOADING" />
+      </div>
+
       <SmileMouth class="smile" />
     </div>
   </div>
@@ -27,6 +32,11 @@ import { mapState } from "vuex";
 
 export default {
   watch: {
+    gltfsLoaded() {
+      if (this.gltfsLoaded) {
+        this.showSlidingText = true;
+      }
+    },
     loadPct: {
       handler(e) {
         if (e.toString().split("").length === 1) {
@@ -53,11 +63,12 @@ export default {
   data() {
     return {
       pct: [0, 0],
-      slideOut: false
+      slideOut: false,
+      showSlidingText: false
     };
   },
   computed: {
-    ...mapState(["loadPct"])
+    ...mapState(["loadPct", "gltfsLoaded"])
   },
   methods: {},
   mounted() {
@@ -76,6 +87,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
+
 .loading-component {
   position: absolute;
   height: 100%;
@@ -109,7 +121,11 @@ export default {
 
 .bottom {
   transform: translateY(0%);
-  @include ease(transform);
+  padding-top: 50%;
+  @include ease(all);
+}
+.slidetext {
+  padding-top: 0%;
 }
 .bottom-out {
   transform: translateY(100%);
@@ -117,9 +133,10 @@ export default {
 .loading {
   position: absolute;
   z-index: 2;
-  width: 100%;
   bottom: 0;
   mix-blend-mode: difference;
+  transform: translateX(-100%);
+  width: 100%;
 }
 .one {
   padding: 0;
