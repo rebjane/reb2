@@ -5,6 +5,8 @@ import { loader } from "./loadComponents.js";
 import store from "./store.js";
 import router from "./router.js";
 import { imageLoader } from "./imageLoader.js";
+import { threeLoader } from "./threeLoader.js";
+import signature from "./assets/reb2.o-animated-BAKED.gltf";
 
 import { prismic } from "./prismic.js";
 Vue.prototype.$loadPct = (prog) => (prog / 2) * 100;
@@ -50,10 +52,13 @@ async function preLoading() {
     loader.loadTheComponents(),
     prismic.fetchData(),
     LoadAllImages(),
+    threeLoader.loadGLTF(signature),
     loadingPct(),
   ]).then((res) => {
     console.log("res", res);
-    // store.commit("setLoaded", true);
+    setTimeout(() => {
+      store.commit("setLoaded", true);
+    }, 800); //to allow for loading to transition out
   });
   // return new Promise((res) => {
   //   //chaining helps to keep track of thr loading progress, but isn't ideal for load time...

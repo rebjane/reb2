@@ -1,6 +1,5 @@
 <template>
   <div id="index" ref="app">
-    <Loading v-if="!loaded" />
     <keep-alive>
       <!-- v-on:beforeEnter="beforeEnter"
         v-on:enter="enter"
@@ -9,6 +8,8 @@
         <router-view class="view" />
       </transition>
     </keep-alive>
+    <!-- <Loading v-if="!loaded" /> -->
+    <Loading v-if="!loaded" />
 
     <CursorThing v-if="loaded" />
     <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
@@ -20,7 +21,7 @@
       <transition appear name="right" v-if="navOpen">
         <div class="rightpane" />
       </transition>
-    </div> -->
+    </div>-->
   </div>
 </template>
 

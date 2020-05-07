@@ -1,6 +1,6 @@
 var PrismicDOM = require("prismic-dom");
 import Vue from "vue";
-import store from "./store.js";
+// import store from "./store.js";
 
 class Prismic {
   constructor() {

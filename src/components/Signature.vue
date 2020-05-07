@@ -130,64 +130,64 @@ export default {
       this.material.morphTargets = true;
     },
     gltf() {
-      var loader = new GLTFLoader();
+      var gltf = this.$gltf;
+      // var loader = new GLTFLoader();
 
-      loader.load(
-        signature,
-        gltf => {
-          //set material properties
-          gltf.scene.traverse(e => {
-            if (e.isMesh) {
-              e.material = this.material;
-              e.material.map.repeat.set(2, 4);
-              e.material.map.wrapS = THREE.RepeatWrapping;
-              e.material.map.wrapT = THREE.RepeatWrapping;
-              e.material.bumpMap = this.bumpMap;
-              e.material.roughnessMap = this.bumpMap;
-              e.material.bumpScale = 0.1;
-              e.material.metalness = 0.7;
-              e.material.roughness = 0.2;
-              e.receiveShadow = true;
-            }
-          });
-
-          //initialize animation
-          var mixer = new AnimationMixer(gltf.scene);
-          gltf.scene.castShadow = true;
-          gltf.scene.children[0].castShadow = true;
-          gltf.scene.children[0].receiveShadow = true;
-
-          gltf.scene.receiveShadow = true;
-          gltf.animations.forEach(clip => {
-            var action = mixer.clipAction(clip);
-            action.setLoop(THREE.LoopOnce);
-            action.play();
-          });
-          gltf.scene.name = "Signature";
-          // console.log(gltf.scene.children[0].children[0]);
-          this.scene.add(gltf.scene);
-          //gltf positioning to center of screen
-          gltf.scene.position.z = 1;
-          gltf.scene.position.y = -0.25;
-          gltf.scene.scale.set(0.85, 0.85, 0.5);
-          this.objs.push({ gltf, mixer });
-          this.signature = gltf.scene.children[0].children;
-          // this.allChildren.push(gltf.scene.children[0].children[0]);
-
-          //when signature finishes animating
-          mixer.addEventListener("finished", () => {
-            this.animFinished = true;
-            this.mouseListener();
-            cancelAnimationFrame(this.animate);
-            this.$store.commit("setSignatureLoaded", true);
-          });
-        },
-        () => {}, //callback for the loading
-        error => {
-          // called when loading has errors
-          console.error("An error happened", error);
+      // loader.load(
+      //   signature,
+      //   gltf => {
+      //set material properties
+      gltf.scene.traverse(e => {
+        if (e.isMesh) {
+          e.material = this.material;
+          e.material.map.repeat.set(2, 4);
+          e.material.map.wrapS = THREE.RepeatWrapping;
+          e.material.map.wrapT = THREE.RepeatWrapping;
+          e.material.bumpMap = this.bumpMap;
+          e.material.roughnessMap = this.bumpMap;
+          e.material.bumpScale = 0.1;
+          e.material.metalness = 0.7;
+          e.material.roughness = 0.2;
+          e.receiveShadow = true;
         }
-      );
+      });
+
+      //initialize animation
+      var mixer = new AnimationMixer(gltf.scene);
+      gltf.scene.castShadow = true;
+      gltf.scene.children[0].castShadow = true;
+      gltf.scene.children[0].receiveShadow = true;
+
+      gltf.scene.receiveShadow = true;
+      gltf.animations.forEach(clip => {
+        var action = mixer.clipAction(clip);
+        action.setLoop(THREE.LoopOnce);
+        action.play();
+      });
+      // console.log(gltf.scene.children[0].children[0]);
+      this.scene.add(gltf.scene);
+      //gltf positioning to center of screen
+      gltf.scene.position.z = 1;
+      gltf.scene.position.y = -0.25;
+      gltf.scene.scale.set(0.85, 0.85, 0.5);
+      this.objs.push({ gltf, mixer });
+      this.signature = gltf.scene.children[0].children;
+      // this.allChildren.push(gltf.scene.children[0].children[0]);
+
+      //when signature finishes animating
+      mixer.addEventListener("finished", () => {
+        this.animFinished = true;
+        this.mouseListener();
+        cancelAnimationFrame(this.animate);
+        this.$store.commit("setSignatureLoaded", true);
+      });
+      // },
+      // () => {}, //callback for the loading
+      // error => {
+      //   // called when loading has errors
+      //   console.error("An error happened", error);
+      // }
+      // );
     },
 
     animate() {
@@ -242,6 +242,6 @@ export default {
 <style lang="scss" scoped>
 .signature {
   // filter: grayscale(100%);
-  // opacity: 0.3;
+  opacity: 0.3;
 }
 </style>
