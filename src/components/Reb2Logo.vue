@@ -7,6 +7,7 @@
       xmlns:xlink="http://www.w3.org/1999/xlink"
       x="0px"
       y="0px"
+      :fill="fill"
       viewBox="0 0 453.2 427.5"
       style="enable-background:new 0 0 453.2 427.5;"
       xml:space="preserve"
@@ -44,7 +45,11 @@
 export default {
   name: "Template",
   props: {
-    msg: String
+    msg: String,
+    fill: {
+      type: String,
+      default: "white"
+    }
   },
   data() {
     return {};
@@ -57,9 +62,4 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
-
-svg {
-  // fill: $bg;
-  fill: white;
-}
 </style>

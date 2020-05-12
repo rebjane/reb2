@@ -22,6 +22,7 @@ export default {
       handler(obj) {
         if (this.renderer) {
           this.renderer.resize(obj.canvasWidth, obj.canvasHeight);
+          // console.log("obj", obj);
           this.renderer.view.style = `transform: scale(${obj.scale}); transform-origin: top left; position:absolute; top: ${obj.canvasTop}px;left: ${obj.canvasLeft}px;`;
           // obj.canvasLeft
         }
@@ -30,7 +31,8 @@ export default {
           this.image.width = obj.imgWidth;
         }
       },
-      deep: true
+      deep: true,
+      immediate: true
     }
   },
   computed: {

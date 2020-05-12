@@ -16,6 +16,11 @@ class LoadComponents {
       Vue.component("WorkPage", require("./WorkPage.vue").default);
       Vue.component("AboutSection", require("./AboutSection.vue").default);
       Vue.component("IntroSection", require("./IntroSection.vue").default);
+      Vue.component("Smiley", require("./components/Smiley.vue").default);
+      Vue.component(
+        "ParallaxImage",
+        require("./components/ParallaxImage.vue").default
+      );
 
       Vue.component(
         "BackgroundSection",

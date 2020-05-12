@@ -122,7 +122,7 @@ export default {
   pointer-events: none;
 }
 .viewport {
-  width: 65%;
+  width: 100%;
   overflow: hidden;
   position: relative;
 

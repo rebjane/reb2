@@ -13,12 +13,19 @@
         <!-- v-if="signatureLoaded" -->
         <!-- </div> -->
         <!-- <div class="work"> -->
-        <IntroSection />
+        <IntroSection @canScroll="canScroll =  true" />
+        <SlidingText
+          :uniquekey="3"
+          col="black"
+          class="slidingtext"
+          :text="'DESIGNER. ILLUSTRATOR. POPCORN-LOVER. | '"
+        />
         <WorkPage />
         <!-- </div> -->
 
-        <AboutSection />
         <BackgroundSection />
+        <!-- <AboutSection /> -->
+
         <!-- <WorkPage class="el" /> -->
       </div>
 
@@ -35,15 +42,15 @@ import { mapState } from "vuex";
 export default {
   name: "Index",
   watch: {
-    // canScroll: {
-    //   handler(e) {
-    //     if (e) {
-    //       this.$nextTick(() => {
-    //         this.scroll = new Scrolly(document.getElementById("app"));
-    //       });
-    //     }
-    //   }
-    // }
+    canScroll: {
+      handler(e) {
+        if (e) {
+          this.$nextTick(() => {
+            this.scroll = new Scrolly(document.getElementById("app"));
+          });
+        }
+      }
+    }
   },
   beforeMounted() {},
   components: {
@@ -53,8 +60,9 @@ export default {
     return {
       time: 0,
       scroll: null,
-      // canScroll: false
-      canScroll: true
+      canScroll: false,
+      rebImg: require("./assets/reb.jpg")
+      // canScroll: true
     };
   },
   computed: {
@@ -66,7 +74,7 @@ export default {
     }
   },
   mounted() {
-    this.scroll = new Scrolly(document.getElementById("app"));
+    // this.scroll = new Scrolly(document.getElementById("app"));
   }
 };
 </script>
@@ -80,6 +88,12 @@ export default {
 img {
   width: 100%;
   height: 100%;
+}
+.slidingtext {
+  width: 100vw;
+  border-top: 1px solid $bg;
+  border-bottom: 1px solid $bg;
+  padding-bottom: 1em;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
