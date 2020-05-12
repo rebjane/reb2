@@ -12,7 +12,8 @@
     <Loading v-if="!loaded" />
 
     <CursorThing v-if="loaded" />
-    <NavMenu v-if="showNav && loaded || loaded && signatureLoaded" />
+    <NavMenu v-if="showNav && loaded || loaded " />
+    <!-- && signatureLoaded -->
     <NavScreen v-if="navOpen" />
     <!-- <div class="nav-curtains">
       <transition appear name="left" v-if="navOpen">

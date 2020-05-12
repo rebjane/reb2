@@ -58,7 +58,7 @@ export default {
           width: 981, // i expect these values to come with prismic automatically
           height: 736,
           title: "Raptors",
-          date: "0.ss"
+          date: "Jan. 5, 2019"
         },
         {
           url:
@@ -66,15 +66,7 @@ export default {
           width: 981, // i expect these values to come with prismic automatically
           height: 736,
           title: "Raptors2",
-          date: "0.ss"
-        },
-        {
-          url:
-            "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-          width: 981, // i expect these values to come with prismic automatically
-          height: 736,
-          title: "Raptors3",
-          date: "0.ss"
+          date: "Mar. 5, 2020"
         }
       ]
     };
@@ -183,7 +175,8 @@ export default {
     // });
     this.$emit("info", {
       title: this.items[0].title,
-      date: this.items[0].date
+      date: this.items[0].date,
+      key: 0
     });
     window.addEventListener("resize", this.imageSizing);
   }

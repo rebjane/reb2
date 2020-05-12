@@ -1,7 +1,7 @@
 <template>
   <div ref="page" class="workpage">
     <!-- <div class="scroll" ref="scroll"> -->
-    <div class="line" :style="`transform: translateY(${fixedTitlePos}px) translateX(-50%); `" />
+    <!-- <div class="line" :style="`transform: translateY(${fixedTitlePos}px) translateX(-50%); `" /> -->
 
     <CarouselVertical @info="handleInfo" />
     <!-- </div> -->
@@ -32,9 +32,9 @@ export default {
   watch: {
     scroll: {
       handler(e) {
-        if (e >= window.innerHeight) {
-          this.fixedTitlePos = e - window.innerHeight;
-          this.fixedCTitlePos = e - window.innerHeight;
+        if (this.scroll >= this.topPos && this.scroll <= this.bottomPos) {
+          this.fixedTitlePos = e - this.topPos;
+          this.fixedCTitlePos = e - this.topPos;
         }
       }
     }
@@ -49,6 +49,8 @@ export default {
     return {
       fixedTitlePos: 0,
       fixedCTitlePos: 0,
+      topPos: null,
+      bottomPos: null,
       info: {
         title: "default",
         date: "default",
@@ -68,6 +70,10 @@ export default {
     }
   },
   mounted() {
+    this.topPos = this.$refs.page.getBoundingClientRect().top;
+    this.bottomPos =
+      this.$refs.page.getBoundingClientRect().bottom - window.innerHeight;
+
     // this.$nextTick(() => {
     //   this.scroll = new Scrolly(this.$refs.page);
     // });
@@ -80,6 +86,8 @@ export default {
 @import "./styles/stylesheet.scss";
 .workpage {
   padding-top: 100px;
+  position: relative;
+  height: 100%;
 }
 p {
   color: white;
@@ -89,12 +97,13 @@ p {
   top: 0;
   z-index: 3;
   width: 100%;
+  // mix-blend-mode: difference;
 }
 .line {
   position: absolute;
   top: 50vh;
   width: 100%;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid $bg;
   opacity: 0.3;
   z-index: -1;
   width: 65%;

@@ -5,13 +5,14 @@ $acumin: "Acumin Pro Wide";
 $suisse: "Suisse Works";
 $acit: "Acumin Pro Wide Italic";
 $bg: #161616;
+$lbg: #e5e5e5;
 $light: #f2e3e3;
 $pad: 124px;
 @mixin outline($col) {
   color: $col;
   // -webkit-text-fill-color: white; /* Will override color (regardless of order) */
   color: transparent;
-  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: $col;
 }
 @mixin ease($what) {

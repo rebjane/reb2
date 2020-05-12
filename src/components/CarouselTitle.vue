@@ -35,11 +35,14 @@ export default {
 @import "../styles/stylesheet.scss";
 .title {
   position: absolute;
-  top: 50vh;
-  transform: translateY(-100%);
-  left: 3em;
+  top: 40vh;
+  transform: translateY(-100%) translateX(-50%);
+  left: 50%;
+  color: $bg;
+  font-family: $suisse;
+  font-size: 3em;
   color: white;
-  font-family: $acumin;
+  // @include outline(white);
 }
 // .line {
 //   position: fixed;
@@ -51,12 +54,15 @@ export default {
 // }
 .date {
   position: absolute;
-  top: 50vh;
-  transform: translateY(-100%);
-  right: 3em;
+  top: 60vh;
+  transform: translateY(-100%) translateX(-50%);
+  // @include outline(white);
   color: white;
+  // right: 3em;
+  left: 50%;
   opacity: 1;
-  font-family: $acumin;
+  font-family: $suisse;
+  font-size: 1em;
 }
 .carousel-title {
   position: absolute;
@@ -64,24 +70,25 @@ export default {
   height: 0;
   max-width: 100%;
   z-index: 0;
+  // mix-blend-mode: difference;
   left: 0;
 }
 .next-enter {
   opacity: 0;
-  transform: translateY(0%);
+  transform: translateY(0%) translateX(-50%);
 }
 .next-enter-active {
   @include ease(all);
 }
 .next-enter-to {
   opacity: 1;
-  transform: translateY(-100%);
+  transform: translateY(-100%) translateX(-50%);
 }
 .next-leave-active {
   @include ease(all);
 }
 .next-leave-to {
   opacity: 0;
-  transform: translateY(-200%);
+  transform: translateY(-200%) translateX(-50%);
 }
 </style>

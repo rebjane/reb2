@@ -62,15 +62,4 @@ async function preLoading() {
       }, 800); //to allow for loading to transition out
     });
   });
-
-  // return new Promise((res) => {
-  //   //chaining helps to keep track of thr loading progress, but isn't ideal for load time...
-  //   loader
-  //     .loadTheComponents()
-  //     .then(() => prismic.fetchData())
-  //     .then(() => {
-  //       store.commit("setLoaded", 100);
-  //       res();
-  //     });
-  // });
 }

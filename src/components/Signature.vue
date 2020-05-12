@@ -198,10 +198,10 @@ export default {
       // if (this.animFinished) {
       //   this.intersecting();
       // }
-      // this.lerpMove();
-      if (!this.animFinished) {
-        requestAnimationFrame(this.animate);
-      }
+      this.lerpMove();
+      // if (!this.animFinished) {
+      requestAnimationFrame(this.animate);
+      // }
     },
     lerpMove() {
       var limit = 0.4; //how far out the signature can move

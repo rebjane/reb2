@@ -7,10 +7,16 @@
       <!-- <div class="home-main" v-if="signatureLoaded">
       <HomeOverlay class="el" />-->
       <div>
-        <div class="home">
-          <Signature class="sig" />
-          <HomeOverlay @canScroll="canScroll = true" class="el" v-if="signatureLoaded" />
-        </div>
+        <!-- <div class="home"> -->
+        <!-- <Signature class="sig" /> -->
+        <!-- <HomeOverlay @canScroll="canScroll = true" class="el" /> -->
+        <!-- v-if="signatureLoaded" -->
+        <!-- </div> -->
+        <!-- <div class="work"> -->
+        <IntroSection />
+        <WorkPage />
+        <!-- </div> -->
+
         <AboutSection />
         <BackgroundSection />
         <!-- <WorkPage class="el" /> -->
@@ -29,15 +35,15 @@ import { mapState } from "vuex";
 export default {
   name: "Index",
   watch: {
-    canScroll: {
-      handler(e) {
-        if (e) {
-          this.$nextTick(() => {
-            this.scroll = new Scrolly(document.getElementById("app"));
-          });
-        }
-      }
-    }
+    // canScroll: {
+    //   handler(e) {
+    //     if (e) {
+    //       this.$nextTick(() => {
+    //         this.scroll = new Scrolly(document.getElementById("app"));
+    //       });
+    //     }
+    //   }
+    // }
   },
   beforeMounted() {},
   components: {
@@ -47,7 +53,8 @@ export default {
     return {
       time: 0,
       scroll: null,
-      canScroll: false
+      // canScroll: false
+      canScroll: true
     };
   },
   computed: {
@@ -58,7 +65,9 @@ export default {
       this.scroll.scrollFromScrollBar(scroll);
     }
   },
-  mounted() {}
+  mounted() {
+    this.scroll = new Scrolly(document.getElementById("app"));
+  }
 };
 </script>
 
@@ -79,8 +88,9 @@ img {
   text-align: center;
   color: #2c3e50;
   /* margin-top: 60px; */
+  background: $lbg;
   overflow: hidden;
-  height: 100vh;
+  height: 100%;
   position: relative;
 }
 p {
@@ -112,4 +122,8 @@ h6 {
 // .sig {
 //   left: -$pad;
 // }
+.work {
+  position: relative;
+  height: 100%;
+}
 </style>

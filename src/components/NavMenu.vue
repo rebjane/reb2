@@ -1,30 +1,43 @@
 <template>
   <div class="nav">
-    <router-link exact to="/">
+    <!-- <router-link exact to="/">
       <Reb2Logo class="logo" />
-    </router-link>
-    <div class="side-title">
-      <SlidingText :rotate="270" :speed="50" :fs="14" :text="'work'" />
-    </div>
+    </router-link>-->
+    <!-- <div class="side-title">
+      <SlidingText :rotate="270" :speed="50" :fs="20" :text="'work'" />
+    </div>-->
     <!-- <Hamburger class="menu" @click.native="toggleNav" /> -->
-    <div class="main-menu">
-      <span>
-        <a>about</a>
-      </span>
-      <span>
-        <a>work</a>
-      </span>
-      <span>
-        <a>contact</a>
-      </span>
+    <div class="main-menu-wrapper">
+      <p class="rebecca">
+        <!-- Rebecca
+        <br />Jane-->
+        <router-link exact to="/">
+          <Reb2Logo />
+        </router-link>
+      </p>
+      <div class="main-menu">
+        <span>
+          <a>about</a>
+        </span>
+        <span>
+          <a>work</a>
+        </span>
+        <span>
+          <a>contact</a>
+        </span>
+      </div>
     </div>
+
+    <!-- <transition appear v-if="time.timeString" name="time">
+        <span class="time">{{ time.timeString }}</span>
+    </transition>-->
     <!-- <transition v-if="signatureLoaded"> -->
     <transition appear v-if="time.timeString" name="time">
       <p class="time">{{ time.timeString }}</p>
     </transition>
-    <transition appear name="line">
+    <!-- <transition appear name="line">
       <div class="line" />
-    </transition>
+    </transition>-->
     <!-- <transition appear name="bottom">
       <p class="bottom-text">Developed with love by myself.</p>
     </transition>-->
@@ -135,14 +148,14 @@ export default {
 
 .time {
   position: fixed;
-  top: 0;
+  top: 50%;
+  transform: translateY(-50%);
   right: 0;
   z-index: 2;
   opacity: 1;
-  transform: translateY(0%);
-  margin-right: 3em;
-  margin-top: 2em;
+  margin-right: 2em;
   color: white;
+  writing-mode: vertical-lr;
 }
 .time-enter-active {
   @include ease(all);
@@ -163,15 +176,43 @@ p {
   overflow: hidden;
   font-size: 14px;
 }
-.main-menu {
+.main-menu-wrapper {
   position: fixed;
-  top: 0;
-  left: 20%;
-  top: 2em;
-  a {
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  overflow: visible;
+  margin-left: 1em;
+  .rebecca {
+    text-align: center;
     font-family: $suisse;
     color: white;
-    padding-right: 4em;
+    font-size: 12px;
+    padding-bottom: 1em;
+    border-bottom: 1px solid white;
+    width: 4em;
+  }
+  .main-menu {
+    transform: rotate(-180deg);
+    transform-origin: center;
+    writing-mode: vertical-lr;
+
+    // left: 20%;
+    margin: auto;
+    span {
+      font-family: $acumin;
+      color: white;
+      padding-bottom: 2em;
+      font-size: 10px;
+      cursor: pointer;
+      &:last-child {
+        padding-bottom: 1em;
+      }
+    }
+    // span:last-child {
+    //   padding-left: 4em;
+    //   color: #494949;
+    // }
   }
 }
 </style>
