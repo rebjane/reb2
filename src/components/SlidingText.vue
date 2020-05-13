@@ -1,21 +1,24 @@
 <template>
-  <div class="sliding-text" :style="`transform: rotate(${rotateVal}deg);`">
+  <div
+    :class="`sliding-text ${isBanner ? 'is_banner' : null}`"
+    :style="`transform: rotate(${rotateVal}deg); width: ${isFullWidth ? '100vw' : '100%'};`"
+  >
     <div class="viewport" ref="viewport" :style="`height: ${spanHeight}px;`">
       <h2
         class="h2_0"
-        :id="`h2_0_${uniquekey}`"
+        :id="`h2_0_${key}`"
         ref="h2_0"
-        :style="`color: ${col}; font-size: ${fs}px; height: ${spanHeight}px;`"
+        :style="`color: ${color}; font-size: ${fs}px; height: ${spanHeight}px;`"
       >
-        <span :id="`span_${i}`" :ref="`span_${i}`">{{text}}</span>
+        <span :id="`span_${i}`" :ref="`span_${i}`">{{mainText}}</span>
       </h2>
       <h2
-        :style="`color: ${col}; font-size: ${fs}px; height: ${spanHeight}px; left: ${totalSpansWidth + (qty * 20)}px;`"
+        :style="`color: ${color}; font-size: ${fs}px; height: ${spanHeight}px; left: ${totalSpansWidth + (qty * 20)}px;`"
         class="h2_1"
-        :id="`h2_1_${uniquekey}`"
+        :id="`h2_1_${key}`"
         ref="h2_1"
       >
-        <span :id="`span_${i}`" :ref="`span_${i}`">{{text}}</span>
+        <span :id="`span_${i}`" :ref="`span_${i}`">{{mainText}}</span>
       </h2>
     </div>
   </div>
@@ -25,12 +28,32 @@
 import { TimelineMax, Linear } from "gsap";
 
 export default {
-  name: "Template",
+  watch: {
+    data: {
+      handler(e) {
+        if (e) {
+          this.color = e.items[0].color;
+          this.key = e.items[0].key;
+          this.mainText = this.$cms.textField(e.items[0].text);
+          this.isFullWidth = e.items[0].is_full_width;
+          this.isBanner = e.items[0].is_banner;
+          console.log(this.key);
+        }
+      },
+      deep: true,
+      immediate: true
+    }
+  },
+  name: "SlidingText",
 
   props: {
+    data: {
+      type: Object,
+      default: null
+    },
     text: {
       type: String,
-      default: "work "
+      default: "work"
     },
     fs: {
       type: Number,
@@ -63,7 +86,12 @@ export default {
       i: 0,
       timelines: [],
       totalSpansWidth: 0,
-      rotateVal: 0
+      rotateVal: 0,
+      color: this.col,
+      key: this.uniquekey,
+      mainText: this.text,
+      isFullWidth: false,
+      isBanner: false
     };
   },
   methods: {
@@ -76,14 +104,14 @@ export default {
       for (let i = 1; i < this.qty; i++) {
         this.$refs.h2_0.innerHTML += `<span id="span_${i}" style="position: absolute;left: ${i *
           this.spanWidth +
-          i * 20}px;">${this.text} </span>`;
+          i * 20}px;">${this.mainText} </span>`;
         this.$refs.h2_1.innerHTML += `<span id="span_${i}" style="position: absolute;left: ${i *
           this.spanWidth +
-          i * 20}px;">${this.text} </span>`;
+          i * 20}px;">${this.mainText} </span>`;
       }
       //   console.log(this.totalSpansWidth);
       for (let i = 0; i < 2; i++) {
-        var el = document.getElementById(`h2_${i}_${this.uniquekey}`);
+        var el = document.getElementById(`h2_${i}_${this.key}`);
         this.slide(el, i);
       }
       //do rotation after all is calcualted, to prevent from messing up with it beforehand
@@ -162,6 +190,11 @@ export default {
   //     rgba(22, 22, 22, 0) 18%
   //   );
   // }
+}
+.is_banner {
+  border-top: 1px solid $bg;
+  border-bottom: 1px solid $bg;
+  padding-bottom: 1em;
 }
 h2 {
   display: inline-block;

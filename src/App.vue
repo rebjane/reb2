@@ -13,13 +13,15 @@
         <!-- v-if="signatureLoaded" -->
         <!-- </div> -->
         <!-- <div class="work"> -->
-        <IntroSection @canScroll="canScroll =  true" />
-        <SlidingText
+        <transition v-for="(item , i) in $home" :key="i">
+          <component :is="item.slice_type" :data="item" />
+        </transition>
+        <!-- <SlidingText
           :uniquekey="3"
           col="black"
           class="slidingtext"
           :text="'DESIGNER. ILLUSTRATOR. POPCORN-LOVER. | '"
-        />
+        />-->
         <WorkPage />
         <!-- </div> -->
 
@@ -31,7 +33,7 @@
 
       <!-- </div> -->
     </div>
-    <Scrollbar @scrollPos="handleScrollBarFunction" v-if="canScroll & !navOpen" />
+    <Scrollbar @scrollPos="handleScrollBarFunction" v-if="scrollAllowed & !navOpen" />
   </div>
 </template>
 
@@ -42,7 +44,7 @@ import { mapState } from "vuex";
 export default {
   name: "Index",
   watch: {
-    canScroll: {
+    scrollAllowed: {
       handler(e) {
         if (e) {
           this.$nextTick(() => {
@@ -50,7 +52,9 @@ export default {
           });
         }
       }
-    }
+    },
+    deep: true,
+    immediate: true
   },
   beforeMounted() {},
   components: {
@@ -60,13 +64,12 @@ export default {
     return {
       time: 0,
       scroll: null,
-      canScroll: false,
       rebImg: require("./assets/reb.jpg")
       // canScroll: true
     };
   },
   computed: {
-    ...mapState(["signatureLoaded", "navOpen"])
+    ...mapState(["signatureLoaded", "navOpen", "scrollAllowed"])
   },
   methods: {
     handleScrollBarFunction(scroll) {
@@ -91,9 +94,6 @@ img {
 }
 .slidingtext {
   width: 100vw;
-  border-top: 1px solid $bg;
-  border-bottom: 1px solid $bg;
-  padding-bottom: 1em;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

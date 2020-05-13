@@ -15,21 +15,31 @@ class Prismic {
           return api.query("");
         })
         .then((response) => {
-          this.data = response.results[0].data.body;
+          this.data = response.results;
         })
         //after everything is done
         .then(() => {
-          //IntroSection
-          const introsection = new Promise((res) => {
-            Vue.prototype.$introsection = {
-              ...this.data.map((e) =>
-                e.slice_type === "HomeOverlay" ? e : null
+          //HomeOverlay
+          const HomeSlices = new Promise((res) => {
+            Vue.prototype.$home = this.data.filter(
+              (e) => e.type === "home_page"
+            )[0].data.body;
+            console.log(Vue.prototype.$home);
+            res(Vue.prototype.$home);
+          });
+          const HomeOverlay = new Promise((res) => {
+            //move this to be processed in App
+            Vue.prototype.$HomeOverlay = {
+              ...Vue.prototype.$home.filter(
+                (e) => e.slice_type === "HomeOverlay"
               )[0],
             };
-            res(Vue.prototype.$introsection);
+            res(Vue.prototype.$HomeOverlay);
           });
 
-          Promise.all([introsection]).then(() => res("prismic all loaded"));
+          Promise.all([HomeOverlay, HomeSlices]).then(() =>
+            res("prismic all loaded")
+          );
         });
     });
   }

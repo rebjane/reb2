@@ -3,13 +3,10 @@
     <div class="wrap" ref="wrap">
       <Smiley :fill="'black'" class="smiley" />
 
-      <!-- <transition appear name="logo">
-        <Reb2Logo :fill="'black'" class="logo" />
-      </transition>-->
       <transition-group
         tag="div"
         class="intro-title"
-        v-for="(item, i) in $introsection.items"
+        v-for="(item, i) in data.items"
         :key="i"
         :style="`display: ${item.break_to_next_line ? 'table' : 'inline-block'};`"
       >
@@ -34,7 +31,10 @@ import WaveText from "./wavetext.js";
 export default {
   name: "HomeOverlay",
   props: {
-    msg: String
+    data: {
+      type: Object,
+      default: null
+    }
   },
   data() {
     var intro;
@@ -45,10 +45,8 @@ export default {
   },
   methods: {},
   mounted() {
-    // console.log(this.$introsection.items);
-
     new Promise(res => {
-      this.$introsection.items.forEach(async item => {
+      this.data.items.forEach(async item => {
         this.opts.push({
           string: this.$cms.textField(item.string),
           tag: this.$tag(item.string[0].type),
@@ -61,33 +59,9 @@ export default {
       res(this.opts);
     }).then(() => this.$nextTick(() => new WaveText(this.opts)));
 
-    // opts = [
-    //   {
-    //     string: "Welcome to", //Welcome to the creative archives of Rebecca Jane.
-    //     el: this.$refs.welcometo,
-    //     delay: 0
-    //   },
-    //   {
-    //     string: "ecca's", //Welcome to the creative archives of Rebecca Jane.
-    //     el: this.$refs.eccas,
-    //     delay: 400
-    //   },
-    //   {
-    //     string: "creative archive.", //designer.
-    //     el: this.$refs.designer,
-    //     delay: 650,
-    //     link: true
-    //   },
-    //   {
-    //     string: "PLEASE SCROLL.", //designer.
-    //     el: this.$refs.scroll,
-    //     delay: 4000,
-    //     link: true
-    //   }
-    // ];
-
     setTimeout(() => {
-      this.$emit("canScroll", true);
+      // this.$emit("canScroll", true);
+      this.$store.commit("allowScroll", true);
     }, this.opts[this.opts.length - 1].delay + 1000);
   }
 };
