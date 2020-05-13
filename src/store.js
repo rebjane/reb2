@@ -32,6 +32,9 @@ export default new Vuex.Store({
     setScroll(state, scroll) {
       Vue.set(state, "scroll", scroll);
     },
+    setScrollDir(state, scrollDir) {
+      Vue.set(state, "scrollDir", scrollDir);
+    },
     setScrollBarHeight(state, scrollBarHeight) {
       Vue.set(state, "scrollBarHeight", scrollBarHeight);
     },
@@ -61,6 +64,9 @@ export default new Vuex.Store({
     },
     setScroll(context, scroll) {
       context.commit("setScroll", scroll);
+    },
+    setScrollDir(context, scrollDir) {
+      context.commit("setScrollDir", scrollDir);
     },
     setScrollBarHeight(context, scrollBarHeight) {
       context.commit("setScrollBarHeight", scrollBarHeight);

@@ -70,6 +70,8 @@ export default {
   height: 0;
   max-width: 100%;
   z-index: 0;
+  pointer-events: none;
+
   // mix-blend-mode: difference;
   left: 0;
 }

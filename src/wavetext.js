@@ -16,7 +16,7 @@ export default class WaveText {
     this.el = item.el;
     this.string = item.string;
     this.lerpTime = 0;
-
+    console.log("el", this.el);
     if (this.mode !== "exit") {
       this.breakApart()
         .then(this.inject(item.el, item.string))

@@ -9,16 +9,16 @@
               @mouseleave=" key === i ?  showHover = false : null"
               :ref="`image-${i}`"
               class="image"
-              :style="`background-image: url(${item.url}); opacity: ${showHover && key === i ? 0.5 : 1};`"
+              :style="`background-image: url(${item.url}); filter: brightness(${showHover && key === i ? 50 : 100}%);`"
             >
               <img style="opacity: 0;" :src="item.url" v-if="key !== i" />
 
               <!-- <RippleImage :key="key" :img="item.url" v-if="key === i" :resize="resizeObj" /> -->
             </div>
           </transition>
-          <transition appear name="h3" v-if="showHover && key === i">
+          <!-- <transition appear name="h3" v-if="showHover && key === i">
             <h3>View.</h3>
-          </transition>
+          </transition>-->
         </div>
       </transition>
       <!-- <RippleImage :key="key" :img="items[key].url" v-if="key" :resize="resizeObj" /> -->
@@ -198,7 +198,7 @@ export default {
   background-position: center;
   // height: 736px;
   // height: 100%;
-  @include ease(opacity);
+  @include ease(filter);
   position: relative;
   cursor: pointer;
 

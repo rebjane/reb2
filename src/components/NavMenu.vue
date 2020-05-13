@@ -156,6 +156,7 @@ export default {
   margin-right: 2em;
   color: white;
   writing-mode: vertical-lr;
+  font-size: 10px;
 }
 .time-enter-active {
   @include ease(all);

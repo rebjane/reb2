@@ -77,7 +77,7 @@ export default {
   width: 10px;
   height: 100%;
   top: 0;
-  opacity: 0.05;
+  opacity: 0;
   background-color: $bg;
 }
 .scrollbar-div {

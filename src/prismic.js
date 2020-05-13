@@ -15,24 +15,37 @@ class Prismic {
           return api.query("");
         })
         .then((response) => {
-          this.res = response.results[0];
+          this.data = response.results[0].data.body;
         })
         //after everything is done
         .then(() => {
-          // setTimeout(() => {
-          console.log(this.res);
-          // store.commit(
-          //   "setLoadPct",
-          //   Vue.prototype.$loadPct((Vue.prototype.$loaded += 1))
-          // );
+          //IntroSection
+          const introsection = new Promise((res) => {
+            Vue.prototype.$introsection = {
+              ...this.data.map((e) =>
+                e.slice_type === "HomeOverlay" ? e : null
+              )[0],
+            };
+            res(Vue.prototype.$introsection);
+          });
 
-          res("prismic all loaded");
-          // }, 2000);
+          Promise.all([introsection]).then(() => res("prismic all loaded"));
         });
     });
   }
 }
 export const prismic = new Prismic();
+
+Vue.prototype.$tag = (tag) => {
+  switch (tag) {
+    case "heading1":
+      return "h1";
+    case "heading2":
+      return "h2";
+    case "paragraph":
+      return "p";
+  }
+};
 
 Vue.prototype.$cms = new (class CMSModule {
   text(field) {

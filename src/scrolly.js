@@ -27,6 +27,8 @@ export default class Scrolly {
       this.dir = Math.abs(e.deltaY) / e.deltaY;
       this.scrollTo += e.deltaY;
       store.commit("setScrollForce", Math.abs(e.deltaY));
+      store.commit("setScrollDir", this.dir);
+
       this.scrollTo = this.limit(this.scrollTo, this.max);
       e.stopPropagation();
     });

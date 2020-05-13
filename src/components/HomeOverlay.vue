@@ -6,20 +6,7 @@
 
     <p ref="wave" />
 
-    <h1 class="designer wavetext" ref="designer">
-      <!-- <router-link exact to="/work" class="wave-link" /> -->
-    </h1>
-
-    <!-- <br />
-
-    <h1 class="wavetext" ref="illustrator">
-      <router-link exact to="/work" class="wave-link" />
-    </h1>
-
-
-    <br />
-
-    <h1 ref="popcorn" />-->
+    <h1 ref="designer"></h1>
   </div>
 </template>
 
@@ -142,9 +129,6 @@ h1 {
   margin-bottom: 20px;
   display: inline-block;
   @include outline($bg);
-}
-.designer {
-  // margin-top: 40px;
 }
 span {
   opacity: 0;

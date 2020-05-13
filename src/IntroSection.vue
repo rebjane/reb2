@@ -1,15 +1,29 @@
 <template>
   <div class="intro">
-    <div class="wrap">
+    <div class="wrap" ref="wrap">
       <Smiley :fill="'black'" class="smiley" />
-      <h1 ref="welcometo" />
-      <transition appear name="logo">
+
+      <!-- <transition appear name="logo">
         <Reb2Logo :fill="'black'" class="logo" />
-      </transition>
-      <h1 ref="eccas" />
-      <br />
-      <h1 class="designer wavetext" ref="designer" />
-      <p ref="scroll" />
+      </transition>-->
+      <transition-group
+        tag="div"
+        class="intro-title"
+        v-for="(item, i) in $introsection.items"
+        :key="i"
+        :style="`display: ${item.break_to_next_line ? 'table' : 'inline-block'};`"
+      >
+        <span :key="i+''" v-if="item.reb_logo_before_this">
+          <transition appear name="logo">
+            <Reb2Logo :fill="'black'" class="logo" />
+          </transition>
+        </span>
+        <component
+          :is="`${$tag(item.string[0].type)}`"
+          :key="`${i}c`"
+          :ref="`${$cms.textField(item.ref_name)}`"
+        />
+      </transition-group>
     </div>
   </div>
 </template>
@@ -25,39 +39,56 @@ export default {
   data() {
     var intro;
     return {
-      intro
+      intro,
+      opts: []
     };
   },
   methods: {},
   mounted() {
-    let opts = [
-      {
-        string: "Welcome to", //Welcome to the creative archives of Rebecca Jane.
-        el: this.$refs.welcometo,
-        delay: 0
-      },
-      {
-        string: "ecca's", //Welcome to the creative archives of Rebecca Jane.
-        el: this.$refs.eccas,
-        delay: 400
-      },
-      {
-        string: "creative archive.", //designer.
-        el: this.$refs.designer,
-        delay: 650,
-        link: true
-      },
-      {
-        string: "PLEASE SCROLL.", //designer.
-        el: this.$refs.scroll,
-        delay: 4000,
-        link: true
-      }
-    ];
-    new WaveText(opts);
+    // console.log(this.$introsection.items);
+
+    new Promise(res => {
+      this.$introsection.items.forEach(async item => {
+        this.opts.push({
+          string: this.$cms.textField(item.string),
+          tag: this.$tag(item.string[0].type),
+          refName: this.$cms.textField(item.ref_name),
+          el: this.$refs[this.$cms.textField(item.ref_name)][0],
+          delay: item.delay,
+          logo_before: item.reb_logo_before_this
+        });
+      });
+      res(this.opts);
+    }).then(() => this.$nextTick(() => new WaveText(this.opts)));
+
+    // opts = [
+    //   {
+    //     string: "Welcome to", //Welcome to the creative archives of Rebecca Jane.
+    //     el: this.$refs.welcometo,
+    //     delay: 0
+    //   },
+    //   {
+    //     string: "ecca's", //Welcome to the creative archives of Rebecca Jane.
+    //     el: this.$refs.eccas,
+    //     delay: 400
+    //   },
+    //   {
+    //     string: "creative archive.", //designer.
+    //     el: this.$refs.designer,
+    //     delay: 650,
+    //     link: true
+    //   },
+    //   {
+    //     string: "PLEASE SCROLL.", //designer.
+    //     el: this.$refs.scroll,
+    //     delay: 4000,
+    //     link: true
+    //   }
+    // ];
+
     setTimeout(() => {
       this.$emit("canScroll", true);
-    }, opts[opts.length - 1].delay + 1000);
+    }, this.opts[this.opts.length - 1].delay + 1000);
   }
 };
 </script>
@@ -105,7 +136,7 @@ h1 {
   // margin-top: 40px;
 }
 span {
-  opacity: 0;
+  // opacity: 0;
 }
 .intro {
   height: 100vh;
@@ -130,5 +161,12 @@ span {
   margin: 1em 0em 1em 2em;
   height: auto;
   mix-blend-mode: difference;
+}
+span {
+  overflow: visible;
+}
+.intro-title {
+  display: inline-block;
+  margin: auto;
 }
 </style>
