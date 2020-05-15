@@ -37,7 +37,7 @@ export default {
           this.mainText = this.$cms.textField(e.items[0].text);
           this.isFullWidth = e.items[0].is_full_width;
           this.isBanner = e.items[0].is_banner;
-          console.log(this.key);
+          // console.log(this.key);
         }
       },
       deep: true,

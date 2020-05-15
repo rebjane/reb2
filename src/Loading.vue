@@ -58,7 +58,10 @@ export default {
   },
   name: "Loading",
   props: {
-    msg: String
+    data: {
+      type: Object,
+      default: null
+    }
   },
   data() {
     return {

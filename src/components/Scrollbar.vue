@@ -12,7 +12,10 @@ import { mapState } from "vuex";
 export default {
   name: "Template",
   props: {
-    msg: String
+    data: {
+      type: Object,
+      default: null
+    }
   },
   watch: {
     scroll: {

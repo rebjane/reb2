@@ -1,20 +1,26 @@
 <template>
   <div class="carousel-vertical">
-    <div ref="carousel" class="carousel">
+    <div ref="carousel" class="carousel" v-if="items.length">
       <transition v-for="(item, i) in items" :key="i">
         <div class="image-wrap">
           <transition appear name="hover">
-            <div
-              @mouseover="key === i ? showHover = true : null"
-              @mouseleave=" key === i ?  showHover = false : null"
+            <!-- <div
               :ref="`image-${i}`"
               class="image"
-              :style="`background-image: url(${item.url}); filter: brightness(${showHover && key === i ? 50 : 100}%);`"
+              :style="`height: ${item.height}px; width: ${item.width}px; background-image: url(${item.url});`"
             >
               <img style="opacity: 0;" :src="item.url" v-if="key !== i" />
-
-              <!-- <RippleImage :key="key" :img="item.url" v-if="key === i" :resize="resizeObj" /> -->
-            </div>
+            </div>-->
+            <ParallaxImage
+              class="image"
+              :imgInfo="{img: item.url,
+          src: item.url,
+          width: item.width,
+          height: item.height}"
+              :img="item.url"
+              :ripple="false"
+              ref="parallax"
+            />
           </transition>
           <!-- <transition appear name="h3" v-if="showHover && key === i">
             <h3>View.</h3>
@@ -32,13 +38,17 @@ import { mapState } from "vuex";
 export default {
   name: "CarouselVertical",
   props: {
-    msg: String
+    data: {
+      type: Array,
+      default: null
+    }
   },
   watch: {
     scroll: {
       handler() {
         this.imageSizing();
       }
+      // immediate: true
     }
   },
   computed: {
@@ -47,28 +57,11 @@ export default {
   data() {
     return {
       midPos: [],
-      showHover: false,
+      showHover: new Array(),
       key: 0,
       ripple: false,
       resizeObj: {},
-      items: [
-        {
-          url:
-            "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-          width: 981, // i expect these values to come with prismic automatically
-          height: 736,
-          title: "Raptors",
-          date: "Jan. 5, 2019"
-        },
-        {
-          url:
-            "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-          width: 981, // i expect these values to come with prismic automatically
-          height: 736,
-          title: "Raptors2",
-          date: "Mar. 5, 2020"
-        }
-      ]
+      items: []
     };
   },
   methods: {
@@ -170,15 +163,29 @@ export default {
     }
   },
   mounted() {
-    // this.$nextTick(() => {
-    this.imagePos();
-    // });
-    this.$emit("info", {
-      title: this.items[0].title,
-      date: this.items[0].date,
-      key: 0
-    });
-    window.addEventListener("resize", this.imageSizing);
+    console.log(this.data);
+    if (this.data.length) {
+      new Promise(res => {
+        this.data.forEach(item => {
+          this.items.push({
+            url: item.feature_image.url,
+            width: item.feature_image.dimensions.width, // i expect these values to come with prismic automatically, 981 default
+            height: item.feature_image.dimensions.height, //736 default
+            title: this.$cms.textField(item.title),
+            date: item.date
+          });
+        });
+        res(this.items);
+      }).then(() => {
+        this.imagePos();
+        this.$emit("info", {
+          title: this.items[0].title,
+          date: this.items[0].date,
+          key: 0
+        });
+        window.addEventListener("resize", this.imageSizing);
+      });
+    }
   }
 };
 </script>
@@ -196,23 +203,35 @@ export default {
   background-size: contain;
   max-width: 60%;
   background-position: center;
+  // border: 1px solid $bg;
   // height: 736px;
   // height: 100%;
+  display: inline-block;
   @include ease(filter);
   position: relative;
+  filter: brightness(100%);
   cursor: pointer;
 
-  width: 100%;
-  height: 600px;
+  &:hover {
+    filter: brightness(50%);
+  }
+
+  // width: 100%;
+  // height: 300px;
   margin: auto;
-  overflow: hidden;
+  // overflow: hidden;
 }
 .image-wrap {
-  margin-bottom: -3em;
-  width: 100%;
+  // margin-bottom: -3em;
+  margin-top: -10%;
+  margin-bottom: -10%;
 
+  // width: 100%;
+  width: 50%;
+  display: inline-block;
+  overflow: visible;
   &:last-child {
-    margin-bottom: 5em;
+    // margin-bottom: 5em;
   }
 }
 .hover {

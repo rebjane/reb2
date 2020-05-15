@@ -21,7 +21,10 @@ export default {
     Scrollbar
   },
   props: {
-    msg: String
+    data: {
+      type: Object,
+      default: null
+    }
   },
   data() {
     return {

@@ -10,7 +10,10 @@
 export default {
   name: "Template",
   props: {
-    msg: String
+    data: {
+      type: Object,
+      default: null
+    }
   },
   data() {
     return {};

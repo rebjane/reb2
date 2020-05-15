@@ -10,10 +10,15 @@
       class="col col-1"
     >
       <RippleImage
+        v-if="ripple"
         :style="`transform: translateY(${parallaxTransform}px); width: ${resizeObj.imgWidth}px;`"
-        v-if="img"
         :img="img"
         :resize="resizeObj"
+      />
+      <img
+        v-else
+        :src="img"
+        :style="`transform: translateY(${parallaxTransform * speedFactor}px); width: ${resizeObj.imgWidth}px;`"
       />
     </div>
   </div>
@@ -34,6 +39,10 @@ export default {
   },
   components: {},
   props: {
+    ripple: {
+      type: Boolean,
+      default: true
+    },
     imgInfo: {
       type: Object,
       default: null
@@ -60,7 +69,8 @@ export default {
       refTop: null,
       waveText: false,
       newHeight: this.getSize(this.imgInfo.width, this.imgInfo.height).height,
-      parallaxTransform: 0
+      parallaxTransform: 0,
+      speedFactor: Math.random() * 3 + 1
     };
   },
   beforeDestroy() {},
@@ -108,6 +118,9 @@ export default {
   display: block;
   position: relative;
   height: 100vh;
+  margin: auto;
+  overflow: visible;
+
   // height: 100%;
   // margin: 0 $pad;
 }

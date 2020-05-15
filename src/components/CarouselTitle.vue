@@ -4,9 +4,9 @@
       <h2 :key="info.key+''" class="title">{{info.title}}</h2>
     </transition-group>
     <!-- <div class="line" /> -->
-    <transition-group appear name="next">
+    <!-- <transition-group appear name="next">
       <h2 :key="info.key+''" class="date">{{info.date}}</h2>
-    </transition-group>
+    </transition-group>-->
   </div>
 </template>
 
@@ -40,8 +40,10 @@ export default {
   left: 50%;
   color: $bg;
   font-family: $suisse;
-  font-size: 3em;
-  color: white;
+  font-size: 80px;
+  color: black;
+  // background: black;
+
   // @include outline(white);
 }
 // .line {
@@ -62,7 +64,8 @@ export default {
   left: 50%;
   opacity: 1;
   font-family: $suisse;
-  font-size: 1em;
+  font-size: 40px;
+  background: black;
 }
 .carousel-title {
   position: absolute;

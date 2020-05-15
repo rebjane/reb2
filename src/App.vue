@@ -22,7 +22,7 @@
           class="slidingtext"
           :text="'DESIGNER. ILLUSTRATOR. POPCORN-LOVER. | '"
         />-->
-        <WorkPage />
+        <!-- <WorkPage /> -->
         <!-- </div> -->
 
         <BackgroundSection />
@@ -48,7 +48,7 @@ export default {
       handler(e) {
         if (e) {
           this.$nextTick(() => {
-            this.scroll = new Scrolly(document.getElementById("app"));
+            this.newscroll = new Scrolly(document.getElementById("app"));
           });
         }
       }
@@ -63,17 +63,17 @@ export default {
   data() {
     return {
       time: 0,
-      scroll: null,
+      newscroll: null,
       rebImg: require("./assets/reb.jpg")
       // canScroll: true
     };
   },
   computed: {
-    ...mapState(["signatureLoaded", "navOpen", "scrollAllowed"])
+    ...mapState(["signatureLoaded", "navOpen", "scrollAllowed", "scroll"])
   },
   methods: {
     handleScrollBarFunction(scroll) {
-      this.scroll.scrollFromScrollBar(scroll);
+      this.newscroll.scrollFromScrollBar(scroll);
     }
   },
   mounted() {

@@ -3,7 +3,7 @@
     <!-- <div class="scroll" ref="scroll"> -->
     <!-- <div class="line" :style="`transform: translateY(${fixedTitlePos}px) translateX(-50%); `" /> -->
 
-    <CarouselVertical @info="handleInfo" />
+    <CarouselVertical @info="handleInfo" :data="carouselData" v-if="carouselData" />
     <!-- </div> -->
     <CarouselTitle
       :info="info"
@@ -43,7 +43,7 @@ export default {
     // Scrollbar
   },
   props: {
-    msg: String
+    data: Object
   },
   data() {
     return {
@@ -52,10 +52,12 @@ export default {
       topPos: null,
       bottomPos: null,
       info: {
-        title: "default",
+        title: this.data.primary.type_of_work,
         date: "default",
         key: 0
-      }
+      },
+      carouselData: null
+      // data: this.$workCarousel
     };
   },
   computed: {
@@ -65,18 +67,30 @@ export default {
     handleScrollBarFunction(scroll) {
       this.scroll.scrollFromScrollBar(scroll);
     },
+    /* eslint-disable no-unused-vars*/
     handleInfo(e) {
-      this.info = e;
+      // this.info = e;
+      // this.info.title = "work";
     }
   },
   mounted() {
-    this.topPos = this.$refs.page.getBoundingClientRect().top;
-    this.bottomPos =
-      this.$refs.page.getBoundingClientRect().bottom - window.innerHeight;
+    // console.log("workpage data", this.data.primary.type_of_work);
 
-    // this.$nextTick(() => {
-    //   this.scroll = new Scrolly(this.$refs.page);
-    // });
+    //handle what carousel data based on what's chosen on the home page!
+    //add to it after the other data is done
+    switch (this.data.primary.type_of_work) {
+      case "project": {
+        this.carouselData = this.$workCarousel;
+        break;
+      }
+    }
+    this.$nextTick(() => {
+      //   this.scroll = new Scrolly(this.$refs.page);
+      this.topPos = this.$refs.page.getBoundingClientRect().top;
+
+      this.bottomPos =
+        this.$refs.page.getBoundingClientRect().bottom - window.innerHeight;
+    });
   }
 };
 </script>
