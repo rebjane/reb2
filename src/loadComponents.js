@@ -13,10 +13,19 @@ class LoadComponents {
       Vue.component("Hamburger", require("./components/Hamburger.vue").default);
       Vue.component("NavScreen", require("./components/NavScreen.vue").default);
       Vue.component("Scrollbar", require("./components/Scrollbar.vue").default);
-      Vue.component("WorkPage", require("./WorkPage.vue").default);
+      Vue.component("WorkSection", require("./WorkSection.vue").default);
       Vue.component("AboutSection", require("./AboutSection.vue").default);
       Vue.component("HomeOverlay", require("./HomeOverlay.vue").default);
       Vue.component("Smiley", require("./components/Smiley.vue").default);
+      Vue.component(
+        "ImageFullScreen",
+        require("./components/ImageFullScreen.vue").default
+      );
+      Vue.component(
+        "ImageGallery",
+        require("./components/ImageGallery.vue").default
+      );
+
       Vue.component(
         "ParallaxImage",
         require("./components/ParallaxImage.vue").default
@@ -54,13 +63,13 @@ class LoadComponents {
         require("./components/CursorThing.vue").default
       );
 
-      setTimeout(() => {
-        // store.commit(
-        //   "setLoadPct",
-        //   Vue.prototype.$loadPct((Vue.prototype.$loaded += 1))
-        // );
-        res();
-      }, 1000);
+      // setTimeout(() => {
+      // store.commit(
+      //   "setLoadPct",
+      //   Vue.prototype.$loadPct((Vue.prototype.$loaded += 1))
+      // );
+      res();
+      // }, 1000);
     });
   }
 }

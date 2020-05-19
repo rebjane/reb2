@@ -19,7 +19,9 @@
           height: item.height}"
               :img="item.url"
               :ripple="false"
+              :speedFactor="Math.random() * 2 + 1"
               ref="parallax"
+              :style="`opacity: ${show ? 1 : 0};`"
             />
           </transition>
           <!-- <transition appear name="h3" v-if="showHover && key === i">
@@ -47,6 +49,7 @@ export default {
     scroll: {
       handler() {
         this.imageSizing();
+        this.show = true;
       }
       // immediate: true
     }
@@ -61,7 +64,8 @@ export default {
       key: 0,
       ripple: false,
       resizeObj: {},
-      items: []
+      items: [],
+      show: false
     };
   },
   methods: {
@@ -73,9 +77,16 @@ export default {
     },
     imagePos() {
       this.$refs.carousel.children.forEach((item, i) => {
+        //for vert
+        // var midPos = Math.abs(
+        //   (window.innerHeight - item.getBoundingClientRect().height) / 2 -
+        //     item.getBoundingClientRect().top
+        // );
+
+        //for horiz
         var midPos = Math.abs(
-          (window.innerHeight - item.getBoundingClientRect().height) / 2 -
-            item.getBoundingClientRect().top
+          (window.innerWidth - item.getBoundingClientRect().width) / 2 -
+            item.getBoundingClientRect().left
         );
         this.midPos.push({
           midPos: midPos,
@@ -163,7 +174,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.data);
+    // console.log(this.data);
     if (this.data.length) {
       new Promise(res => {
         this.data.forEach(item => {
@@ -223,8 +234,12 @@ export default {
 }
 .image-wrap {
   // margin-bottom: -3em;
-  margin-top: -10%;
-  margin-bottom: -10%;
+  margin-top: -15%;
+  margin-bottom: -15%;
+  &:nth-child(3) {
+    margin-top: -30%;
+    margin-bottom: -30%;
+  }
 
   // width: 100%;
   width: 50%;

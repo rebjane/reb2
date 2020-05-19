@@ -21,6 +21,7 @@ export default {
     scroll: {
       handler() {
         this.$refs.scrollbar.style = `transform: translateY(${this.scrollBarPos}px)`;
+        // this.$refs.scrollbar.style = `height: ${60 + this.scrollBarPos}px;`;
       }
     }
   },
@@ -42,6 +43,8 @@ export default {
         window.innerHeight - this.barHeight
       );
       this.$refs.scrollbar.style = `transform: translateY(${scroll}px)`;
+      // this.$refs.scrollbar.style = `height: ${60 + scroll}px;`;
+
       this.$emit("scrollPos", scroll);
     },
     mousedown(e) {
@@ -67,12 +70,13 @@ export default {
 .scrollbar {
   position: fixed;
   right: 0;
+
   top: 0;
   height: 60px;
   width: 10px;
-  border-radius: 100px;
-  opacity: 0.5;
-  background-color: $bg;
+  // border-radius: 100px;
+  // opacity: 0.5;
+  background-color: white;
 }
 .scroll {
   position: fixed;
@@ -81,12 +85,14 @@ export default {
   height: 100%;
   top: 0;
   opacity: 0;
-  background-color: $bg;
+  background-color: black;
 }
 .scrollbar-div {
   position: fixed;
   right: 0;
   top: 0;
   height: 100%;
+  z-index: 5;
+  mix-blend-mode: difference;
 }
 </style>

@@ -84,7 +84,7 @@ export default {
 #index {
   overflow: hidden;
   height: 100vh;
-  width: 100%;
+  // width: 100%;
   // background: $bg;
   background: white;
 }

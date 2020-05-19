@@ -6,7 +6,7 @@
     <div id="app" ref="appofficial">
       <!-- <div class="home-main" v-if="signatureLoaded">
       <HomeOverlay class="el" />-->
-      <div>
+      <div class="inner">
         <!-- <div class="home"> -->
         <!-- <Signature class="sig" /> -->
         <!-- <HomeOverlay @canScroll="canScroll = true" class="el" /> -->
@@ -14,7 +14,7 @@
         <!-- </div> -->
         <!-- <div class="work"> -->
         <transition v-for="(item , i) in $home" :key="i">
-          <component :is="item.slice_type" :data="item" />
+          <component :is="item.slice_type" :data="item" class="component" />
         </transition>
         <!-- <SlidingText
           :uniquekey="3"
@@ -22,13 +22,13 @@
           class="slidingtext"
           :text="'DESIGNER. ILLUSTRATOR. POPCORN-LOVER. | '"
         />-->
-        <!-- <WorkPage /> -->
+        <!-- <WorkSection /> -->
         <!-- </div> -->
 
         <BackgroundSection />
         <!-- <AboutSection /> -->
 
-        <!-- <WorkPage class="el" /> -->
+        <!-- <WorkSection class="el" /> -->
       </div>
 
       <!-- </div> -->
@@ -95,6 +95,10 @@ img {
 .slidingtext {
   width: 100vw;
 }
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -103,10 +107,22 @@ img {
   color: #2c3e50;
   /* margin-top: 60px; */
   background: $lbg;
-  overflow: hidden;
+  // overflow-y: hidden;
   height: 100%;
+  width: 100%;
   position: relative;
+  .inner {
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+
+    .component {
+      width: 100%;
+      min-width: 100vw;
+    }
+  }
 }
+
 p {
   color: $bg;
   overflow: hidden;

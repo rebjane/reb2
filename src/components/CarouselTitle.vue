@@ -1,7 +1,7 @@
 <template>
   <div class="carousel-title">
     <transition-group appear name="next">
-      <h2 :key="info.key+''" class="title">{{info.title}}</h2>
+      <h2 :key="info.key+''" class="title">{{info.title }}</h2>
     </transition-group>
     <!-- <div class="line" /> -->
     <!-- <transition-group appear name="next">
@@ -38,13 +38,14 @@ export default {
   top: 40vh;
   transform: translateY(-100%) translateX(-50%);
   left: 50%;
-  color: $bg;
-  font-family: $suisse;
-  font-size: 80px;
-  color: black;
+  // font-family: $suisse;
+  font-family: $acumin;
+
+  font-size: 140px;
   // background: black;
 
-  // @include outline(white);
+  // @include outline(black);
+  color: black;
 }
 // .line {
 //   position: fixed;

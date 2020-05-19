@@ -11,14 +11,14 @@
     >
       <RippleImage
         v-if="ripple"
-        :style="`transform: translateY(${parallaxTransform}px); width: ${resizeObj.imgWidth}px;`"
+        :style="`transform: translateX(${parallaxTransform}px); width: ${resizeObj.imgWidth}px;`"
         :img="img"
         :resize="resizeObj"
       />
       <img
         v-else
         :src="img"
-        :style="`transform: translateY(${parallaxTransform * speedFactor}px); width: ${resizeObj.imgWidth}px;`"
+        :style="`transform: translateX(${parallaxTransform * speedFactor}px); width: ${resizeObj.imgWidth}px;`"
       />
     </div>
   </div>
@@ -47,6 +47,10 @@ export default {
       type: Object,
       default: null
     },
+    speedFactor: {
+      type: Number,
+      default: 1
+    },
     img: {
       type: String,
       default: null
@@ -66,11 +70,9 @@ export default {
         canvasTop: 0,
         midPos: null
       },
-      refTop: null,
       waveText: false,
       newHeight: this.getSize(this.imgInfo.width, this.imgInfo.height).height,
-      parallaxTransform: 0,
-      speedFactor: Math.random() * 3 + 1
+      parallaxTransform: 0
     };
   },
   beforeDestroy() {},
@@ -79,11 +81,16 @@ export default {
   },
   methods: {
     getMidPos() {
-      var top = this.$refs.imgCol.getBoundingClientRect().top;
-      var height = this.$refs.imgCol.getBoundingClientRect().height;
-      this.midPos = top - (window.innerHeight - height) / 2;
+      //for  vert
+      // var top = this.$refs.imgCol.getBoundingClientRect().top;
+      // var height = this.$refs.imgCol.getBoundingClientRect().height;
+      // this.midPos = top - (window.innerHeight - height) / 2;
       // console.log("top ", top, "height ", height, "this.midPos ", this.midPos);
       // console.log((window.innerHeight - height) / 2);
+
+      var left = this.$refs.imgCol.getBoundingClientRect().left;
+      var width = this.$refs.imgCol.getBoundingClientRect().width;
+      this.midPos = left - (window.innerWidth - width) / 2;
     },
     transform() {
       this.parallaxTransform = this.parallax(this.midPos, this.scroll);
@@ -102,8 +109,6 @@ export default {
     }
   },
   mounted() {
-    this.refTop =
-      this.$refs.parallax.getBoundingClientRect().top - window.innerHeight / 2;
     this.$nextTick(() => {
       this.getMidPos();
     });
@@ -115,7 +120,7 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
 .parallax {
-  display: block;
+  // display: block;
   position: relative;
   height: 100vh;
   margin: auto;

@@ -16,7 +16,7 @@ class Prismic {
         })
         .then((response) => {
           this.data = response.results;
-          console.log("data", this.data);
+          // console.log("data", this.data);
 
           this.homepage = this.data.filter(
             (e) => e.type === "home_page"
@@ -24,12 +24,12 @@ class Prismic {
         })
         //after everything is done
         .then(() => {
-          //WorkPage Section
-          const WorkPageSection = new Promise((res) => {
-            Vue.prototype.$workCarousel = this.data
-              .filter((i) => i.type === "project")
+          //WorkSection Section
+          const WorkSectionSection = new Promise((res) => {
+            Vue.prototype.$work = this.data
+              .filter((i) => i.type === "work")
               .map((i) => i.data);
-            console.log(Vue.prototype.$workCarousel);
+            // console.log(this.$work);
             res();
           });
 
@@ -38,11 +38,10 @@ class Prismic {
             Vue.prototype.$home = this.data.filter(
               (e) => e.type === "home_page"
             )[0].data.body;
-            console.log(Vue.prototype.$home);
             res(Vue.prototype.$home);
           });
 
-          Promise.all([WorkPageSection, HomeSlices]).then(() =>
+          Promise.all([WorkSectionSection, HomeSlices]).then(() =>
             res("prismic all loaded")
           );
         });

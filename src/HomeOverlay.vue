@@ -1,7 +1,7 @@
 <template>
   <div class="intro">
     <div class="wrap" ref="wrap">
-      <Smiley :fill="'black'" class="smiley" />
+      <!-- <Smiley :fill="'black'" class="smiley" /> -->
 
       <transition-group
         tag="div"
@@ -22,6 +22,7 @@
         />
       </transition-group>
     </div>
+    <p class="scroll-cta" :ref="$cms.textField(this.data.primary.scroll_cta_ref)"></p>
   </div>
 </template>
 
@@ -45,6 +46,7 @@ export default {
   },
   methods: {},
   mounted() {
+    console.log(this.data);
     new Promise(res => {
       this.data.items.forEach(async item => {
         this.opts.push({
@@ -56,6 +58,17 @@ export default {
           logo_before: item.reb_logo_before_this
         });
       });
+
+      if (this.data.primary) {
+        this.opts.push({
+          string: this.$cms.textField(this.data.primary.scroll_cta_string),
+          tag: "p",
+          refName: this.$cms.textField(this.data.primary.scroll_cta_ref),
+          el: this.$refs[this.$cms.textField(this.data.primary.scroll_cta_ref)],
+          delay: this.data.primary.scroll_cta_delay,
+          logo_before: false
+        });
+      }
       res(this.opts);
     }).then(() => this.$nextTick(() => new WaveText(this.opts)));
 
@@ -104,7 +117,9 @@ h1 {
   margin-bottom: 0;
   display: inline-block;
   // @include outline($bg);
-  font-family: $suisse;
+  // font-family: $suisse;
+  font-family: $acumin;
+  font-size: 80px;
 }
 .designer {
   // margin-top: 40px;
@@ -141,6 +156,19 @@ span {
 }
 .intro-title {
   display: inline-block;
-  margin: auto;
+  margin-right: auto;
+  margin-left: 25%;
+  // text-align: left;
+}
+.scroll-cta {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+p {
+  // font-family: $acumin;
+  font-family: $suisse;
+  // font-style: italic;
 }
 </style>
