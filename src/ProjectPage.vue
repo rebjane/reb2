@@ -3,7 +3,7 @@
     <div class="scroll" ref="scroll">
       <p>project page</p>
     </div>
-    <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" />
+    <Scrollbar v-if="loaded & !navOpen" />
   </div>
 </template>
 
@@ -31,11 +31,7 @@ export default {
   computed: {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
   },
-  methods: {
-    handleScrollBarFunction(scroll) {
-      this.scroll.scrollFromScrollBar(scroll);
-    }
-  },
+  methods: {},
   mounted() {
     this.$nextTick(() => {
       this.scroll = new Scrolly(this.$refs.page);

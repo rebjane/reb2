@@ -15,7 +15,7 @@
           <Reb2Logo />
         </router-link>
       </p>
-      <div class="main-menu">
+      <!-- <div class="main-menu">
         <span>
           <a>about</a>
         </span>
@@ -25,7 +25,7 @@
         <span>
           <a>contact</a>
         </span>
-      </div>
+      </div>-->
     </div>
 
     <!-- <transition appear v-if="time.timeString" name="time">
@@ -151,15 +151,20 @@ export default {
 
 .time {
   position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 0;
+  // top: 50%;
+  // transform: translateY(-50%);
+  // right: 0;
+  left: 0;
+  bottom: 0%;
   z-index: 2;
   opacity: 1;
-  margin-right: 2em;
+  margin-left: 3em;
+  margin-bottom: 2em;
+  // transform: translateX(-50%);
+
   color: white;
-  writing-mode: vertical-lr;
-  font-size: 10px;
+  // writing-mode: vertical-lr;
+  font-size: 14px;
 }
 .time-enter-active {
   @include ease(all);
@@ -178,13 +183,16 @@ export default {
 p {
   color: white;
   overflow: hidden;
-  font-size: 14px;
+  font-size: 18px;
 }
 .main-menu-wrapper {
   position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
+  // top: 50%;
+  top: 0;
+  // transform: translateY(-50%);
   left: 0;
+  margin-left: 2em;
+  margin-top: 1em;
   overflow: visible;
   margin-left: 1em;
   .rebecca {
@@ -192,26 +200,30 @@ p {
     font-family: $suisse;
     color: white;
     font-size: 12px;
-    padding-bottom: 1em;
-    border-bottom: 1px solid white;
-    width: 4em;
+    margin-left: 3em;
+    width: 6em;
+    float: left;
   }
   .main-menu {
-    transform: rotate(-180deg);
-    transform-origin: center;
-    writing-mode: vertical-lr;
+    // transform: rotate(-180deg);
+    // transform-origin: center;
+    // writing-mode: vertical-lr;
 
     // left: 20%;
     margin: auto;
+    margin-left: 1em;
+    display: inline-block;
+
     span {
       font-family: $acumin;
       color: white;
-      padding-bottom: 2em;
-      font-size: 10px;
+      // padding-bottom: 2em;
+      padding-right: 2em;
+      font-size: 18px;
       cursor: pointer;
-      &:last-child {
-        padding-bottom: 1em;
-      }
+      // &:last-child {
+      //   padding-bottom: 1em;
+      // }
     }
     // span:last-child {
     //   padding-left: 4em;

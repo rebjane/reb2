@@ -16,7 +16,8 @@ export default class WaveText {
     this.el = item.el;
     this.string = item.string;
     this.lerpTime = 0;
-    console.log("el", this.el);
+    this.bold_start = item.bold_start;
+    this.bold_end = item.bold_end;
     if (this.mode !== "exit") {
       this.breakApart()
         .then(this.inject(item.el, item.string))
@@ -44,12 +45,23 @@ export default class WaveText {
 
       //for each character
       for (let i in string) {
-        if (string[i] !== " ") {
-          //if it's a letter, it's inline block.
-          el.innerHTML += `<span style="opacity: 0; transform: translateY(100%); display: inline-block;">${string[i]}</span>`;
+        //if it's bold
+        if (this.inRange(i, this.bold_start, this.bold_end)) {
+          if (string[i] !== " ") {
+            //if it's a letter, it's inline block.
+            el.innerHTML += `<span class="suisse" style="opacity: 0; transform: translateY(100%); display: inline-block;"><b>${string[i]}</b></span>`;
+          } else {
+            //if it's a space, no inline-block (because the width by default sets to 0, therefore leaving no spaces visible in the word)
+            el.innerHTML += `<span class="suisse" style="opacity: 0; transform: translateY(100%); "><b>${string[i]}</b></span>`;
+          }
         } else {
-          //if it's a space, no inline-block (because the width by default sets to 0, therefore leaving no spaces visible in the word)
-          el.innerHTML += `<span style="opacity: 0; transform: translateY(100%); ">${string[i]}</span>`;
+          if (string[i] !== " ") {
+            //if it's a letter, it's inline block.
+            el.innerHTML += `<span style="opacity: 0; transform: translateY(100%); display: inline-block;">${string[i]}</span>`;
+          } else {
+            //if it's a space, no inline-block (because the width by default sets to 0, therefore leaving no spaces visible in the word)
+            el.innerHTML += `<span style="opacity: 0; transform: translateY(100%); ">${string[i]}</span>`;
+          }
         }
       }
       res();
@@ -116,5 +128,8 @@ export default class WaveText {
         res();
       }, delay);
     });
+  }
+  inRange(i, start, end) {
+    return i >= start && i < end;
   }
 }

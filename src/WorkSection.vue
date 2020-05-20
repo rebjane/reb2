@@ -32,9 +32,9 @@ export default {
   watch: {
     scroll: {
       handler(e) {
-        if (this.scroll >= this.topPos && this.scroll <= this.bottomPos) {
-          this.fixedTitlePos = e - this.topPos;
-          this.fixedCTitlePos = e - this.topPos;
+        if (e.pos >= this.topPos && e.pos <= this.bottomPos) {
+          this.fixedTitlePos = e.pos - this.topPos;
+          this.fixedCTitlePos = e.pos - this.topPos;
         }
       }
     }
@@ -64,9 +64,6 @@ export default {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen", "scroll"])
   },
   methods: {
-    handleScrollBarFunction(scroll) {
-      this.scroll.scrollFromScrollBar(scroll);
-    },
     /* eslint-disable no-unused-vars*/
     handleInfo(e) {
       // this.info = e;
@@ -74,7 +71,7 @@ export default {
     }
   },
   mounted() {
-    console.log("workpage data", this.$work);
+    // console.log("workpage data", this.$work);
 
     //handle what carousel data based on what's chosen on the home page!
     //add to it after the other data is done
@@ -93,10 +90,14 @@ export default {
 
     this.$nextTick(() => {
       //   this.scroll = new Scrolly(this.$refs.page);
-      this.topPos = this.$refs.page.getBoundingClientRect().top;
+      // this.topPos = this.$refs.page.getBoundingClientRect().top;
+
+      // this.bottomPos =
+      //   this.$refs.page.getBoundingClientRect().bottom - window.innerHeight;
+      this.topPos = this.$refs.page.getBoundingClientRect().left;
 
       this.bottomPos =
-        this.$refs.page.getBoundingClientRect().bottom - window.innerHeight;
+        this.$refs.page.getBoundingClientRect().right - window.innerWidth;
     });
   }
 };
@@ -116,7 +117,7 @@ p {
 .title {
   position: absolute;
   top: 0;
-  z-index: 3;
+  z-index: 0;
   width: 100%;
   // mix-blend-mode: difference;
 }

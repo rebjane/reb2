@@ -55,7 +55,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["signatureLoaded", "navOpen", "scroll", "scrollForce"])
+    ...mapState(["signatureLoaded", "navOpen", "scroll"])
   },
   data() {
     return {
@@ -233,13 +233,21 @@ export default {
   // overflow: hidden;
 }
 .image-wrap {
-  // margin-bottom: -3em;
-  margin-top: -15%;
-  margin-bottom: -15%;
+  //for horiz
+  margin-left: -15%;
+  margin-right: -15%;
   &:nth-child(3) {
-    margin-top: -30%;
-    margin-bottom: -30%;
+    margin-left: -30%;
+    margin-right: -30%;
   }
+
+  //for vertical
+  // margin-top: -15%;
+  // margin-bottom: -15%;
+  // &:nth-child(3) {
+  //   margin-top: -30%;
+  //   margin-bottom: -30%;
+  // }
 
   // width: 100%;
   width: 50%;

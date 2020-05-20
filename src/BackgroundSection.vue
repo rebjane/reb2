@@ -60,7 +60,7 @@ export default {
   },
   beforeDestroy() {},
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen", "scroll"])
+    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
   },
   methods: {},
   mounted() {

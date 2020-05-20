@@ -5,14 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    scroll: null,
+    scroll: {
+      pos: 0,
+      dir: 0,
+      elWidth: 0,
+    },
     loaded: false,
     loadPct: 0,
     signatureLoaded: false,
     navOpen: false,
-    scrollBarHeight: 0,
-    scrollBarPos: 0,
-    scrollForce: 0,
     gltfsLoaded: false,
     scrollAllowed: false,
   },
@@ -33,18 +34,7 @@ export default new Vuex.Store({
     setScroll(state, scroll) {
       Vue.set(state, "scroll", scroll);
     },
-    setScrollDir(state, scrollDir) {
-      Vue.set(state, "scrollDir", scrollDir);
-    },
-    setScrollBarHeight(state, scrollBarHeight) {
-      Vue.set(state, "scrollBarHeight", scrollBarHeight);
-    },
-    setScrollBarPos(state, scrollBarPos) {
-      Vue.set(state, "scrollBarPos", scrollBarPos);
-    },
-    setScrollForce(state, scrollForce) {
-      Vue.set(state, "scrollForce", scrollForce);
-    },
+
     setLoadedGLTFs(state, gltfsLoaded) {
       Vue.set(state, "gltfsLoaded", gltfsLoaded);
     },
@@ -69,18 +59,7 @@ export default new Vuex.Store({
     setScroll(context, scroll) {
       context.commit("setScroll", scroll);
     },
-    setScrollDir(context, scrollDir) {
-      context.commit("setScrollDir", scrollDir);
-    },
-    setScrollBarHeight(context, scrollBarHeight) {
-      context.commit("setScrollBarHeight", scrollBarHeight);
-    },
-    setScrollBarPos(context, scrollBarPos) {
-      context.commit("setScrollBarPos", scrollBarPos);
-    },
-    setScrollForce(context, scrollForce) {
-      context.commit("setScrollForce", scrollForce);
-    },
+
     setLoadedGLTFs(context, gltfsLoaded) {
       context.commit("setLoadedGLTFs", gltfsLoaded);
     },

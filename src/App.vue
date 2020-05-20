@@ -33,7 +33,7 @@
 
       <!-- </div> -->
     </div>
-    <Scrollbar @scrollPos="handleScrollBarFunction" v-if="scrollAllowed & !navOpen" />
+    <Scrollbar v-if="scrollAllowed & !navOpen" />
   </div>
 </template>
 
@@ -69,13 +69,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(["signatureLoaded", "navOpen", "scrollAllowed", "scroll"])
+    ...mapState(["signatureLoaded", "navOpen", "scrollAllowed"])
   },
-  methods: {
-    handleScrollBarFunction(scroll) {
-      this.newscroll.scrollFromScrollBar(scroll);
-    }
-  },
+  methods: {},
   mounted() {
     // this.scroll = new Scrolly(document.getElementById("app"));
   }

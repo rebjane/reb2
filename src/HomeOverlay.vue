@@ -3,13 +3,7 @@
     <div class="wrap" ref="wrap">
       <!-- <Smiley :fill="'black'" class="smiley" /> -->
 
-      <transition-group
-        tag="div"
-        class="intro-title"
-        v-for="(item, i) in data.items"
-        :key="i"
-        :style="`display: ${item.break_to_next_line ? 'table' : 'inline-block'};`"
-      >
+      <transition-group tag="div" class="intro-title" v-for="(item, i) in data.items" :key="i">
         <span :key="i+''" v-if="item.reb_logo_before_this">
           <transition appear name="logo">
             <Reb2Logo :fill="'black'" class="logo" />
@@ -46,7 +40,7 @@ export default {
   },
   methods: {},
   mounted() {
-    console.log(this.data);
+    // console.log(this.data);
     new Promise(res => {
       this.data.items.forEach(async item => {
         this.opts.push({
@@ -55,10 +49,16 @@ export default {
           refName: this.$cms.textField(item.ref_name),
           el: this.$refs[this.$cms.textField(item.ref_name)][0],
           delay: item.delay,
-          logo_before: item.reb_logo_before_this
+          logo_before: item.reb_logo_before_this,
+          bold_start: item.string[0].spans.length
+            ? item.string[0].spans[0].start
+            : 0,
+          bold_end: item.string[0].spans.length
+            ? item.string[0].spans[0].end
+            : 0
         });
       });
-
+      //scroll cta
       if (this.data.primary) {
         this.opts.push({
           string: this.$cms.textField(this.data.primary.scroll_cta_string),
@@ -66,7 +66,9 @@ export default {
           refName: this.$cms.textField(this.data.primary.scroll_cta_ref),
           el: this.$refs[this.$cms.textField(this.data.primary.scroll_cta_ref)],
           delay: this.data.primary.scroll_cta_delay,
-          logo_before: false
+          logo_before: false,
+          bold_start: 0,
+          bold_end: 0
         });
       }
       res(this.opts);
@@ -83,6 +85,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
+
 .smiley {
   width: 4em;
   position: absolute;
@@ -155,16 +158,25 @@ span {
   overflow: visible;
 }
 .intro-title {
-  display: inline-block;
+  // display: inline-block;
+  display: table;
+
   margin-right: auto;
-  margin-left: 25%;
+  margin-left: 20%;
+  text-align: left;
+  // transform: translateX(-50%);
+
   // text-align: left;
 }
 .scroll-cta {
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  // bottom: 0;
+  // left: 50%;
+  // transform: translateX(-50%);
+  right: 0;
+  transform: translateY(-50%);
+  top: 50%;
+  margin-right: 3em;
 }
 p {
   // font-family: $acumin;

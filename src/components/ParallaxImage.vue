@@ -93,7 +93,7 @@ export default {
       this.midPos = left - (window.innerWidth - width) / 2;
     },
     transform() {
-      this.parallaxTransform = this.parallax(this.midPos, this.scroll);
+      this.parallaxTransform = this.parallax(this.midPos, this.scroll.pos);
     },
     parallax(midPos, scrollPos) {
       return (midPos - scrollPos) * 0.7;

@@ -1,8 +1,8 @@
 <template>
   <div class="scrollbar-div">
-    <div class="scroll" />
+    <div class="scroll-line" ref="scrollline" />
 
-    <div ref="scrollbar" class="scrollbar"></div>
+    <div ref="scrollbar" class="scroll-bar"></div>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 import { mapState } from "vuex";
 
 export default {
-  name: "Template",
+  name: "Scrollbar",
   props: {
     data: {
       type: Object,
@@ -19,47 +19,34 @@ export default {
   },
   watch: {
     scroll: {
-      handler() {
-        this.$refs.scrollbar.style = `transform: translateY(${this.scrollBarPos}px)`;
-        // this.$refs.scrollbar.style = `height: ${60 + this.scrollBarPos}px;`;
+      handler(e) {
+        // console.log(e);
+        this.$refs.scrollbar.style = `width: ${this.width(
+          this.sbwidth,
+          this.slwidth,
+          e.elWidth,
+          e.pos
+        )}px;`;
       }
     }
   },
   data() {
     return {
-      pos: 0,
-      dir: 0,
-      startPos: 0,
-      barHeight: null
+      slwidth: null,
+      sbwidth: null
     };
   },
   computed: {
-    ...mapState(["scroll", "scrollBarHeight", "scrollBarPos"])
+    ...mapState(["scroll"])
   },
   methods: {
-    doScroll(e) {
-      var scroll = Math.min(
-        Math.max(e.clientY - this.startPos, 0),
-        window.innerHeight - this.barHeight
-      );
-      this.$refs.scrollbar.style = `transform: translateY(${scroll}px)`;
-      // this.$refs.scrollbar.style = `height: ${60 + scroll}px;`;
-
-      this.$emit("scrollPos", scroll);
-    },
-    mousedown(e) {
-      this.startPos = e.offsetY;
-      window.addEventListener("mousemove", this.doScroll);
-      window.addEventListener("mouseup", this.removeScroll);
-    },
-    removeScroll() {
-      window.removeEventListener("mousemove", this.doScroll);
+    width(sb, sl, el, pos) {
+      return ((sl - sb) / el) * pos + sb;
     }
   },
   mounted() {
-    this.$refs.scrollbar.addEventListener("mousedown", this.mousedown);
-    this.barHeight = this.$refs.scrollbar.getBoundingClientRect().height;
-    this.$store.commit("setScrollBarHeight", this.barHeight);
+    this.slwidth = this.$refs.scrollline.getBoundingClientRect().width;
+    this.sbwidth = this.$refs.scrollbar.getBoundingClientRect().width;
   }
 };
 </script>
@@ -67,32 +54,27 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
-.scrollbar {
-  position: fixed;
-  right: 0;
-
-  top: 0;
-  height: 60px;
-  width: 10px;
-  // border-radius: 100px;
-  // opacity: 0.5;
-  background-color: white;
-}
-.scroll {
-  position: fixed;
-  right: 0;
-  width: 10px;
-  height: 100%;
-  top: 0;
-  opacity: 0;
-  background-color: black;
-}
 .scrollbar-div {
-  position: fixed;
-  right: 0;
-  top: 0;
-  height: 100%;
-  z-index: 5;
-  mix-blend-mode: difference;
+  height: 100vh;
+  position: relative;
+  pointer-events: none;
+}
+.scroll-line {
+  border-top: 1px solid black;
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 2em;
+  width: 50%;
+  left: 25%;
+}
+.scroll-bar {
+  position: absolute;
+  bottom: 0;
+  height: 10px;
+  width: 60px;
+  background: black;
+  margin-bottom: 2em;
+  transform: translateY(50%);
+  left: 25%;
 }
 </style>
