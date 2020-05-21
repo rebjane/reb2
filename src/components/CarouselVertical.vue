@@ -22,8 +22,8 @@
             :img="item.url"
             :ripple="false"
             :isParallax="true"
-            :style="`opacity: ${show ? 1 : 0};`"
-            :horiz="true"
+            :horiz="horiz"
+            :scrollObj="scroll"
           />
           <!-- <transition appear name="h3" v-if="showHover && key === i">
             <h3>View.</h3>
@@ -54,9 +54,9 @@ export default {
     scroll: {
       handler() {
         // this.imageSizing();
-        this.show = true;
-      }
-      // immediate: true
+        // console.log(this.scroll.direction);
+      },
+      deep: true
     }
   },
   computed: {
@@ -69,8 +69,7 @@ export default {
       key: 0,
       ripple: false,
       resizeObj: {},
-      items: [],
-      show: false
+      items: []
     };
   },
   methods: {

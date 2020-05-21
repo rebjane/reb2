@@ -31,7 +31,7 @@ export default new Vuex.Store({
     setLoaded(state, loaded) {
       Vue.set(state, "loaded", loaded);
     },
-    setScroll(state, scroll) {
+    updateScroll(state, scroll) {
       Vue.set(state, "scroll", scroll);
     },
 

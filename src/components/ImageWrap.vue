@@ -21,8 +21,9 @@ import { mapState } from "vuex";
 export default {
   name: "Template",
   watch: {
-    scroll: {
+    scrollObj: {
       handler() {
+        // console.log("poarallax");
         this.transform();
         if (this.isParallax) {
           this.$refs.image.style = this.parallaxTransform;
@@ -55,6 +56,10 @@ export default {
     horiz: {
       type: Boolean,
       default: false
+    },
+    scrollObj: {
+      type: Object,
+      default: null
     }
   },
   data() {
@@ -78,16 +83,10 @@ export default {
   },
   beforeDestroy() {},
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen", "scroll"])
+    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
   },
   methods: {
     getMidPos() {
-      //for  vert
-      // var top = this.$refs.imgCol.getBoundingClientRect().top;
-      // var height = this.$refs.imgCol.getBoundingClientRect().height;
-      // this.midPos = top - (window.innerHeight - height) / 2;
-      // console.log("top ", top, "height ", height, "this.midPos ", this.midPos);
-      // console.log((window.innerHeight - height) / 2);
       if (this.horiz) {
         var left = this.$refs.imgCol.getBoundingClientRect().left;
         var width = this.$refs.imgCol.getBoundingClientRect().width;
@@ -103,12 +102,12 @@ export default {
       if (this.horiz) {
         this.parallaxTransform = `transform: translateX(${this.parallax(
           this.midPos,
-          this.scroll.pos
+          this.scrollObj.pos
         ) * this.speedFactor}px)`;
       } else {
         this.parallaxTransform = `transform: translateY(${this.parallax(
           this.midPos,
-          this.scroll.pos
+          this.scrollObj.pos
         ) * this.speedFactor}px)`;
       }
     },

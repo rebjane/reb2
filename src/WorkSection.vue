@@ -1,49 +1,88 @@
 <template>
-  <div ref="page" class="worksection">
-    <!-- <div class="scroll" ref="scroll"> -->
-    <!-- <div class="line" :style="`transform: translateY(${fixedTitlePos}px) translateX(-50%); `" /> -->
-
-    <CarouselVertical :horiz="false" @info="handleInfo" :data="carouselData" v-if="carouselData" />
-    <!-- </div> -->
-    <!-- <CarouselTitle
+  <div ref="workwrap" class="worksection-wrapper">
+    <div ref="work" class="worksection">
+      <!-- <div class="scroll" ref="scroll"> -->
+      <!-- <div class="line" :style="`transform: translateY(${fixedTitlePos}px) translateX(-50%); `" /> -->
+      <div class="workinner">
+        <CarouselVertical
+          :horiz="horiz"
+          @info="handleInfo"
+          :data="carouselData"
+          v-if="carouselData"
+        />
+        <!-- </div> -->
+        <!-- <CarouselTitle
       :info="info"
       :style="`transform: translateY(${fixedTitlePos}px);`"
       class="title"
       :text="'work'"
-    />-->
+        />-->
 
-    <!-- <SlidingText
+        <!-- <SlidingText
       :style="`transform: translateY(${fixedTitlePos}px);`"
       class="title"
       :text="'work'"
-    />-->
+        />-->
+      </div>
+      <div class="workinner">
+        <CarouselVertical
+          :horiz="false"
+          @info="handleInfo"
+          :data="carouselData"
+          v-if="carouselData"
+        />
+        <!-- </div> -->
+        <!-- <CarouselTitle
+      :info="info"
+      :style="`transform: translateY(${fixedTitlePos}px);`"
+      class="title"
+      :text="'work'"
+        />-->
 
-    <!-- <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" /> -->
+        <!-- <SlidingText
+      :style="`transform: translateY(${fixedTitlePos}px);`"
+      class="title"
+      :text="'work'"
+        />-->
+      </div>
+
+      <!-- <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" /> -->
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-// import Scrolly from "./scrolly.js";
+import Scrolly from "./scrolly.js";
 // import Scrollbar from "./components/Scrollbar.vue";
 
 export default {
   name: "Template",
   watch: {
-    scroll: {
-      handler(e) {
-        if (e.pos >= this.topPos && e.pos <= this.bottomPos) {
-          this.fixedTitlePos = e.pos - this.topPos;
-          this.fixedCTitlePos = e.pos - this.topPos;
-        }
+    inview() {
+      if (this.inview && !this.newscroll) {
+        this.$nextTick(() => {
+          this.newscroll = new Scrolly(this.$refs.workwrap, "v");
+          this.$emit("deafen", true);
+        });
       }
     }
+    //fixed title
+    // scroll: {
+    //   handler(e) {
+    //     if (e.pos >= this.topPos && e.pos <= this.bottomPos) {
+    //       this.fixedTitlePos = e.pos - this.topPos;
+    //       this.fixedCTitlePos = e.pos - this.topPos;
+    //     }
+    //   }
+    // }
   },
   components: {
     // Scrollbar
   },
   props: {
-    data: Object
+    data: Object,
+    inview: Boolean
   },
   data() {
     return {
@@ -51,12 +90,15 @@ export default {
       fixedCTitlePos: 0,
       topPos: null,
       bottomPos: null,
+      newscroll: null,
+      horiz: false,
       info: {
         title: this.data.primary.type_of_work,
         date: "default",
         key: 0
       },
-      carouselData: null
+      carouselData: null,
+      vertScroll: null
       // data: this.$projectCarousel
     };
   },
@@ -91,13 +133,18 @@ export default {
     this.$nextTick(() => {
       //   this.scroll = new Scrolly(this.$refs.page);
       // this.topPos = this.$refs.page.getBoundingClientRect().top;
-
       // this.bottomPos =
       //   this.$refs.page.getBoundingClientRect().bottom - window.innerHeight;
-      this.topPos = this.$refs.page.getBoundingClientRect().left;
-
-      this.bottomPos =
-        this.$refs.page.getBoundingClientRect().right - window.innerWidth;
+      //for fixed title
+      // if (this.horiz) {
+      //   this.topPos = this.$refs.work.getBoundingClientRect().left;
+      //   this.bottomPos =
+      //     this.$refs.work.getBoundingClientRect().right - window.innerWidth;
+      // } else {
+      //   this.topPos = this.$refs.work.getBoundingClientRect().top;
+      //   this.bottomPos =
+      //     this.$refs.work.getBoundingClientRect().bottom - window.innerHeight;
+      // }
     });
   }
 };
@@ -106,15 +153,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
-.worksection {
-  // padding-top: 100px;
+.worksection-wrapper {
   position: relative;
+}
+.worksection {
   height: 100%;
-  margin: auto;
-  // border-top: 1px solid $lbg;
-  // border-bottom: 1px solid $lbg;
-  padding-top: 1em;
-  padding-bottom: 1em;
+}
+.inner {
 }
 p {
   color: white;

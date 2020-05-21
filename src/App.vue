@@ -14,7 +14,14 @@
         <!-- </div> -->
         <!-- <div class="work"> -->
         <transition v-for="(item , i) in $home" :key="i">
-          <component :is="item.slice_type" :data="item" class="component" />
+          <component
+            :is="item.slice_type"
+            :ref="`component-${i}`"
+            :data="item"
+            :class="`component ${scroll.pos > i * winw ? 'inview' : null}`"
+            :inview="scroll.pos > i * (winw * 0.75) ? true : false"
+            @deafen="deafen"
+          />
         </transition>
         <!-- <SlidingText
           :uniquekey="3"
@@ -48,11 +55,16 @@ export default {
       handler(e) {
         if (e) {
           this.$nextTick(() => {
-            this.newscroll = new Scrolly(document.getElementById("app"));
+            this.newscroll = new Scrolly(document.getElementById("app"), "h");
           });
         }
       }
     },
+    // scroll: {
+    //   handler() {
+    //     this.$store.commit("updateScroll", this.newscroll);
+    //   }
+    // },
     deep: true,
     immediate: true
   },
@@ -64,37 +76,32 @@ export default {
     return {
       time: 0,
       newscroll: null,
-      rebImg: require("./assets/reb.jpg")
+      rebImg: require("./assets/reb.jpg"),
+      winw: window.innerWidth
       // canScroll: true
     };
   },
   computed: {
-    ...mapState(["signatureLoaded", "navOpen", "scrollAllowed"])
+    ...mapState(["signatureLoaded", "navOpen", "scrollAllowed", "scroll"])
   },
-  methods: {},
+  methods: {
+    deafen() {
+      this.newscroll.deafen();
+    }
+  },
   mounted() {
     // this.scroll = new Scrolly(document.getElementById("app"));
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" >
 /* canvas {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 } */
 @import "./styles/stylesheet.scss";
-img {
-  width: 100%;
-  height: 100%;
-}
-.slidingtext {
-  width: 100vw;
-}
-* {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
+
 #app-wrapper {
   height: 0;
 }
@@ -122,37 +129,34 @@ img {
   }
 }
 
-p {
+h1 {
+  font-family: $acumin;
+  // color: white;
   color: $bg;
-  overflow: hidden;
-}
 
-p,
+  font-weight: normal;
+}
+p {
+  font-family: $suisse;
+  color: $bg;
+}
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  overflow: hidden;
+  font-weight: normal;
+  color: $bg;
 }
 
-.intro {
+html {
   overflow: hidden;
-}
-.el,
-.sig {
-  position: relative;
-}
-.home {
-  position: relative;
-  height: 100vh;
-}
-// .sig {
-//   left: -$pad;
-// }
-.work {
-  position: relative;
   height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: auto;
 }
 </style>

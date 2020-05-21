@@ -43,7 +43,7 @@ async function loadingPct() {
       } else {
         store.commit("setLoadPct", store.state.loadPct + 1);
       }
-    }, 20);
+    }, 0);
   });
 }
 
