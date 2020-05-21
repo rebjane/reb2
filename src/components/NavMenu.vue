@@ -3,7 +3,7 @@
     <div class="main-menu-wrapper">
       <p class="rebecca">
         <router-link exact to="/">
-          <Reb2Logo :fill="'black'" />
+          <Reb2Logo class="logo" :fill="'black'" />
         </router-link>
       </p>
     </div>
@@ -85,8 +85,8 @@ export default {
 }
 .logo {
   width: 50px;
-  margin-top: 20px;
-  margin-left: 20px;
+  margin-top: 2em;
+  margin-left: 2em;
   top: 0;
   left: 0;
   position: fixed;
@@ -234,9 +234,10 @@ p {
 .socials {
   position: fixed;
   bottom: 0;
-  left: 25%;
-  margin-bottom: 2em;
-  transform: translateY(50%);
+  margin-bottom: 1.5em;
+  left: 50%;
+  transform: translateY(50%) translateX(-50%);
+
   ul {
     list-style: none;
     padding: 0;
@@ -246,7 +247,7 @@ p {
       display: inline-block;
       padding-right: 2em;
       position: relative;
-      font-size: 14px;
+      font-size: 12px;
       &:after {
         content: "";
         position: absolute;

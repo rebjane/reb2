@@ -1,9 +1,9 @@
 <template>
-  <div ref="page" class="workpage">
+  <div ref="page" class="worksection">
     <!-- <div class="scroll" ref="scroll"> -->
     <!-- <div class="line" :style="`transform: translateY(${fixedTitlePos}px) translateX(-50%); `" /> -->
 
-    <CarouselVertical @info="handleInfo" :data="carouselData" v-if="carouselData" />
+    <CarouselVertical :horiz="false" @info="handleInfo" :data="carouselData" v-if="carouselData" />
     <!-- </div> -->
     <!-- <CarouselTitle
       :info="info"
@@ -71,7 +71,7 @@ export default {
     }
   },
   mounted() {
-    // console.log("workpage data", this.$work);
+    // console.log("worksection data", this.$work);
 
     //handle what carousel data based on what's chosen on the home page!
     //add to it after the other data is done
@@ -106,11 +106,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
-.workpage {
+.worksection {
   // padding-top: 100px;
   position: relative;
   height: 100%;
   margin: auto;
+  // border-top: 1px solid $lbg;
+  // border-bottom: 1px solid $lbg;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 p {
   color: white;

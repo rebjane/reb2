@@ -26,10 +26,7 @@ class LoadComponents {
         require("./components/ImageGallery.vue").default
       );
 
-      Vue.component(
-        "ParallaxImage",
-        require("./components/ParallaxImage.vue").default
-      );
+      Vue.component("ImageWrap", require("./components/ImageWrap.vue").default);
 
       Vue.component(
         "BackgroundSection",

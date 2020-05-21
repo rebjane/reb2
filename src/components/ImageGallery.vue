@@ -4,7 +4,7 @@
     <div class="gallery">
       <transition v-for="(item, i) in data.items" :key="i">
         <div class="col">
-          <ParallaxImage
+          <ImageWrap
             class="image"
             :imgInfo="{img: item.image.url,
           src: item.image.url,

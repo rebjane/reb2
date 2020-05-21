@@ -1,7 +1,7 @@
 <template>
   <div ref="about" class="about">
     <div class="parallaximage">
-      <ParallaxImage :imgInfo="$aboutImg" :img="rebImg" />
+      <ImageWrap :imgInfo="$aboutImg" :img="rebImg" />
     </div>
   </div>
 </template>

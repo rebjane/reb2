@@ -25,7 +25,7 @@
         <!-- <WorkSection /> -->
         <!-- </div> -->
 
-        <BackgroundSection />
+        <!-- <BackgroundSection /> -->
         <!-- <AboutSection /> -->
 
         <!-- <WorkSection class="el" /> -->
@@ -33,7 +33,7 @@
 
       <!-- </div> -->
     </div>
-    <Scrollbar v-if="scrollAllowed & !navOpen" />
+    <!-- <Scrollbar v-if="scrollAllowed & !navOpen" /> -->
   </div>
 </template>
 

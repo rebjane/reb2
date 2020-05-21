@@ -1,28 +1,15 @@
 <template>
-  <div
-    ref="parallax"
-    class="parallax"
-    :style="`height: ${newHeight}px; width: ${resizeObj.imgWidth}px;`"
-  >
-    <div
-      ref="imgCol"
-      :style="`height: ${newHeight}px; width: ${resizeObj.imgWidth}px;`"
-      class="col col-1"
-    >
-      <RippleImage
-        v-if="ripple"
-        :style="`transform: translateX(${parallaxTransform}px); width: ${resizeObj.imgWidth}px;`"
-        :img="img"
-        :resize="resizeObj"
-      />
-      <img
-        :src="img"
-        :style="`transform: translateX(${parallaxTransform * speedFactor}px); width: ${resizeObj.imgWidth}px;`"
-      />
-      <p
-        v-if="imgInfo.title"
-        :style="`transform: translateX(${parallaxTransform * speedFactor}px); width: ${resizeObj.imgWidth}px;`"
-      >{{imgInfo.title}}</p>
+  <div ref="parallax" class="parallax">
+    <div ref="imgCol" class="col col-1">
+      <div v-if="ripple" ref="image">
+        <RippleImage :img="img" :resize="resizeObj" />
+      </div>
+      <div v-else ref="image">
+        <img :style="`width: ${
+            resizeObj.imgWidth
+          }px;`" :src="img" />
+        <p v-if="imgInfo.title">{{imgInfo.title}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -37,6 +24,9 @@ export default {
     scroll: {
       handler() {
         this.transform();
+        if (this.isParallax) {
+          this.$refs.image.style = this.parallaxTransform;
+        }
       }
     }
   },
@@ -57,6 +47,14 @@ export default {
     img: {
       type: String,
       default: null
+    },
+    isParallax: {
+      type: Boolean,
+      default: true
+    },
+    horiz: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -90,21 +88,50 @@ export default {
       // this.midPos = top - (window.innerHeight - height) / 2;
       // console.log("top ", top, "height ", height, "this.midPos ", this.midPos);
       // console.log((window.innerHeight - height) / 2);
-
-      var left = this.$refs.imgCol.getBoundingClientRect().left;
-      var width = this.$refs.imgCol.getBoundingClientRect().width;
-      this.midPos = left - (window.innerWidth - width) / 2;
+      if (this.horiz) {
+        var left = this.$refs.imgCol.getBoundingClientRect().left;
+        var width = this.$refs.imgCol.getBoundingClientRect().width;
+        this.midPos = left - (window.innerWidth - width) / 2;
+      } else {
+        //for  vert
+        var top = this.$refs.imgCol.getBoundingClientRect().top;
+        var height = this.$refs.imgCol.getBoundingClientRect().height;
+        this.midPos = top - (window.innerHeight - height) / 2;
+      }
     },
     transform() {
-      this.parallaxTransform = this.parallax(this.midPos, this.scroll.pos);
+      if (this.horiz) {
+        this.parallaxTransform = `transform: translateX(${this.parallax(
+          this.midPos,
+          this.scroll.pos
+        ) * this.speedFactor}px)`;
+      } else {
+        this.parallaxTransform = `transform: translateY(${this.parallax(
+          this.midPos,
+          this.scroll.pos
+        ) * this.speedFactor}px)`;
+      }
     },
     parallax(midPos, scrollPos) {
       return (midPos - scrollPos) * 0.7;
     },
     getSize(width, height) {
-      var colWidth = Math.min(window.innerWidth / 2, 400); //that hundred value's sorta random for now
-      var newHeight = (colWidth / width) * height;
-      var newWidth = colWidth;
+      // var colWidth = Math.min(window.innerWidth / 2, 400); //that hundred value's sorta random for now
+      // var newHeight = (colWidth / width) * height;
+      // var newWidth = colWidth;
+      var newHeight, newWidth;
+      if (this.imgInfo.heightResize) {
+        var colHeight = Math.min(
+          window.innerHeight / 2,
+          this.imgInfo.heightResize
+        ); //that hundred value's sorta random for now
+        newWidth = (colHeight / height) * width;
+        newHeight = colHeight;
+      } else {
+        var colWidth = Math.min(window.innerWidth / 2, 400); //that hundred value's sorta random for now
+        newHeight = (colWidth / width) * height;
+        newWidth = colWidth;
+      }
       return {
         width: newWidth,
         height: newHeight
@@ -158,5 +185,8 @@ h3 {
 .image {
   height: 100%;
   color: $bg;
+}
+p {
+  text-align: center;
 }
 </style>

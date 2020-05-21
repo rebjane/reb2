@@ -89,10 +89,11 @@ export default {
   top: 0;
 
   // padding-bottom: 2em;
-  margin-top: 2em;
+  margin-top: 1em;
 
   // width: 50%;
-  left: 25%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .scroll-bar {
   position: absolute;
@@ -116,7 +117,7 @@ ul {
     display: inline-block;
     padding-right: 2em;
     position: relative;
-    font-size: 14px;
+    font-size: 12px;
 
     &:after {
       content: "";

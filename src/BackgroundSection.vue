@@ -7,7 +7,7 @@
       @mouseover="textOpacity = 0.2, imgOpacity = 1"
       @mouseleave="textOpacity = 1, imgOpacity = 0.5"
     >
-      <ParallaxImage :imgInfo="$aboutImg" :img="rebImg" ref="parallax" />
+      <ImageWrap :imgInfo="$aboutImg" :img="rebImg" ref="parallax" />
     </div>
     <p class="pre">But who AM I?</p>
     <div class="nav-curtains">

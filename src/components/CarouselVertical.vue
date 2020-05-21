@@ -10,19 +10,20 @@
             >
               <img style="opacity: 0;" :src="item.url" v-if="key !== i" />
           </div>-->
-          <ParallaxImage
+          <div class="bordering" />
+          <ImageWrap
             class="image"
             :imgInfo="{title: item.title,
             img: item.url,
           src: item.url,
           width: item.width,
-          height: item.height}"
+          height: item.height,
+          heightResize: 500}"
             :img="item.url"
             :ripple="false"
-            :speedFactor="Math.random() * 2 + 1"
-            ref="parallax"
+            :isParallax="true"
             :style="`opacity: ${show ? 1 : 0};`"
-            :caption="'name'"
+            :horiz="true"
           />
           <!-- <transition appear name="h3" v-if="showHover && key === i">
             <h3>View.</h3>
@@ -43,12 +44,16 @@ export default {
     data: {
       type: Array,
       default: null
+    },
+    horiz: {
+      type: Boolean,
+      default: true
     }
   },
   watch: {
     scroll: {
       handler() {
-        this.imageSizing();
+        // this.imageSizing();
         this.show = true;
       }
       // immediate: true
@@ -77,17 +82,20 @@ export default {
     },
     imagePos() {
       this.$refs.carousel.children.forEach((item, i) => {
-        //for vert
-        // var midPos = Math.abs(
-        //   (window.innerHeight - item.getBoundingClientRect().height) / 2 -
-        //     item.getBoundingClientRect().top
-        // );
-
         //for horiz
-        var midPos = Math.abs(
-          (window.innerWidth - item.getBoundingClientRect().width) / 2 -
-            item.getBoundingClientRect().left
-        );
+        var midPos;
+        if (this.horiz) {
+          midPos = Math.abs(
+            (window.innerWidth - item.getBoundingClientRect().width) / 2 -
+              item.getBoundingClientRect().left
+          );
+        } else {
+          //for vert
+          midPos = Math.abs(
+            (window.innerHeight - item.getBoundingClientRect().height) / 2 -
+              item.getBoundingClientRect().top
+          );
+        }
         this.midPos.push({
           midPos: midPos,
           key: i,
@@ -113,19 +121,18 @@ export default {
         //where its middle y coordinate is located, relative to the page
         let midPos = this.midPos[i].midPos;
         //the middle position, less your scroll position (generates linear relative value to your position and each element's midPos)
-        let size = Math.abs(midPos - this.scroll);
+        let size = Math.abs(midPos - this.scroll.pos);
 
         let opacity = Math.min(size / 600, 1); //the lower the hundred val, the quicker it'll fade
-        opacity = 1 - opacity;
+        opacity = Math.max(0.5, 1 - opacity);
         //divided by 1000 and cannot exceed 1
         size = Math.min(size / 1000, 1);
         //size is 1 less the calculation
         size = 1 - size;
         //size does not go below 0.7
-        size = Math.max(size, 0.7);
+        size = Math.max(size, 0.9);
 
         item.style = `transform: scale(${size}); opacity: ${opacity};`;
-
         //-----------
         let iW = this.items[i].width;
         let iH = this.items[i].height;
@@ -212,7 +219,7 @@ export default {
 .image {
   background-repeat: no-repeat;
   background-size: contain;
-  max-width: 60%;
+  // max-width: 60%;
   background-position: center;
   // border: 1px solid $bg;
   // height: 736px;
@@ -234,25 +241,34 @@ export default {
 }
 .image-wrap {
   //for horiz
-  margin-left: -15%;
-  margin-right: -15%;
-  &:nth-child(3) {
-    margin-left: -30%;
-    margin-right: -30%;
-  }
-
-  //for vertical
-  // margin-top: -15%;
-  // margin-bottom: -15%;
   // &:nth-child(3) {
-  //   margin-top: -30%;
-  //   margin-bottom: -30%;
+  //   margin-left: -30%;
+  //   margin-right: -30%;
   // }
 
+  // //for vertical
+  // // margin-top: -15%;
+  // // margin-bottom: -15%;
+  // // &:nth-child(3) {
+  // //   margin-top: -30%;
+  // //   margin-bottom: -30%;
+  // // }
+
+  // // width: 100%;
   // width: 100%;
-  width: 50%;
+  padding: 1em;
+  margin: 1em;
   display: inline-block;
+  position: relative;
   overflow: visible;
+  .bordering {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 80%;
+    width: 100%;
+    border: 1px solid black;
+  }
 }
 .hover {
   position: absolute;
