@@ -176,7 +176,7 @@ span {
   right: 0;
   transform: translateY(-50%);
   top: 50%;
-  margin-right: 3em;
+  margin-right: 6em;
 }
 p {
   // font-family: $acumin;

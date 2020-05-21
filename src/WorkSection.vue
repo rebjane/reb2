@@ -5,12 +5,12 @@
 
     <CarouselVertical @info="handleInfo" :data="carouselData" v-if="carouselData" />
     <!-- </div> -->
-    <CarouselTitle
+    <!-- <CarouselTitle
       :info="info"
       :style="`transform: translateY(${fixedTitlePos}px);`"
       class="title"
       :text="'work'"
-    />
+    />-->
 
     <!-- <SlidingText
       :style="`transform: translateY(${fixedTitlePos}px);`"
@@ -107,9 +107,10 @@ export default {
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
 .workpage {
-  padding-top: 100px;
+  // padding-top: 100px;
   position: relative;
   height: 100%;
+  margin: auto;
 }
 p {
   color: white;

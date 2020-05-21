@@ -16,10 +16,13 @@
         :resize="resizeObj"
       />
       <img
-        v-else
         :src="img"
         :style="`transform: translateX(${parallaxTransform * speedFactor}px); width: ${resizeObj.imgWidth}px;`"
       />
+      <p
+        v-if="imgInfo.title"
+        :style="`transform: translateX(${parallaxTransform * speedFactor}px); width: ${resizeObj.imgWidth}px;`"
+      >{{imgInfo.title}}</p>
     </div>
   </div>
 </template>
@@ -129,11 +132,6 @@ export default {
   // height: 100%;
   // margin: 0 $pad;
 }
-p {
-  color: $bg;
-  margin-bottom: 4em;
-  margin-top: 6em;
-}
 h3 {
   font-family: $acumin;
   font-size: 60px;
@@ -156,5 +154,9 @@ h3 {
 }
 .col-1 {
   float: left;
+}
+.image {
+  height: 100%;
+  color: $bg;
 }
 </style>

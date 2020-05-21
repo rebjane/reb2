@@ -11,10 +11,11 @@
     <!-- <Loading v-if="!loaded" /> -->
     <Loading v-if="!loaded" />
 
-    <CursorThing v-if="loaded" />
     <NavMenu v-if="showNav && loaded || loaded " />
     <!-- && signatureLoaded -->
     <NavScreen v-if="navOpen" />
+    <CursorThing v-if="loaded" />
+
     <!-- <div class="nav-curtains">
       <transition appear name="left" v-if="navOpen">
         <div class="leftpane" />

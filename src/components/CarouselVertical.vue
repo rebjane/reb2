@@ -3,27 +3,27 @@
     <div ref="carousel" class="carousel" v-if="items.length">
       <transition v-for="(item, i) in items" :key="i">
         <div class="image-wrap">
-          <transition appear name="hover">
-            <!-- <div
+          <!-- <div
               :ref="`image-${i}`"
               class="image"
               :style="`height: ${item.height}px; width: ${item.width}px; background-image: url(${item.url});`"
             >
               <img style="opacity: 0;" :src="item.url" v-if="key !== i" />
-            </div>-->
-            <ParallaxImage
-              class="image"
-              :imgInfo="{img: item.url,
+          </div>-->
+          <ParallaxImage
+            class="image"
+            :imgInfo="{title: item.title,
+            img: item.url,
           src: item.url,
           width: item.width,
           height: item.height}"
-              :img="item.url"
-              :ripple="false"
-              :speedFactor="Math.random() * 2 + 1"
-              ref="parallax"
-              :style="`opacity: ${show ? 1 : 0};`"
-            />
-          </transition>
+            :img="item.url"
+            :ripple="false"
+            :speedFactor="Math.random() * 2 + 1"
+            ref="parallax"
+            :style="`opacity: ${show ? 1 : 0};`"
+            :caption="'name'"
+          />
           <!-- <transition appear name="h3" v-if="showHover && key === i">
             <h3>View.</h3>
           </transition>-->
@@ -206,7 +206,7 @@ export default {
 @import "../styles/stylesheet.scss";
 .carousel-vertical {
   //   max-height: 100vh;
-  padding-bottom: 200px;
+  // padding-bottom: 200px;
   margin: auto;
 }
 .image {
@@ -253,9 +253,6 @@ export default {
   width: 50%;
   display: inline-block;
   overflow: visible;
-  &:last-child {
-    // margin-bottom: 5em;
-  }
 }
 .hover {
   position: absolute;
@@ -285,17 +282,6 @@ img {
 }
 .carousel {
   margin: auto;
-}
-.hover-enter,
-.hover-leave-to {
-  opacity: 0;
-}
-.hover-enter-active,
-.hover-leave-active {
-  @include ease(opacity);
-}
-.hover-enter-to {
-  opacity: 0.3;
 }
 
 .h3-enter,

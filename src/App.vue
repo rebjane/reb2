@@ -95,6 +95,9 @@ img {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+#app-wrapper {
+  height: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

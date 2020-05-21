@@ -1,8 +1,13 @@
 <template>
   <div class="scrollbar-div">
-    <div class="scroll-line" ref="scrollline" />
-
-    <div ref="scrollbar" class="scroll-bar"></div>
+    <div class="scroll-line" ref="scrollline">
+      <ul>
+        <li v-for="(item, i) in menu" :key="i">
+          <span>{{item.title}}</span>
+        </li>
+      </ul>
+      <div ref="scrollbar" class="scroll-bar"></div>
+    </div>
   </div>
 </template>
 
@@ -33,7 +38,24 @@ export default {
   data() {
     return {
       slwidth: null,
-      sbwidth: null
+      sbwidth: null,
+      menu: [
+        {
+          title: "INTRO"
+        },
+        {
+          title: "DESIGN"
+        },
+        {
+          title: "ILLUSTRATION"
+        },
+        {
+          title: "ABOUT"
+        },
+        {
+          title: "CONTACT"
+        }
+      ]
     };
   },
   computed: {
@@ -58,23 +80,61 @@ export default {
   height: 100vh;
   position: relative;
   pointer-events: none;
+  z-index: 10;
 }
 .scroll-line {
-  border-top: 1px solid black;
+  // border-top: 1px solid black;
   position: absolute;
-  bottom: 0;
-  padding-bottom: 2em;
-  width: 50%;
+  // bottom: 0;
+  top: 0;
+
+  // padding-bottom: 2em;
+  margin-top: 2em;
+
+  // width: 50%;
   left: 25%;
 }
 .scroll-bar {
   position: absolute;
+  // bottom: 0;
   bottom: 0;
-  height: 10px;
+  height: 3px;
   width: 60px;
   background: black;
-  margin-bottom: 2em;
+  // margin-bottom: 2em;
+  // margin-top: 1em;
   transform: translateY(50%);
-  left: 25%;
+  left: 0;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+
+  li {
+    display: inline-block;
+    padding-right: 2em;
+    position: relative;
+    font-size: 14px;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2em;
+      z-index: 1;
+      background: white;
+
+      height: calc(100% + 3px);
+    }
+    :not(:last-child) {
+      padding-right: 0;
+    }
+    span {
+      font-family: $acuminc;
+    }
+  }
 }
 </style>

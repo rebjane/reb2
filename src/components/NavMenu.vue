@@ -1,47 +1,24 @@
 <template>
   <div class="nav">
-    <!-- <router-link exact to="/">
-      <Reb2Logo class="logo" />
-    </router-link>-->
-    <!-- <div class="side-title">
-      <SlidingText :rotate="270" :speed="50" :fs="20" :text="'work'" />
-    </div>-->
-    <!-- <Hamburger class="menu" @click.native="toggleNav" /> -->
     <div class="main-menu-wrapper">
       <p class="rebecca">
-        <!-- Rebecca
-        <br />Jane-->
         <router-link exact to="/">
-          <Reb2Logo />
+          <Reb2Logo :fill="'black'" />
         </router-link>
       </p>
-      <!-- <div class="main-menu">
-        <span>
-          <a>about</a>
-        </span>
-        <span>
-          <a>work</a>
-        </span>
-        <span>
-          <a>contact</a>
-        </span>
-      </div>-->
     </div>
-
-    <!-- <transition appear v-if="time.timeString" name="time">
-        <span class="time">{{ time.timeString }}</span>
-    </transition>-->
-    <!-- <transition v-if="signatureLoaded"> -->
     <transition appear v-if="time.timeString" name="time">
       <p class="time">{{ time.timeString }}</p>
     </transition>
-    <!-- <transition appear name="line">
-      <div class="line" />
-    </transition>-->
-    <!-- <transition appear name="bottom">
-      <p class="bottom-text">Developed with love by myself.</p>
-    </transition>-->
-    <!-- </transition> -->
+    <!-- main menu is in this component -->
+    <Scrollbar v-if=" !navOpen" />
+    <div class="socials">
+      <ul>
+        <li v-for="(item, i) in socialmedia" :key="i">
+          <span>{{item.title}}</span>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -66,7 +43,21 @@ export default {
   },
   data() {
     return {
-      time: new Time()
+      time: new Time(),
+      socialmedia: [
+        {
+          title: "instagram",
+          link: ""
+        },
+        {
+          title: "behance",
+          link: ""
+        },
+        {
+          title: "creative market",
+          link: ""
+        }
+      ]
     };
   },
   computed: {
@@ -108,7 +99,7 @@ export default {
   overflow: visible;
   height: 0%;
   width: 100%;
-  mix-blend-mode: difference;
+  // mix-blend-mode: difference;
 }
 .menu {
   position: fixed;
@@ -121,7 +112,8 @@ export default {
 
 .bottom-text {
   position: fixed;
-  color: white;
+  // color: white;
+  color: black;
   bottom: 0;
   margin-bottom: 2em;
   left: 50%;
@@ -162,7 +154,9 @@ export default {
   margin-bottom: 2em;
   // transform: translateX(-50%);
 
-  color: white;
+  // color: white;
+  color: black;
+
   // writing-mode: vertical-lr;
   font-size: 14px;
 }
@@ -181,7 +175,9 @@ export default {
   @include ease(all);
 }
 p {
-  color: white;
+  // color: white;
+  color: black;
+
   overflow: hidden;
   font-size: 18px;
 }
@@ -198,7 +194,9 @@ p {
   .rebecca {
     text-align: center;
     font-family: $suisse;
-    color: white;
+    // color: white;
+    color: black;
+
     font-size: 12px;
     margin-left: 3em;
     width: 6em;
@@ -216,7 +214,9 @@ p {
 
     span {
       font-family: $acumin;
-      color: white;
+      // color: white;
+      color: black;
+
       // padding-bottom: 2em;
       padding-right: 2em;
       font-size: 18px;
@@ -229,6 +229,42 @@ p {
     //   padding-left: 4em;
     //   color: #494949;
     // }
+  }
+}
+.socials {
+  position: fixed;
+  bottom: 0;
+  left: 25%;
+  margin-bottom: 2em;
+  transform: translateY(50%);
+  ul {
+    list-style: none;
+    padding: 0;
+    cursor: pointer;
+
+    li {
+      display: inline-block;
+      padding-right: 2em;
+      position: relative;
+      font-size: 14px;
+      &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 2em;
+        z-index: 4;
+        background: white;
+
+        height: calc(100% + 3px);
+      }
+      :not(:last-child) {
+        padding-right: 0;
+      }
+      span {
+        font-family: $acuminc;
+      }
+    }
   }
 }
 </style>

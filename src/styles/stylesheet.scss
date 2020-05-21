@@ -1,7 +1,8 @@
 $acpath: "/fonts/AcuminProWide-Light";
-$acpathit: "/fonts/AcuminProWideBook-Italic";
+$acpathcon: "/fonts/AcuminProSemiCond-Regular";
 $supath: "/fonts/SuisseWorks-Light";
 $acumin: "Acumin Pro Wide";
+$acuminc: "Acumin Pro SemiCondensed";
 $suisse: "Suisse Works";
 $acit: "Acumin Pro Wide Italic";
 $bg: #161616;
@@ -38,6 +39,19 @@ $pad: 124px;
 }
 
 @font-face {
+  font-family: "Acumin Pro SemiCondensed";
+  src: url($acpathcon+".eot");
+  src: url($acpathcon+".woff") format("woff"),
+    url($acpathcon+".woff2") format("woff2"),
+    url($acpathcon+".eot?#iefix") format("embedded-opentype"),
+    url($acpathcon+".ttf") format("truetype");
+  src: local("Acumin Pro Wide"), local("Acumin");
+  font-weight: normal;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
   font-family: "Suisse Works";
   src: url($supath+".eot");
   src: url($supath+".eot?#iefix") format("embedded-opentype"),
@@ -46,13 +60,6 @@ $pad: 124px;
   font-weight: normal;
   font-style: normal;
   text-rendering: optimizeLegibility;
-}
-
-@font-face {
-  font-family: "Acumin Pro Wide Italic";
-  src: url($acpathit+".ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }
 
 .wavetext {
