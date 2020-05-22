@@ -1,7 +1,14 @@
 <template>
   <div ref="about" class="about">
     <div class="parallaximage">
-      <ImageWrap :imgInfo="$aboutImg" :img="rebImg" />
+      <ImageWrap
+        :ripple="true"
+        :isParallax="true"
+        :horiz="true"
+        :imgInfo="$aboutImg"
+        :img="rebImg"
+        :scrollObj="scroll"
+      />
     </div>
   </div>
 </template>
@@ -27,10 +34,12 @@ export default {
   },
   beforeDestroy() {},
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
+    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen", "scroll"])
   },
   methods: {},
-  mounted() {}
+  mounted() {
+    console.log(this.$aboutImg);
+  }
 };
 </script>
 

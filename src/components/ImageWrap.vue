@@ -4,7 +4,7 @@
       <div v-if="ripple" ref="image">
         <RippleImage :img="img" :resize="resizeObj" />
       </div>
-      <div v-else ref="image">
+      <div class="image" ref="image" v-else>
         <img :style="`width: ${
             resizeObj.imgWidth
           }px;`" :src="img" />
@@ -130,7 +130,7 @@ export default {
       } else {
         var colWidth = Math.min(
           window.innerWidth / 2,
-          this.imgInfo.widthResize
+          this.imgInfo.widthResize || 400 //random value
         ); //that hundred value's sorta random for now
         newHeight = (colWidth / width) * height;
         newWidth = colWidth;

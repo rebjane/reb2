@@ -8,7 +8,7 @@
         <transition v-for="(item , i) in $home" :key="i">
           <div
             :ref="`component-${i} ${item.slice_type === 'WorkSection' ? 'vert' : null}`"
-            :class="`component ${scroll.pos > i * winw ? 'inview' : 'hidden'}`"
+            :class="`component ${scroll.pos > i * (winw * 0.75) ? 'inview' : 'hidden'}`"
           >
             <component
               :inview="scroll.pos > i * (winw * 0.75) ? true : false"
