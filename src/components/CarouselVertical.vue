@@ -23,7 +23,7 @@
             :ripple="false"
             :isParallax="true"
             :horiz="horiz"
-            :scrollObj="scroll"
+            :scrollObj="carouselScroll"
           />
           <!-- <transition appear name="h3" v-if="showHover && key === i">
             <h3>View.</h3>
@@ -55,6 +55,9 @@ export default {
       handler() {
         // this.imageSizing();
         // console.log(this.scroll.direction);
+        if (this.scroll.direction === "v") {
+          this.carouselScroll = this.scroll;
+        }
       },
       deep: true
     }
@@ -69,7 +72,8 @@ export default {
       key: 0,
       ripple: false,
       resizeObj: {},
-      items: []
+      items: [],
+      carouselScroll: null
     };
   },
   methods: {
@@ -211,10 +215,17 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
 .carousel-vertical {
-  //   max-height: 100vh;
+  max-height: 100vh;
   // padding-bottom: 200px;
+  height: 100%;
   margin: auto;
 }
+.carousel {
+  margin: auto;
+  width: 100%;
+  height: 100%;
+}
+
 .image {
   background-repeat: no-repeat;
   background-size: contain;
@@ -260,6 +271,7 @@ export default {
   display: inline-block;
   position: relative;
   overflow: visible;
+  width: 30%;
   .bordering {
     position: absolute;
     bottom: 0;
@@ -294,9 +306,6 @@ h3 {
 }
 img {
   width: 100%;
-}
-.carousel {
-  margin: auto;
 }
 
 .h3-enter,

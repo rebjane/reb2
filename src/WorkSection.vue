@@ -3,48 +3,35 @@
     <div ref="work" class="worksection">
       <!-- <div class="scroll" ref="scroll"> -->
       <!-- <div class="line" :style="`transform: translateY(${fixedTitlePos}px) translateX(-50%); `" /> -->
-      <div class="workinner">
-        <CarouselVertical
-          :horiz="horiz"
-          @info="handleInfo"
-          :data="carouselData"
-          v-if="carouselData"
-        />
-        <!-- </div> -->
-        <!-- <CarouselTitle
+
+      <CarouselVertical :horiz="horiz" @info="handleInfo" :data="carouselData" v-if="carouselData" />
+      <!-- </div> -->
+      <!-- <CarouselTitle
       :info="info"
       :style="`transform: translateY(${fixedTitlePos}px);`"
       class="title"
       :text="'work'"
-        />-->
+      />-->
 
-        <!-- <SlidingText
+      <!-- <SlidingText
       :style="`transform: translateY(${fixedTitlePos}px);`"
       class="title"
       :text="'work'"
-        />-->
-      </div>
-      <div class="workinner">
-        <CarouselVertical
-          :horiz="false"
-          @info="handleInfo"
-          :data="carouselData"
-          v-if="carouselData"
-        />
-        <!-- </div> -->
-        <!-- <CarouselTitle
+      />-->
+
+      <!-- </div> -->
+      <!-- <CarouselTitle
       :info="info"
       :style="`transform: translateY(${fixedTitlePos}px);`"
       class="title"
       :text="'work'"
-        />-->
+      />-->
 
-        <!-- <SlidingText
+      <!-- <SlidingText
       :style="`transform: translateY(${fixedTitlePos}px);`"
       class="title"
       :text="'work'"
-        />-->
-      </div>
+      />-->
 
       <!-- <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" /> -->
     </div>
@@ -158,9 +145,9 @@ export default {
 }
 .worksection {
   height: 100%;
+  min-height: 200vh;
 }
-.inner {
-}
+
 p {
   color: white;
 }

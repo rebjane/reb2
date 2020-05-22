@@ -23,7 +23,6 @@ export default {
   watch: {
     scrollObj: {
       handler() {
-        // console.log("poarallax");
         this.transform();
         if (this.isParallax) {
           this.$refs.image.style = this.parallaxTransform;
@@ -83,7 +82,7 @@ export default {
   },
   beforeDestroy() {},
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
+    ...mapState(["navOpen"])
   },
   methods: {
     getMidPos() {
@@ -96,6 +95,8 @@ export default {
         var top = this.$refs.imgCol.getBoundingClientRect().top;
         var height = this.$refs.imgCol.getBoundingClientRect().height;
         this.midPos = top - (window.innerHeight - height) / 2;
+
+        console.log(top, height);
       }
     },
     transform() {
@@ -138,9 +139,12 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
+    // this.$nextTick(() => {
+    //   this.getMidPos();
+    // });
+    setTimeout(() => {
       this.getMidPos();
-    });
+    }, 500); //temporary fix
   }
 };
 </script>

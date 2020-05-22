@@ -7,12 +7,12 @@ export default class Scrolly {
     this.direction = direction; //either v for vertical, or h for horizontal
     this.elParent = el;
     this.el = this.elParent.children[0];
-    // this.elHeight = this.elParent.children[0].getBoundingClientRect().height;
     this.elWidth = this.elParent.children[0].getBoundingClientRect().width;
     this.elHeight = this.elParent.children[0].getBoundingClientRect().height;
-
+    this.preDeafPos = null;
     this.pos = 0;
     this.dir = 0;
+    this.isScrolling = false;
     this.scrollTo = 0;
     if (direction === "h") {
       this.max = this.el.offsetWidth - window.innerWidth;
@@ -22,11 +22,18 @@ export default class Scrolly {
     this.eventListeners = this.eventListeners.bind(this);
     this.scroll = this.scroll.bind(this);
     this.eventListeners();
-    this.scroll();
   }
 
   eventListeners() {
     window.addEventListener("mousewheel", (e) => {
+      if (this.deaf) {
+        return;
+      }
+      if (!this.isScrolling) {
+        this.scroll();
+        this.isScrolling = true;
+      }
+
       this.dir = Math.abs(e.deltaY) / e.deltaY;
 
       this.scrollTo += e.deltaY;
@@ -37,16 +44,20 @@ export default class Scrolly {
   }
 
   scroll() {
-    if (!this.deaf) {
-      requestAnimationFrame(this.scroll);
-    } else {
+    this.pos += (this.scrollTo - this.pos) / 20;
+    this.pos = Number(this.pos.toFixed(2));
+    //stop from running animation frame if scroll is deafened and you come to a stop
+    if (this.isScrolling && this.preDeafPos === this.pos) {
+      this.isScrolling = false;
       cancelAnimationFrame(this.scroll);
       return;
     }
-    this.pos += (this.scrollTo - this.pos) / 20;
 
+    requestAnimationFrame(this.scroll);
+
+    this.preDeafPos = this.pos;
     store.commit("updateScroll", {
-      pos: Number(this.pos.toFixed(2)),
+      pos: this.pos,
       dir: this.dir,
       elWidth: this.elWidth,
       elHeight: this.elHeight,
@@ -54,23 +65,10 @@ export default class Scrolly {
       el: this.el,
     });
 
-    // Vue.set("scroll", {
-    //   pos: Number(this.pos.toFixed(2)),
-    //   dir: this.dir,
-    //   elWidth: this.elWidth,
-    //   elHeight: this.elHeight,
-    //   direction: this.direction,
-    //   el: this.el,
-    // });
-
-    // this.el.style.transform = `translate3d(0,${-1 * this.pos}px,0)`; //vertical
-    // console.log(store.state.scroll.direction);
     if (this.direction === "h") {
-      this.el.style.transform = `translate3d(${-1 *
-        Number(this.pos.toFixed(2))}px, 0,0)`; //horizontal
+      this.el.style.transform = `translate3d(${-1 * this.pos}px, 0,0)`; //horizontal
     } else {
-      this.el.style.transform = `translate3d(0, ${-1 *
-        Number(this.pos.toFixed(2))}px,0)`; //vertical
+      this.el.style.transform = `translate3d(0, ${-1 * this.pos}px,0)`; //vertical
     }
   }
 
