@@ -1,8 +1,20 @@
 <template>
   <div ref="parallax" class="parallax">
-    <div ref="imgCol" class="col col-1">
+    <div
+      ref="imgCol"
+      class="col"
+      :style="`width: ${
+            resizeObj.imgWidth
+          }px;`"
+    >
       <div v-if="ripple" ref="image">
-        <RippleImage :img="img" :resize="resizeObj" />
+        <RippleImage
+          :style="`height: ${
+            resizeObj.imgHeight
+          }px;`"
+          :img="img"
+          :resize="resizeObj"
+        />
       </div>
       <div class="image" ref="image" v-else>
         <img :style="`width: ${
@@ -158,7 +170,10 @@ export default {
 .parallax {
   // display: block;
   position: relative;
-  height: 100vh;
+  // height: 100vh;
+  // width: 100%;
+  width: auto;
+  display: inline-block;
   margin: auto;
   overflow: visible;
 
@@ -175,7 +190,7 @@ h3 {
   display: inline-block;
 }
 .col {
-  width: 50%;
+  width: max-content;
   display: inline-block;
   text-align: left;
   position: relative;
@@ -185,9 +200,7 @@ h3 {
   border-top: 1px solid $bg;
   height: 1px;
 }
-.col-1 {
-  float: left;
-}
+
 .image {
   height: 100%;
   color: $bg;

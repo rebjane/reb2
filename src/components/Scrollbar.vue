@@ -48,6 +48,9 @@ export default {
         },
         {
           title: "ILLUSTRATION"
+        },
+        {
+          title: "ABOUT"
         }
       ]
     };

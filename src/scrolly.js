@@ -26,7 +26,8 @@ export default class Scrolly {
 
   scrollTo(destination) {
     this.scrollDestination = destination;
-    if (!this.isScrolling && !this.deaf) {
+    this.deaf = false;
+    if (!this.isScrolling) {
       this.scroll();
       this.isScrolling = true;
     }
