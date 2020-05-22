@@ -87,7 +87,8 @@ export default {
   height: 100vh;
   // width: 100%;
   // background: $bg;
-  background: white;
+  // background: white;
+  background: $lbg;
 }
 .scroll {
   position: relative;

@@ -10,7 +10,7 @@
             >
               <img style="opacity: 0;" :src="item.url" v-if="key !== i" />
           </div>-->
-          <div class="bordering" />
+          <!-- <div class="bordering" /> -->
           <ImageWrap
             class="image"
             :imgInfo="{title: item.title,
@@ -18,10 +18,10 @@
           src: item.url,
           width: item.width,
           height: item.height,
-          heightResize: 500}"
+          widthResize: 300}"
             :img="item.url"
             :ripple="false"
-            :isParallax="true"
+            :isParallax="false"
             :horiz="horiz"
             :scrollObj="carouselScroll"
           />
@@ -51,19 +51,19 @@ export default {
     }
   },
   watch: {
-    scroll: {
+    vertscroll: {
       handler() {
         // this.imageSizing();
         // console.log(this.scroll.direction);
-        if (this.scroll.direction === "v") {
-          this.carouselScroll = this.scroll;
+        if (this.vertscroll.direction === "v") {
+          this.carouselScroll = this.vertscroll;
         }
       },
       deep: true
     }
   },
   computed: {
-    ...mapState(["signatureLoaded", "navOpen", "scroll"])
+    ...mapState(["signatureLoaded", "navOpen", "vertscroll"])
   },
   data() {
     return {
@@ -124,7 +124,7 @@ export default {
         //where its middle y coordinate is located, relative to the page
         let midPos = this.midPos[i].midPos;
         //the middle position, less your scroll position (generates linear relative value to your position and each element's midPos)
-        let size = Math.abs(midPos - this.scroll.pos);
+        let size = Math.abs(midPos - this.vertscroll.pos);
 
         let opacity = Math.min(size / 600, 1); //the lower the hundred val, the quicker it'll fade
         opacity = Math.max(0.5, 1 - opacity);
@@ -255,23 +255,13 @@ export default {
   //   margin-left: -30%;
   //   margin-right: -30%;
   // }
-
-  // //for vertical
-  // // margin-top: -15%;
-  // // margin-bottom: -15%;
-  // // &:nth-child(3) {
-  // //   margin-top: -30%;
-  // //   margin-bottom: -30%;
-  // // }
-
-  // // width: 100%;
-  // width: 100%;
-  padding: 1em;
   margin: 1em;
+
+  padding: 1em;
   display: inline-block;
   position: relative;
   overflow: visible;
-  width: 30%;
+  width: 40%;
   .bordering {
     position: absolute;
     bottom: 0;

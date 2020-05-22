@@ -1,7 +1,21 @@
 <template>
-  <div ref="workwrap" class="worksection-wrapper outer">
-    <div ref="work" class="worksection">
-      <CarouselVertical :horiz="horiz" @info="handleInfo" :data="carouselData" v-if="carouselData" />
+  <div ref="workwrap" class="worksection-wrapper">
+    <div class="info">
+      <h2 v-if="data.primary.heading.length">{{$cms.textField(data.primary.heading)}}</h2>
+      <p v-if="data.primary.desc.length">{{$cms.textField(data.primary.desc)}}</p>
+      <p>Scroll</p>
+    </div>
+    <div class="scroll outer" ref="scroll">
+      <div ref="work" class="worksection">
+        <CarouselVertical
+          ref="carousel"
+          class="carousel"
+          :horiz="horiz"
+          @info="handleInfo"
+          :data="carouselData"
+          v-if="carouselData"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -14,9 +28,9 @@ import Scrolly from "./scrolly.js";
 export default {
   name: "Template",
   watch: {
-    inview() {
-      this.toggleScroll(this.inview);
-    }
+    // inview() {
+    //   this.toggleScroll(this.inview);
+    // }
   },
   components: {
     // Scrollbar
@@ -59,10 +73,14 @@ export default {
       // this.info.title = "work";
     },
     toggleScroll(mouseOn) {
+      //ensure the scroll has already been made
       if (this.newscroll) {
+        //if in view an d mouse is  over the element
         if (mouseOn && this.inview) {
           this.newscroll.listen();
           this.$emit("deafenGlobalScroll", true);
+
+          //if themouse moves away,indicates i want to scroll away
         } else if (!mouseOn) {
           this.newscroll.deafen();
           this.$emit("deafenGlobalScroll", false);
@@ -71,11 +89,18 @@ export default {
     }
   },
   mounted() {
+    console.log(this.data);
+
+    //filter by what kind of work (ie. work, illustration, design)
     this.carouselData = this.$work.filter(
       i => i.type_of_work === this.data.primary.type_of_work
     );
-    this.newscroll = new Scrolly(this.$refs.workwrap, "v");
+
+    //initialize a new vertical scroll and deafen
+    this.newscroll = new Scrolly(this.$refs.scroll, "v");
     this.newscroll.deafen();
+
+    //listener for when you want to scroll out of
     this.$refs.workwrap.addEventListener("mousemove", e => {
       if (e.target.className.includes("outer")) {
         this.toggleScroll(false);
@@ -96,23 +121,41 @@ export default {
 .worksection {
   height: 100%;
   min-height: 200vh;
-  margin: 0 10em;
   position: relative;
+  background: $lbg;
+
+  @include ease(background);
+  &:hover {
+    background: white;
+  }
 }
 
-.mousedetectarea {
-  position: absolute;
-  // pointer-events: none;
-  height: 100%;
-  left: 0;
-  top: 0;
-  width: 100%;
-  z-index: 2;
+.info {
+  margin-top: 10%;
+  margin-left: 2em;
+  float: left;
+  text-align: left;
+  max-width: 20%;
+  border-bottom: 1px solid $bg;
+
+  h2 {
+    font-size: 60px;
+    border-bottom: 1px solid $bg;
+    margin: 0;
+    font-family: $acumin;
+  }
+  .desc {
+    margin-bottom: 3em;
+  }
+  pointer-events: none;
 }
 
-p {
-  color: white;
+.scroll {
+  // display: inline-block;
+  padding: 0 15% 0 25%;
+  max-width: 90%;
 }
+
 .title {
   position: absolute;
   top: 0;

@@ -81,6 +81,7 @@ export default {
   position: relative;
   pointer-events: none;
   z-index: 10;
+  mix-blend-mode: difference;
 }
 .scroll-line {
   // border-top: 1px solid black;
@@ -101,7 +102,7 @@ export default {
   bottom: 0;
   height: 3px;
   width: 60px;
-  background: black;
+  background: white;
   // margin-bottom: 2em;
   // margin-top: 1em;
   transform: translateY(50%);
@@ -112,6 +113,7 @@ ul {
   margin: 0;
   padding: 0;
   cursor: pointer;
+  color: white;
 
   li {
     display: inline-block;
@@ -127,7 +129,7 @@ ul {
       width: 2em;
       z-index: 1;
       background: white;
-
+      opacity: 0;
       height: calc(100% + 3px);
     }
     :not(:last-child) {

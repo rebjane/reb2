@@ -128,7 +128,10 @@ export default {
         newWidth = (colHeight / height) * width;
         newHeight = colHeight;
       } else {
-        var colWidth = Math.min(window.innerWidth / 2, 400); //that hundred value's sorta random for now
+        var colWidth = Math.min(
+          window.innerWidth / 2,
+          this.imgInfo.widthResize
+        ); //that hundred value's sorta random for now
         newHeight = (colWidth / width) * height;
         newWidth = colWidth;
       }
@@ -190,6 +193,6 @@ h3 {
   color: $bg;
 }
 p {
-  text-align: center;
+  text-align: left;
 }
 </style>

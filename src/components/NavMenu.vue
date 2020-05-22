@@ -3,7 +3,7 @@
     <div class="main-menu-wrapper">
       <p class="rebecca">
         <router-link exact to="/">
-          <Reb2Logo class="logo" :fill="'black'" />
+          <Reb2Logo class="logo" :fill="'white'" />
         </router-link>
       </p>
     </div>
@@ -99,7 +99,7 @@ export default {
   overflow: visible;
   height: 0%;
   width: 100%;
-  // mix-blend-mode: difference;
+  mix-blend-mode: difference;
 }
 .menu {
   position: fixed;
@@ -155,7 +155,7 @@ export default {
   // transform: translateX(-50%);
 
   // color: white;
-  color: black;
+  color: white;
 
   // writing-mode: vertical-lr;
   font-size: 14px;
@@ -176,12 +176,14 @@ export default {
 }
 p {
   // color: white;
-  color: black;
+  color: white;
 
   overflow: hidden;
   font-size: 18px;
 }
 .main-menu-wrapper {
+  mix-blend-mode: difference;
+
   position: fixed;
   // top: 50%;
   top: 0;
@@ -195,7 +197,7 @@ p {
     text-align: center;
     font-family: $suisse;
     // color: white;
-    color: black;
+    color: white;
 
     font-size: 12px;
     margin-left: 3em;
@@ -215,7 +217,7 @@ p {
     span {
       font-family: $acumin;
       // color: white;
-      color: black;
+      color: white;
 
       // padding-bottom: 2em;
       padding-right: 2em;
@@ -237,7 +239,7 @@ p {
   margin-bottom: 1.5em;
   left: 50%;
   transform: translateY(50%) translateX(-50%);
-
+  color: white;
   ul {
     list-style: none;
     padding: 0;
@@ -248,17 +250,17 @@ p {
       padding-right: 2em;
       position: relative;
       font-size: 12px;
-      &:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 2em;
-        z-index: 4;
-        background: white;
+      // &:after {
+      //   content: "";
+      //   position: absolute;
+      //   top: 0;
+      //   right: 0;
+      //   width: 2em;
+      //   z-index: 4;
+      //   background: white;
 
-        height: calc(100% + 3px);
-      }
+      //   height: calc(100% + 3px);
+      // }
       :not(:last-child) {
         padding-right: 0;
       }
