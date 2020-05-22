@@ -11,7 +11,7 @@
       <p class="time">{{ time.timeString }}</p>
     </transition>
     <!-- main menu is in this component -->
-    <Scrollbar v-if=" !navOpen" />
+    <Scrollbar v-if=" !navOpen" class="mainnav" @scrollTo="handleScrollTo" />
     <div class="socials">
       <ul>
         <li v-for="(item, i) in socialmedia" :key="i">
@@ -64,6 +64,9 @@ export default {
     ...mapState(["navOpen", "signatureLoaded"])
   },
   methods: {
+    handleScrollTo(e) {
+      this.$emit("scrollTo", e);
+    },
     toggleNav() {
       this.$store.commit("setNavOpen", true);
     }
@@ -91,6 +94,7 @@ export default {
   left: 0;
   position: fixed;
 }
+
 .nav {
   top: 0;
   left: 0;

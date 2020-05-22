@@ -13,7 +13,7 @@ export default class Scrolly {
     this.pos = 0;
     this.dir = 0;
     this.isScrolling = false;
-    this.scrollTo = 0;
+    this.scrollDestination = 0;
     if (direction === "h") {
       this.max = this.el.offsetWidth - window.innerWidth;
     } else {
@@ -22,6 +22,14 @@ export default class Scrolly {
     this.eventListeners = this.eventListeners.bind(this);
     this.scroll = this.scroll.bind(this);
     this.eventListeners();
+  }
+
+  scrollTo(destination) {
+    this.scrollDestination = destination;
+    if (!this.isScrolling && !this.deaf) {
+      this.scroll();
+      this.isScrolling = true;
+    }
   }
 
   eventListeners() {
@@ -36,15 +44,15 @@ export default class Scrolly {
 
       this.dir = Math.abs(e.deltaY) / e.deltaY;
 
-      this.scrollTo += e.deltaY;
+      this.scrollDestination += e.deltaY;
 
-      this.scrollTo = this.limit(this.scrollTo, this.max);
+      this.scrollDestination = this.limit(this.scrollDestination, this.max);
       e.stopPropagation();
     });
   }
 
   scroll() {
-    this.pos += (this.scrollTo - this.pos) / 20;
+    this.pos += (this.scrollDestination - this.pos) / 20;
     this.pos = Number(this.pos.toFixed(2));
     //stop from running animation frame if scroll is deafened and you come to a stop
     if (this.isScrolling && this.preDeafPos === this.pos) {

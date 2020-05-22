@@ -8,7 +8,7 @@
         <transition v-for="(item , i) in $home" :key="i">
           <div
             :ref="`component-${i} ${item.slice_type === 'WorkSection' ? 'vert' : null}`"
-            :class="`component ${scroll.pos > i * winw ? 'inview' : null}`"
+            :class="`component ${scroll.pos > i * winw ? 'inview' : 'hidden'}`"
           >
             <component
               :inview="scroll.pos > i * (winw * 0.75) ? true : false"
@@ -29,18 +29,28 @@ import Scrollbar from "./components/Scrollbar.vue";
 import { mapState } from "vuex";
 export default {
   name: "Index",
+  props: {
+    showNav: Boolean,
+    scrollTo: Number
+  },
   watch: {
+    scrollTo: {
+      handler(pos) {
+        if (this.globalscroll) {
+          this.globalscroll.scrollTo(pos);
+        }
+      },
+      deep: true
+    },
     scrollAllowed: {
       handler(e) {
         if (e) {
-          this.$nextTick(() => {
-            this.globalscroll = new Scrolly(
-              document.getElementById("app"),
-              "h"
-            );
-          });
+          // this.$nextTick(() => {
+          this.globalscroll = new Scrolly(document.getElementById("app"), "h");
+          // });
         }
-      }
+      },
+      deep: true
     },
     scroll: {
       handler() {}
@@ -63,7 +73,13 @@ export default {
     };
   },
   computed: {
-    ...mapState(["signatureLoaded", "navOpen", "scrollAllowed", "scroll"])
+    ...mapState([
+      "signatureLoaded",
+      "navOpen",
+      "scrollAllowed",
+      "scroll",
+      "loaded"
+    ])
   },
   methods: {
     deafenGlobalScroll(e) {

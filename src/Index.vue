@@ -1,17 +1,13 @@
 <template>
   <div id="index" ref="app">
     <keep-alive>
-      <!-- v-on:beforeEnter="beforeEnter"
-        v-on:enter="enter"
-      v-on:leave="leave"-->
       <transition :key="title" appear v-if="loaded" name="up">
-        <router-view class="view" />
+        <router-view class="view" :showNav="showNav" :scrollTo="scrollToScrollPos" />
       </transition>
     </keep-alive>
     <!-- <Loading v-if="!loaded" /> -->
     <Loading v-if="!loaded" />
-
-    <NavMenu v-if="showNav && loaded || loaded " />
+    <NavMenu v-if="showNav && loaded || loaded " @scrollTo="scrollTo" />
     <!-- && signatureLoaded -->
     <NavScreen v-if="navOpen" />
     <CursorThing v-if="loaded" />
@@ -30,7 +26,7 @@
 <script>
 import { mapState } from "vuex";
 import Loading from "./Loading.vue";
-import NavMenu from "./components/NavMenu.vue";
+// import NavMenu from "./components/NavMenu.vue";
 import CursorThing from "./components/CursorThing.vue";
 
 export default {
@@ -39,7 +35,7 @@ export default {
   beforeMounted() {},
   components: {
     Loading,
-    NavMenu,
+    // NavMenu,
     CursorThing
     // Scrollbar
     // Index
@@ -52,6 +48,7 @@ export default {
         "transition: transform 750ms cubic-bezier(0.91, 0.02, 0.275, 1);",
       showNav: false,
       scrollIndex: 0,
+      scrollToScrollPos: null,
       title:
         window.location.pathname === "/"
           ? "home"
@@ -59,17 +56,9 @@ export default {
     };
   },
   methods: {
-    // beforeEnter(el) {
-    //   el.style = `transform: translateX(-100%); ${this.transitionStyle}`;
-    // },
-    // enter(el, done) {
-    //   el.style = "transform: translateX(0%)";
-    //   done();
-    // },
-    // leave(el, done) {
-    //   el.style = `transform: translateX(100%); ${this.transitionStyle}`;
-    //   setTimeout(() => done(), 750);
-    // }
+    scrollTo(e) {
+      this.scrollToScrollPos = e;
+    }
   },
   computed: {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])

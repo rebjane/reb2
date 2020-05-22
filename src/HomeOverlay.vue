@@ -77,7 +77,7 @@ export default {
     setTimeout(() => {
       // this.$emit("canScroll", true);
       this.$store.commit("allowScroll", true);
-    }, this.opts[this.opts.length - 1].delay + 1000);
+    }, this.opts[this.opts.length - 1].delay + 100);
   }
 };
 </script>

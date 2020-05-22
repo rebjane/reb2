@@ -2,7 +2,7 @@
   <div class="scrollbar-div">
     <div class="scroll-line" ref="scrollline">
       <ul>
-        <li v-for="(item, i) in menu" :key="i">
+        <li v-for="(item, i) in menu" :key="i" @click="$emit('scrollTo', i * ww)">
           <span>{{item.title}}</span>
         </li>
       </ul>
@@ -25,11 +25,10 @@ export default {
   watch: {
     scroll: {
       handler(e) {
-        // console.log(e);
         this.$refs.scrollbar.style = `width: ${this.width(
           this.sbwidth,
           this.slwidth,
-          e.elWidth,
+          e.elWidth - this.ww,
           e.pos
         )}px;`;
       }
@@ -39,6 +38,7 @@ export default {
     return {
       slwidth: null,
       sbwidth: null,
+      ww: window.innerWidth,
       menu: [
         {
           title: "INTRO"
@@ -48,12 +48,6 @@ export default {
         },
         {
           title: "ILLUSTRATION"
-        },
-        {
-          title: "ABOUT"
-        },
-        {
-          title: "CONTACT"
         }
       ]
     };
@@ -77,9 +71,10 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
 .scrollbar-div {
-  height: 100vh;
+  // height: 100vh;
+  height: 0;
   position: relative;
-  pointer-events: none;
+  // pointer-events: none;
   z-index: 10;
   mix-blend-mode: difference;
 }
@@ -101,7 +96,8 @@ export default {
   // bottom: 0;
   bottom: 0;
   height: 3px;
-  width: 60px;
+  // width: 60px;
+  width: 0;
   background: white;
   // margin-bottom: 2em;
   // margin-top: 1em;
@@ -112,29 +108,18 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  cursor: pointer;
   color: white;
 
   li {
     display: inline-block;
-    padding-right: 2em;
+    padding: 0 4em;
+    cursor: pointer;
+
     position: relative;
     font-size: 12px;
+    text-align: left;
+    // width: 100px;
 
-    &:after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 2em;
-      z-index: 1;
-      background: white;
-      opacity: 0;
-      height: calc(100% + 3px);
-    }
-    :not(:last-child) {
-      padding-right: 0;
-    }
     span {
       font-family: $acuminc;
     }
