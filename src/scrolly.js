@@ -29,7 +29,7 @@ export default class Scrolly {
       if (this.deaf) {
         return;
       }
-      if (!this.isScrolling) {
+      if (!this.isScrolling && !this.deaf) {
         this.scroll();
         this.isScrolling = true;
       }
@@ -56,14 +56,30 @@ export default class Scrolly {
     requestAnimationFrame(this.scroll);
 
     this.preDeafPos = this.pos;
-    store.commit("updateScroll", {
-      pos: this.pos,
-      dir: this.dir,
-      elWidth: this.elWidth,
-      elHeight: this.elHeight,
-      direction: this.direction,
-      el: this.el,
-    });
+    switch (this.direction) {
+      case "h": {
+        store.commit("updateScroll", {
+          pos: this.pos,
+          dir: this.dir,
+          elWidth: this.elWidth,
+          elHeight: this.elHeight,
+          direction: this.direction,
+          el: this.el,
+        });
+        break;
+      }
+      case "v": {
+        store.commit("updateVertScroll", {
+          pos: this.pos,
+          dir: this.dir,
+          elWidth: this.elWidth,
+          elHeight: this.elHeight,
+          direction: this.direction,
+          el: this.el,
+        });
+        break;
+      }
+    }
 
     if (this.direction === "h") {
       this.el.style.transform = `translate3d(${-1 * this.pos}px, 0,0)`; //horizontal
@@ -73,7 +89,6 @@ export default class Scrolly {
   }
 
   deafen() {
-    console.log("deafen");
     this.deaf = true;
   }
 

@@ -1,39 +1,7 @@
 <template>
-  <div ref="workwrap" class="worksection-wrapper">
+  <div ref="workwrap" class="worksection-wrapper outer">
     <div ref="work" class="worksection">
-      <!-- <div class="scroll" ref="scroll"> -->
-      <!-- <div class="line" :style="`transform: translateY(${fixedTitlePos}px) translateX(-50%); `" /> -->
-
       <CarouselVertical :horiz="horiz" @info="handleInfo" :data="carouselData" v-if="carouselData" />
-      <!-- </div> -->
-      <!-- <CarouselTitle
-      :info="info"
-      :style="`transform: translateY(${fixedTitlePos}px);`"
-      class="title"
-      :text="'work'"
-      />-->
-
-      <!-- <SlidingText
-      :style="`transform: translateY(${fixedTitlePos}px);`"
-      class="title"
-      :text="'work'"
-      />-->
-
-      <!-- </div> -->
-      <!-- <CarouselTitle
-      :info="info"
-      :style="`transform: translateY(${fixedTitlePos}px);`"
-      class="title"
-      :text="'work'"
-      />-->
-
-      <!-- <SlidingText
-      :style="`transform: translateY(${fixedTitlePos}px);`"
-      class="title"
-      :text="'work'"
-      />-->
-
-      <!-- <Scrollbar @scrollPos="handleScrollBarFunction" v-if="loaded & !navOpen" /> -->
     </div>
   </div>
 </template>
@@ -47,22 +15,8 @@ export default {
   name: "Template",
   watch: {
     inview() {
-      if (this.inview && !this.newscroll) {
-        this.$nextTick(() => {
-          this.newscroll = new Scrolly(this.$refs.workwrap, "v");
-          this.$emit("deafen", true);
-        });
-      }
+      this.toggleScroll(this.inview);
     }
-    //fixed title
-    // scroll: {
-    //   handler(e) {
-    //     if (e.pos >= this.topPos && e.pos <= this.bottomPos) {
-    //       this.fixedTitlePos = e.pos - this.topPos;
-    //       this.fixedCTitlePos = e.pos - this.topPos;
-    //     }
-    //   }
-    // }
   },
   components: {
     // Scrollbar
@@ -90,48 +44,44 @@ export default {
     };
   },
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen", "scroll"])
+    ...mapState([
+      "signatureLoaded",
+      "loadPct",
+      "loaded",
+      "navOpen",
+      "vertscroll"
+    ])
   },
   methods: {
     /* eslint-disable no-unused-vars*/
     handleInfo(e) {
       // this.info = e;
       // this.info.title = "work";
+    },
+    toggleScroll(mouseOn) {
+      if (this.newscroll) {
+        if (mouseOn && this.inview) {
+          this.newscroll.listen();
+          this.$emit("deafenGlobalScroll", true);
+        } else if (!mouseOn) {
+          this.newscroll.deafen();
+          this.$emit("deafenGlobalScroll", false);
+        }
+      }
     }
   },
   mounted() {
-    // console.log("worksection data", this.$work);
-
-    //handle what carousel data based on what's chosen on the home page!
-    //add to it after the other data is done
-    // switch (this.data.primary.type_of_work) {
-    //   case "work": {
-    //     break;
-    //   }
-    //   case 'illustration': {
-    //     this.carouselData = this.$work.filter(i => i.type_of_work === "illustration");
-    //     break;
-    // }
-
     this.carouselData = this.$work.filter(
       i => i.type_of_work === this.data.primary.type_of_work
     );
-
-    this.$nextTick(() => {
-      //   this.scroll = new Scrolly(this.$refs.page);
-      // this.topPos = this.$refs.page.getBoundingClientRect().top;
-      // this.bottomPos =
-      //   this.$refs.page.getBoundingClientRect().bottom - window.innerHeight;
-      //for fixed title
-      // if (this.horiz) {
-      //   this.topPos = this.$refs.work.getBoundingClientRect().left;
-      //   this.bottomPos =
-      //     this.$refs.work.getBoundingClientRect().right - window.innerWidth;
-      // } else {
-      //   this.topPos = this.$refs.work.getBoundingClientRect().top;
-      //   this.bottomPos =
-      //     this.$refs.work.getBoundingClientRect().bottom - window.innerHeight;
-      // }
+    this.newscroll = new Scrolly(this.$refs.workwrap, "v");
+    this.newscroll.deafen();
+    this.$refs.workwrap.addEventListener("mousemove", e => {
+      if (e.target.className.includes("outer")) {
+        this.toggleScroll(false);
+        return;
+      }
+      this.toggleScroll(true);
     });
   }
 };
@@ -146,6 +96,18 @@ export default {
 .worksection {
   height: 100%;
   min-height: 200vh;
+  margin: 0 10em;
+  position: relative;
+}
+
+.mousedetectarea {
+  position: absolute;
+  // pointer-events: none;
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 2;
 }
 
 p {
@@ -157,15 +119,5 @@ p {
   z-index: 0;
   width: 100%;
   // mix-blend-mode: difference;
-}
-.line {
-  position: absolute;
-  top: 50vh;
-  width: 100%;
-  border-bottom: 1px solid $bg;
-  opacity: 0.3;
-  z-index: -1;
-  width: 65%;
-  left: 50%;
 }
 </style>

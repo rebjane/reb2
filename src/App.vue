@@ -4,43 +4,22 @@
 <template>
   <div id="app-wrapper">
     <div id="app" ref="appofficial">
-      <!-- <div class="home-main" v-if="signatureLoaded">
-      <HomeOverlay class="el" />-->
       <div class="inner">
-        <!-- <div class="home"> -->
-        <!-- <Signature class="sig" /> -->
-        <!-- <HomeOverlay @canScroll="canScroll = true" class="el" /> -->
-        <!-- v-if="signatureLoaded" -->
-        <!-- </div> -->
-        <!-- <div class="work"> -->
         <transition v-for="(item , i) in $home" :key="i">
-          <component
-            :is="item.slice_type"
-            :ref="`component-${i}`"
-            :data="item"
+          <div
+            :ref="`component-${i} ${item.slice_type === 'WorkSection' ? 'vert' : null}`"
             :class="`component ${scroll.pos > i * winw ? 'inview' : null}`"
-            :inview="scroll.pos > i * (winw * 0.75) ? true : false"
-            @deafen="deafen"
-          />
+          >
+            <component
+              :inview="scroll.pos > i * (winw * 0.75) ? true : false"
+              :is="item.slice_type"
+              :data="item"
+              @deafenGlobalScroll="deafenGlobalScroll"
+            />
+          </div>
         </transition>
-        <!-- <SlidingText
-          :uniquekey="3"
-          col="black"
-          class="slidingtext"
-          :text="'DESIGNER. ILLUSTRATOR. POPCORN-LOVER. | '"
-        />-->
-        <!-- <WorkSection /> -->
-        <!-- </div> -->
-
-        <!-- <BackgroundSection /> -->
-        <!-- <AboutSection /> -->
-
-        <!-- <WorkSection class="el" /> -->
       </div>
-
-      <!-- </div> -->
     </div>
-    <!-- <Scrollbar v-if="scrollAllowed & !navOpen" /> -->
   </div>
 </template>
 
@@ -55,16 +34,17 @@ export default {
       handler(e) {
         if (e) {
           this.$nextTick(() => {
-            this.newscroll = new Scrolly(document.getElementById("app"), "h");
+            this.globalscroll = new Scrolly(
+              document.getElementById("app"),
+              "h"
+            );
           });
         }
       }
     },
-    // scroll: {
-    //   handler() {
-    //     this.$store.commit("updateScroll", this.newscroll);
-    //   }
-    // },
+    scroll: {
+      handler() {}
+    },
     deep: true,
     immediate: true
   },
@@ -75,9 +55,10 @@ export default {
   data() {
     return {
       time: 0,
-      newscroll: null,
+      globalscroll: null,
       rebImg: require("./assets/reb.jpg"),
-      winw: window.innerWidth
+      winw: window.innerWidth,
+      vertComponents: []
       // canScroll: true
     };
   },
@@ -85,12 +66,30 @@ export default {
     ...mapState(["signatureLoaded", "navOpen", "scrollAllowed", "scroll"])
   },
   methods: {
-    deafen() {
-      this.newscroll.deafen();
+    deafenGlobalScroll(e) {
+      if (this.globalscroll) {
+        if (e) {
+          this.globalscroll.deafen();
+        } else {
+          this.globalscroll.listen();
+        }
+      }
     }
   },
   mounted() {
-    // this.scroll = new Scrolly(document.getElementById("app"));
+    //process vertical  components (post-rendered in the template)
+    // Object.keys(this.$refs).forEach((item, i) => {
+    //   if (item.includes("vert")) {
+    //     // console.log(this.$refs[i]);
+    //     this.vertComponents.push({
+    //       scroll: new Scrolly(this.$refs[item][0], "v"),
+    //       left: this.$refs[item][0].getBoundingClientRect().left
+    //     });
+    //     //for  some reason the index started at 1, should be 0. so deafening the vert scrolls for now, so scroll lsitener can hear out and enable when necessary
+    //     this.vertComponents[i - 1].scroll.deafen();
+    //     console.log(this.vertComponents, i - 1);
+    //   }
+    // });
   }
 };
 </script>

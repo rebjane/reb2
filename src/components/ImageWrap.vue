@@ -96,7 +96,7 @@ export default {
         var height = this.$refs.imgCol.getBoundingClientRect().height;
         this.midPos = top - (window.innerHeight - height) / 2;
 
-        console.log(top, height);
+        // console.log(top, height);
       }
     },
     transform() {

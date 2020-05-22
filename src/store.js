@@ -10,6 +10,11 @@ export default new Vuex.Store({
       dir: 0,
       elWidth: 0,
     },
+    vertscroll: {
+      pos: 0,
+      dir: 0,
+      elWidth: 0,
+    },
     loaded: false,
     loadPct: 0,
     signatureLoaded: false,
@@ -33,6 +38,10 @@ export default new Vuex.Store({
     },
     updateScroll(state, scroll) {
       Vue.set(state, "scroll", scroll);
+    },
+
+    updateVertScroll(state, vertscroll) {
+      Vue.set(state, "vertscroll", vertscroll);
     },
 
     setLoadedGLTFs(state, gltfsLoaded) {
