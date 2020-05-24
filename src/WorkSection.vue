@@ -1,10 +1,10 @@
 <template>
   <div ref="workwrap" class="worksection-wrapper">
-    <div class="info">
-      <h2 v-if="data.primary.heading.length">{{$cms.textField(data.primary.heading)}}</h2>
-      <p v-if="data.primary.desc.length">{{$cms.textField(data.primary.desc)}}</p>
-      <p>Scroll</p>
-    </div>
+    <HeadText
+      :title="$cms.textField(data.primary.heading)"
+      :body="$cms.textField(data.primary.desc)"
+    />
+
     <div class="scroll outer" ref="scroll">
       <div ref="work" class="worksection">
         <CarouselVertical
@@ -89,7 +89,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.data);
+    // console.log(this.data);
 
     //filter by what kind of work (ie. work, illustration, design)
     this.carouselData = this.$work.filter(
@@ -117,6 +117,7 @@ export default {
 @import "./styles/stylesheet.scss";
 .worksection-wrapper {
   position: relative;
+  height: 100vh;
 }
 .worksection {
   height: 100%;
@@ -131,15 +132,19 @@ export default {
 }
 
 .info {
-  margin-top: 10%;
-  margin-left: 2em;
-  float: left;
+  // margin-top: 10%;
+  top: 50vh;
+  transform: translateY(-50%);
+  margin-left: 3em;
+  position: absolute;
   text-align: left;
-  max-width: 20%;
-  border-bottom: 1px solid $bg;
-
+  // max-width: 20%;
+  width: 300px;
+  // border-right: 1px solid $bg;
+  padding-right: 2em;
+  z-index: 4;
   h2 {
-    font-size: 60px;
+    font-size: 50px;
     border-bottom: 1px solid $bg;
     margin: 0;
     font-family: $acumin;
@@ -152,7 +157,7 @@ export default {
 
 .scroll {
   // display: inline-block;
-  padding: 0 15% 0 25%;
+  padding: 0 15% 0 30%;
   max-width: 90%;
 }
 

@@ -5,9 +5,12 @@ import { loader } from "./loadComponents.js";
 import store from "./store.js";
 import router from "./router.js";
 import { imageLoader } from "./imageLoader.js";
+import { smtp } from "./smtp.js";
+Vue.prototype.$imageLoader = imageLoader;
+Vue.prototype.$smtp = smtp;
+console.log(smtp);
 import { threeLoader } from "./threeLoader.js";
 import signature from "./assets/reb2.o-animated-BAKED.gltf";
-
 import { prismic } from "./prismic.js";
 Vue.prototype.$loadPct = (prog) => (prog / 2) * 100;
 Vue.prototype.$loaded = 0;
@@ -18,20 +21,6 @@ new Vue({
   router,
   render: (h) => h(Index),
 }).$mount("#app");
-
-async function LoadAllImages() {
-  //load all these images here!
-
-  return new Promise((res) => {
-    Promise.all([imageLoader.getObj(require("./assets/reb.jpg"))]).then(
-      (resolved) => {
-        Vue.prototype.$aboutImg = resolved[0];
-        // console.log(resolved[0]);
-        res(resolved);
-      }
-    );
-  });
-}
 
 preLoading();
 async function loadingPct() {
@@ -54,7 +43,6 @@ async function preLoading() {
       loadingPct(),
       loader.loadTheComponents(),
       prismic.fetchData(),
-      LoadAllImages(),
     ]).then((res) => {
       console.log("res", res);
       setTimeout(() => {

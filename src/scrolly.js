@@ -18,6 +18,7 @@ export default class Scrolly {
       this.max = this.el.offsetWidth - window.innerWidth;
     } else {
       this.max = this.el.offsetHeight - window.innerHeight;
+      console.log(this.el.offsetHeight);
     }
     this.eventListeners = this.eventListeners.bind(this);
     this.scroll = this.scroll.bind(this);
@@ -26,10 +27,10 @@ export default class Scrolly {
 
   scrollTo(destination) {
     this.scrollDestination = destination;
-    this.deaf = false;
     if (!this.isScrolling) {
       this.scroll();
       this.isScrolling = true;
+      this.deaf = false;
     }
   }
 
@@ -38,16 +39,16 @@ export default class Scrolly {
       if (this.deaf) {
         return;
       }
-      if (!this.isScrolling && !this.deaf) {
-        this.scroll();
-        this.isScrolling = true;
-      }
 
       this.dir = Math.abs(e.deltaY) / e.deltaY;
 
       this.scrollDestination += e.deltaY;
 
       this.scrollDestination = this.limit(this.scrollDestination, this.max);
+      if (!this.isScrolling && !this.deaf) {
+        this.scroll();
+        this.isScrolling = true;
+      }
       e.stopPropagation();
     });
   }

@@ -58,7 +58,9 @@ export default {
     deep: true,
     immediate: true
   },
-  beforeMounted() {},
+  // beforeDestroy() {
+  //   this.$refs.app.style = "transform: translateY(-50%)";
+  // },
   components: {
     Scrollbar
   },

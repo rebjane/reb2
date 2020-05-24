@@ -51,6 +51,12 @@ export default {
         },
         {
           title: "ABOUT"
+        },
+        {
+          title: "CONTACT"
+        },
+        {
+          title: "SIGNING OFF"
         }
       ]
     };
@@ -97,14 +103,14 @@ export default {
 .scroll-bar {
   position: absolute;
   // bottom: 0;
-  bottom: 0;
-  height: 3px;
+  top: 50%;
+  height: 1px;
   // width: 60px;
   width: 0;
   background: white;
   // margin-bottom: 2em;
   // margin-top: 1em;
-  transform: translateY(50%);
+  transform: translateY(-50%);
   left: 0;
 }
 ul {
@@ -115,7 +121,7 @@ ul {
 
   li {
     display: inline-block;
-    padding: 0 4em;
+    padding: 0 2em;
     cursor: pointer;
 
     position: relative;

@@ -28,8 +28,11 @@ class Prismic {
           const WorkSectionSection = new Promise((res) => {
             Vue.prototype.$work = this.data
               .filter((i) => i.type === "work")
-              .map((i) => i.data);
-            // console.log(this.$work);
+              .map((i) => {
+                // console.log(i.uid);
+                return { ...new Object(i.data), ...{ uid: i.uid } };
+              });
+            // console.log(Vue.prototype.$work);
             res();
           });
 

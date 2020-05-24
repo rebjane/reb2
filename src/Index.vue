@@ -7,7 +7,7 @@
     </keep-alive>
     <!-- <Loading v-if="!loaded" /> -->
     <Loading v-if="!loaded" />
-    <NavMenu v-if="showNav && loaded || loaded " @scrollTo="scrollTo" />
+    <NavMenu v-if="showNav && loaded || loaded " @scrollTo="scrollTo" class="nav" />
     <!-- && signatureLoaded -->
     <NavScreen v-if="navOpen" />
     <CursorThing v-if="loaded" />
@@ -79,6 +79,9 @@ export default {
   // background: white;
   background: $lbg;
 }
+.nav {
+  position: fixed;
+}
 .scroll {
   position: relative;
   min-height: 100%;
@@ -123,6 +126,7 @@ export default {
 }
 .view {
   transform: translateY(0%);
+  min-height: 100%;
 }
 // .up-enter {
 //   transform: translateY(100%);

@@ -1,6 +1,9 @@
 <template>
   <div class="full-screen-image">
-    <div class="full-image"></div>
+    <div class="full-image">
+      image full screen
+      {{data}}
+    </div>
   </div>
 </template>
 

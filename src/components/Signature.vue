@@ -198,10 +198,10 @@ export default {
       // if (this.animFinished) {
       //   this.intersecting();
       // }
-      this.lerpMove();
-      // if (!this.animFinished) {
-      requestAnimationFrame(this.animate);
-      // }
+      // this.lerpMove();
+      if (!this.animFinished) {
+        requestAnimationFrame(this.animate);
+      }
     },
     lerpMove() {
       var limit = 0.4; //how far out the signature can move
@@ -241,7 +241,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .signature {
-  // filter: grayscale(100%);
-  opacity: 0.3;
+  filter: grayscale(100%);
+  // opacity: 0.3;
 }
 </style>

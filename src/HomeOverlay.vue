@@ -16,7 +16,7 @@
         />
       </transition-group>
     </div>
-    <p class="scroll-cta" :ref="$cms.textField(this.data.primary.scroll_cta_ref)"></p>
+    <!-- <p class="scroll-cta" :ref="$cms.textField(this.data.primary.scroll_cta_ref)"></p> -->
   </div>
 </template>
 
@@ -59,18 +59,18 @@ export default {
         });
       });
       //scroll cta
-      if (this.data.primary) {
-        this.opts.push({
-          string: this.$cms.textField(this.data.primary.scroll_cta_string),
-          tag: "p",
-          refName: this.$cms.textField(this.data.primary.scroll_cta_ref),
-          el: this.$refs[this.$cms.textField(this.data.primary.scroll_cta_ref)],
-          delay: this.data.primary.scroll_cta_delay,
-          logo_before: false,
-          bold_start: 0,
-          bold_end: 0
-        });
-      }
+      // if (this.data.primary) {
+      //   this.opts.push({
+      //     string: this.$cms.textField(this.data.primary.scroll_cta_string),
+      //     tag: "p",
+      //     refName: this.$cms.textField(this.data.primary.scroll_cta_ref),
+      //     el: this.$refs[this.$cms.textField(this.data.primary.scroll_cta_ref)],
+      //     delay: this.data.primary.scroll_cta_delay,
+      //     logo_before: false,
+      //     bold_start: 0,
+      //     bold_end: 0
+      //   });
+      // }
       res(this.opts);
     }).then(() => this.$nextTick(() => new WaveText(this.opts)));
 

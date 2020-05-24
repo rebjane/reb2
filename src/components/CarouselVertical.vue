@@ -11,20 +11,23 @@
               <img style="opacity: 0;" :src="item.url" v-if="key !== i" />
           </div>-->
           <!-- <div class="bordering" /> -->
-          <ImageWrap
-            class="image"
-            :imgInfo="{title: item.title,
+          <!-- <p v-html="`/${data[i].type_of_work}/${data[i].uid}`" /> -->
+          <router-link :to="`/${data[i].type_of_work}/${data[i].uid}`">
+            <ImageWrap
+              class="image"
+              :imgInfo="{title: item.title,
             img: item.url,
           src: item.url,
           width: item.width,
           height: item.height,
           widthResize: 300}"
-            :img="item.url"
-            :ripple="false"
-            :isParallax="false"
-            :horiz="horiz"
-            :scrollObj="carouselScroll"
-          />
+              :img="item.url"
+              :ripple="false"
+              :isParallax="false"
+              :horiz="horiz"
+              :scrollObj="carouselScroll"
+            />
+          </router-link>
           <!-- <transition appear name="h3" v-if="showHover && key === i">
             <h3>View.</h3>
           </transition>-->
@@ -77,6 +80,9 @@ export default {
     };
   },
   methods: {
+    transition(i) {
+      console.log(i);
+    },
     isHovering(isHover) {
       this.ripple = isHover;
       if (this.ripple) {
@@ -184,7 +190,7 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.data);
+    console.log(this.data);
     if (this.data.length) {
       new Promise(res => {
         this.data.forEach(item => {
@@ -219,6 +225,8 @@ export default {
   // padding-bottom: 200px;
   height: 100%;
   margin: auto;
+  // border-left: 1px solid $lightgrey;
+  // border-right: 1px solid $lightgrey;
 }
 .carousel {
   margin: auto;
@@ -239,7 +247,6 @@ export default {
   position: relative;
   filter: brightness(100%);
   cursor: pointer;
-
   &:hover {
     filter: brightness(50%);
   }

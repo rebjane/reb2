@@ -1,20 +1,27 @@
 <template>
   <div ref="about" class="about">
     <div class="parallaximage">
-      <h2 class="toptitle">Here is</h2>
+      <h2 v-if="data.primary.top_text" class="toptitle">{{$cms.textField(data.primary.top_text)}}</h2>
       <ImageWrap
+        v-if="aboutImg"
         :ripple="true"
         :isParallax="true"
         :horiz="true"
-        :imgInfo="$aboutImg"
-        :img="rebImg"
+        :imgInfo="aboutImg"
+        :img="aboutImg.src"
         :scrollObj="scroll"
         class="pimg"
       />
-      <h2 class="bottomtitle">my face.</h2>
-      <div class="bio">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute</p>
-      </div>
+      <h2
+        v-if="data.primary.bottom_text.length"
+        class="bottomtitle"
+      >{{$cms.textField(data.primary.bottom_text)}}</h2>
+      <HeadText
+        class="bio"
+        :color="'white'"
+        :title="$cms.textField(data.primary.about_title)"
+        :body="$cms.textField(data.primary.about_body)"
+      />
     </div>
   </div>
 </template>
@@ -35,7 +42,7 @@ export default {
   },
   data() {
     return {
-      rebImg: require("./assets/reb.jpg")
+      aboutImg: null
     };
   },
   beforeDestroy() {},
@@ -44,7 +51,9 @@ export default {
   },
   methods: {},
   mounted() {
-    console.log(this.$aboutImg);
+    this.$imageLoader.getObj(this.data.primary.about_image.url).then(res => {
+      this.aboutImg = res;
+    });
   }
 };
 </script>
@@ -52,19 +61,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
+
 .about {
   height: 100vh;
   position: relative;
-  // background: $bg;
+  background: $bg;
   // height: 100%;
 }
 .bio {
-  position: absolute;
-  right: -50%;
-  top: 50%;
-  width: 50%;
-  transform: translate3d(50%, -50%, 0);
-  text-align: left;
+  right: -100%;
 }
 .parallaximage {
   height: auto;
@@ -73,13 +78,17 @@ export default {
   top: 50%;
   transform: translate3d(-100%, -50%, 0);
   display: inline-block;
-  h2 {
+  mix-blend-mode: difference;
+
+  .toptitle,
+  .bottomtitle {
     font-family: $suisse;
     font-size: 60px;
     position: absolute;
     margin: 0;
     z-index: 2;
     width: 100%;
+    color: white;
   }
   .toptitle {
     left: 50%;

@@ -4,14 +4,16 @@ class LoadedImage {
   async getObj(src) {
     return new Promise((res) => {
       this.src = src;
-      this.assign().then((i) => {
-        res({
-          img: this.img,
-          src: this.src,
-          width: i.width,
-          height: i.height,
-        });
-      });
+      this.assign()
+        .then((i) => {
+          res({
+            img: this.img,
+            src: this.src,
+            width: i.width,
+            height: i.height,
+          });
+        })
+        .catch(() => console.log("not a valid img src"));
     });
   }
 

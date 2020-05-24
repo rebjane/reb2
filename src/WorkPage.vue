@@ -1,16 +1,14 @@
 <template>
   <div ref="page" class="workpage">
-    <div class="scroll" ref="scroll">
-      <div>
-        <p>workpage</p>
-        <transition v-for="(item , i) in $work" :key="i">
+    <div v-if="data" class="inner" ref="scroll">
+      <transition v-for="(item , i) in data.body" :key="i">
+        <div class="component">
           <component :is="item.slice_type" :data="item" />
-        </transition>
-      </div>
-
-      <!-- <RippleImage /> -->
+        </div>
+      </transition>
     </div>
-    <Scrollbar v-if="loaded & !navOpen" />
+
+    <!-- <RippleImage /> -->
   </div>
 </template>
 
@@ -25,24 +23,36 @@ export default {
     Scrollbar
   },
   props: {
-    data: {
-      type: Object,
-      default: null
-    }
+    // data: {
+    //   type: Object,
+    //   default: null
+    // }
   },
   data() {
     return {
-      scroll: null
+      scroll: null,
+      data: null
     };
   },
   beforeDestroy() {},
   computed: {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
   },
-  methods: {},
+  methods: {
+    async getData() {
+      return new Promise(res => {
+        var url = window.location.href.split("/");
+        url = url[url.length - 1];
+        this.data = this.$work.filter(i => i.uid === url)[0];
+        res(this.data);
+      });
+    }
+  },
   mounted() {
-    this.$nextTick(() => {
-      this.scroll = new Scrolly(this.$refs.page);
+    this.getData().then(() => {
+      setTimeout(() => {
+        this.scroll = new Scrolly(this.$refs.page, "v");
+      }, 500);
     });
   }
 };
@@ -52,10 +62,20 @@ export default {
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
 .workpage {
-  padding-top: 100px;
-  // height: 100%;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  .inner {
+    position: fixed;
+
+    .component {
+      width: 100%;
+      min-width: 100vw;
+    }
+  }
 }
 p {
   color: black;
+  margin-top: 0;
 }
 </style>

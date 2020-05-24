@@ -33,9 +33,7 @@ export default {
     return {};
   },
   methods: {},
-  mounted() {
-    console.log("ig", this.data);
-  }
+  mounted() {}
 };
 </script>
 
@@ -45,13 +43,33 @@ export default {
 .image-gallery {
   height: 100%;
   position: relative;
+  width: 100%;
+  text-align: center;
 }
 .gallery {
-  width: 100%;
+  // width: 100%;
+  height: 100%;
+  display: inline-block;
   position: relative;
 }
 .col {
-  width: 50%;
+  position: relative;
+  // width: 50%;
+  min-width: calc(50% - 2em);
+  margin: 1em;
+  height: 100%;
   display: inline-block;
+  &:nth-child(odd) {
+    text-align: right;
+  }
+  &:nth-child(even) {
+    text-align: left;
+  }
+  .image {
+    // position: absolute;
+    // left: 50%;
+    // top: 50%;
+    // transform: translate3d(-50%, -50%, 0);
+  }
 }
 </style>
