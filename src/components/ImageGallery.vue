@@ -1,6 +1,5 @@
 <template>
   <div class="image-gallery">
-    <p>image gallery</p>
     <div class="gallery">
       <transition v-for="(item, i) in data.items" :key="i">
         <div class="col">
@@ -22,7 +21,7 @@
 
 <script>
 export default {
-  name: "Template",
+  name: "ImageGallery",
   props: {
     data: {
       type: Object,
