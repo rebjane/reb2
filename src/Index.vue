@@ -15,8 +15,21 @@
     <div class="transition-curtain" ref="transition" />
     <!-- <Loading v-if="!loaded" /> -->
     <Loading v-if="!loaded" class="loadingcurtain" />
-    <NavMenu v-if="loaded && isHomePage " @scrollTo="scrollTo" class="nav" />
-    <WorkPageNavMenu v-else-if="loaded && !isHomePage" />
+
+    <div class="nav-wrapper">
+      <transition name="nav" v-if="loaded && showMainNav" appear :key="loaded && showMainNav">
+        <NavMenu :key="loaded && isHomePage" @scrollTo="scrollTo" />
+      </transition>
+      <transition
+        name="nav"
+        v-else-if="loaded && !showMainNav"
+        appear
+        :key="loaded && !showMainNav"
+      >
+        <WorkPageNavMenu :key="loaded && !showMainNav" />
+      </transition>
+    </div>
+
     <!-- && signatureLoaded -->
     <NavScreen v-if="navOpen" />
     <CursorThing v-if="loaded" />
@@ -46,6 +59,10 @@ export default {
     },
     $route() {
       this.isHomePage = window.location.pathname === "/";
+
+      setTimeout(() => {
+        this.showMainNav = this.isHomePage;
+      }, 750);
       this.url();
       this.transition();
     }
@@ -59,7 +76,8 @@ export default {
       transitionStyle:
         "transition: transform 750ms cubic-bezier(0.91, 0.02, 0.275, 1);",
       scrollIndex: 0,
-      scrollToScrollPos: null
+      scrollToScrollPos: null,
+      showMainNav: true
     };
   },
   methods: {
@@ -126,12 +144,18 @@ export default {
   min-height: 100%;
 }
 .view-leave-active {
-  transition-delay: 750ms;
+  transition-delay: 750ms !important;
 }
 .loadingcurtain {
   position: fixed;
   z-index: 3;
 }
+.nav-wrapper {
+  // position: relative;
+  height: 0;
+  mix-blend-mode: difference;
+}
+
 #index {
   overflow: hidden;
   height: 100vh;
@@ -139,8 +163,5 @@ export default {
   // background: $bg;
   // background: white;
   background: $lbg;
-}
-.nav {
-  position: fixed;
 }
 </style>

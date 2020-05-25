@@ -82,7 +82,7 @@ export default {
 .scrollbar-div {
   // height: 100vh;
   height: 0;
-  position: relative;
+  // position: relative;
   // pointer-events: none;
   z-index: 10;
   mix-blend-mode: difference;

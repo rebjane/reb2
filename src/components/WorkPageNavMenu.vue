@@ -2,7 +2,7 @@
   <div class="work-nav-menu">
     <div class="back" @click="handlePrevPage">
       <div class="arrow-wrap">
-        <Arrow class="arrow up" />
+        <Arrow class="arrow up" :fill="'white'" />
       </div>
       <p>BACK</p>
     </div>
@@ -16,7 +16,7 @@
     <div class="next" @click="handleNextPage">
       <p>NEXT</p>
       <div class="arrow-wrap">
-        <Arrow class="arrow down" />
+        <Arrow class="arrow down" :fill="'white'" />
       </div>
     </div>
   </div>
@@ -70,6 +70,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
+
 .arrow-wrap {
   //   height: 3em;
   width: 3em;
@@ -88,6 +89,7 @@ export default {
     transform: rotate(180deg);
     margin: auto;
     font-family: $acuminc;
+    color: white;
   }
 }
 .home-link {

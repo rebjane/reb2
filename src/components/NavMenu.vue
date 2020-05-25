@@ -94,16 +94,14 @@ export default {
   left: 0;
   position: fixed;
 }
-
-.nav {
+.mainnav {
+  position: fixed;
   top: 0;
-  left: 0;
-  // position: fixed;
-  z-index: 1;
-  overflow: visible;
-  height: 0%;
-  width: 100%;
+  z-index: 10;
   mix-blend-mode: difference;
+  width: 100%;
+}
+.nav {
 }
 .menu {
   position: fixed;
