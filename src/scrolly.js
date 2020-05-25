@@ -106,6 +106,11 @@ export default class Scrolly {
     this.deaf = false;
   }
 
+  destroy() {
+    cancelAnimationFrame(this.scroll);
+    window.removeEventListener("mousewheel");
+  }
+
   limit(min, max) {
     return Math.max(Math.min(min, max), 0);
   }

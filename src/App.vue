@@ -30,8 +30,8 @@ import { mapState } from "vuex";
 export default {
   name: "Index",
   props: {
-    showNav: Boolean,
-    scrollTo: Number
+    scrollTo: Number,
+    route: Object
   },
   watch: {
     scrollTo: {
@@ -42,19 +42,20 @@ export default {
       },
       deep: true
     },
+    // route: {
+    //   handler() {
+    //     if (!this.globalScroll) this.initScroll();
+    //   },
+    //   deep: true,
+    //   immediate: true
+    // },
     scrollAllowed: {
       handler(e) {
-        if (e) {
-          // this.$nextTick(() => {
-          this.globalscroll = new Scrolly(document.getElementById("app"), "h");
-          // });
-        }
+        if (e) this.initScroll();
       },
       deep: true
     },
-    scroll: {
-      handler() {}
-    },
+
     deep: true,
     immediate: true
   },
@@ -63,6 +64,9 @@ export default {
   // },
   components: {
     Scrollbar
+  },
+  beforeDestroy() {
+    this.globalScroll = null;
   },
   data() {
     return {
@@ -84,6 +88,16 @@ export default {
     ])
   },
   methods: {
+    initScroll() {
+      if (!this.globalscroll)
+        this.$nextTick(
+          () =>
+            (this.globalscroll = new Scrolly(
+              document.getElementById("app"),
+              "h"
+            ))
+        );
+    },
     deafenGlobalScroll(e) {
       if (this.globalscroll) {
         if (e) {
@@ -112,7 +126,7 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss"  >
 /* canvas {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
@@ -144,36 +158,5 @@ export default {
       min-width: 100vw;
     }
   }
-}
-
-h1 {
-  font-family: $acumin;
-  // color: white;
-  color: $bg;
-
-  font-weight: normal;
-}
-p {
-  font-family: $suisse;
-  color: $bg;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: normal;
-  color: $bg;
-}
-
-html {
-  overflow: hidden;
-  height: 100%;
-}
-
-body {
-  height: 100%;
-  overflow: auto;
 }
 </style>

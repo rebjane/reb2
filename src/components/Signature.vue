@@ -231,9 +231,11 @@ export default {
     }
   },
   mounted() {
-    this.loadTextures();
-    this.init();
-    this.animate();
+    if (this.$refs.signature) {
+      this.loadTextures();
+      this.init();
+      this.animate();
+    }
   }
 };
 </script>

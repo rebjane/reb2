@@ -19,7 +19,14 @@ class LoadComponents {
       Vue.component("Smiley", require("./components/Smiley.vue").default);
       Vue.component("HeadText", require("./components/HeadText.vue").default);
       Vue.component("Arrow", require("./components/Arrow.vue").default);
+      Vue.component("TextSlice", require("./components/TextSlice.vue").default);
+      Vue.component(
+        "WorkPageNavMenu",
+        require("./components/WorkPageNavMenu.vue").default
+      );
+
       Vue.component("ContactSection", require("./ContactSection.vue").default);
+
       Vue.component(
         "SigningOffSection",
         require("./SigningOffSection.vue").default

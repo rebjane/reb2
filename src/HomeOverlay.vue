@@ -40,6 +40,8 @@ export default {
   },
   methods: {},
   mounted() {
+    //accounts for any route change (resets to false so it doesn't initialize scroll before when it should)
+    this.$store.commit("allowScroll", false);
     // console.log(this.data);
     new Promise(res => {
       this.data.items.forEach(async item => {
@@ -123,12 +125,6 @@ h1 {
   // font-family: $suisse;
   font-family: $acumin;
   font-size: 80px;
-}
-.designer {
-  // margin-top: 40px;
-}
-span {
-  // opacity: 0;
 }
 .intro {
   height: 100vh;

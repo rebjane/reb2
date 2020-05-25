@@ -1,6 +1,15 @@
 <template>
   <div ref="page" class="workpage">
     <div v-if="data" class="inner" ref="scroll">
+      <div class="intro-wrap">
+        <div class="intro">
+          <div class="main-image" :style="`background-image: url(${data.feature_image.url})`">
+            <img :src="data.feature_image.url" />
+          </div>
+          <h1>{{$cms.textField(data.title)}}</h1>
+        </div>
+      </div>
+
       <transition v-for="(item , i) in data.body" :key="i">
         <div class="component">
           <component :is="item.slice_type" :data="item" />
@@ -22,45 +31,53 @@ export default {
   components: {
     Scrollbar
   },
+  watch: {
+    data: {
+      handler() {
+        console.log(this.data, "workpage");
+        setTimeout(() => {
+          this.scroll = new Scrolly(this.$refs.page, "v");
+        }, 1000);
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   props: {
-    // data: {
-    //   type: Object,
-    //   default: null
-    // }
+    data: {
+      type: Object,
+      default: null
+    }
   },
   data() {
     return {
-      scroll: null,
-      data: null
+      scroll: null
     };
   },
   beforeDestroy() {},
   computed: {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
   },
-  methods: {
-    async getData() {
-      return new Promise(res => {
-        var url = window.location.href.split("/");
-        url = url[url.length - 1];
-        this.data = this.$work.filter(i => i.uid === url)[0];
-        res(this.data);
-      });
-    }
-  },
-  mounted() {
-    this.getData().then(() => {
-      setTimeout(() => {
-        this.scroll = new Scrolly(this.$refs.page, "v");
-      }, 500);
-    });
-  }
+  methods: {},
+  mounted() {}
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
+.main-image {
+  height: 80vh;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  img {
+    opacity: 0;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
 .workpage {
   height: 100%;
   width: 100%;
@@ -77,5 +94,22 @@ export default {
 p {
   color: black;
   margin-top: 0;
+}
+.intro-wrap {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  padding-bottom: 5em;
+}
+.intro {
+  display: inline-block;
+  width: auto;
+  text-align: left;
+  height: 100%;
+}
+h1 {
+  font-family: $suisse;
+  font-size: 60px;
+  font-weight: normal;
 }
 </style>

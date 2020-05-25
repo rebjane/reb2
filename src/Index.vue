@@ -1,25 +1,17 @@
 <template>
   <div id="index" ref="app">
     <keep-alive>
-      <transition :key="title" appear v-if="loaded" name="up">
-        <router-view class="view" :showNav="showNav" :scrollTo="scrollToScrollPos" />
+      <transition :key="title" appear v-if="isHomePage ? loaded : data && loaded" name="up">
+        <router-view class="view" :scrollTo="scrollToScrollPos" :data="data" :route="$route" />
       </transition>
     </keep-alive>
     <!-- <Loading v-if="!loaded" /> -->
     <Loading v-if="!loaded" />
-    <NavMenu v-if="showNav && loaded || loaded " @scrollTo="scrollTo" class="nav" />
+    <NavMenu v-if="loaded && isHomePage " @scrollTo="scrollTo" class="nav" />
+    <WorkPageNavMenu v-else-if="loaded && !isHomePage" />
     <!-- && signatureLoaded -->
     <NavScreen v-if="navOpen" />
     <CursorThing v-if="loaded" />
-
-    <!-- <div class="nav-curtains">
-      <transition appear name="left" v-if="navOpen">
-        <div class="leftpane" />
-      </transition>
-      <transition appear name="right" v-if="navOpen">
-        <div class="rightpane" />
-      </transition>
-    </div>-->
   </div>
 </template>
 
@@ -40,13 +32,23 @@ export default {
     // Scrollbar
     // Index
   },
+  watch: {
+    loaded() {
+      this.url();
+    },
+    $route() {
+      this.isHomePage = window.location.pathname === "/";
+      this.url();
+    }
+  },
   data() {
     return {
       time: 0,
       scroll: null,
+      data: null,
+      isHomePage: false,
       transitionStyle:
         "transition: transform 750ms cubic-bezier(0.91, 0.02, 0.275, 1);",
-      showNav: false,
       scrollIndex: 0,
       scrollToScrollPos: null,
       title:
@@ -57,15 +59,27 @@ export default {
   },
   methods: {
     scrollTo(e) {
+      //clicking top nav items
       this.scrollToScrollPos = e;
+    },
+    url() {
+      if (!this.isHomePage) {
+        var url = window.location.pathname.split("/");
+        url = url[url.length - 1];
+        this.data = this.$work.filter(i => i.uid === url)[0];
+      }
+      // return new Promise(res => {
+      //   var url = window.location.pathname.split("/");
+      //   url = url[url.length - 1];
+      //   this.data = this.$work.filter(i => i.uid === url)[0];
+      //   res(this.data);
+      // });
     }
   },
   computed: {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
   },
-  mounted() {
-    this.showNav = window.location.pathname !== "/";
-  }
+  mounted() {}
 };
 </script>
 
