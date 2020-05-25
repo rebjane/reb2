@@ -31,8 +31,13 @@ import { mapState } from "vuex";
 // import WaveText from "./wavetext.js";
 
 export default {
-  name: "Template",
+  name: "ImageWrap",
   watch: {
+    winresize(e) {
+      //when resizing, need to offset for horizontal parallax so it doesn't fall off the view
+      this.offset += e.interval * 2;
+      this.transform();
+    },
     scrollObj: {
       handler() {
         this.transform();
@@ -89,19 +94,21 @@ export default {
       },
       waveText: false,
       newHeight: this.getSize(this.imgInfo.width, this.imgInfo.height).height,
-      parallaxTransform: 0
+      parallaxTransform: 0,
+      offset: 0,
+      width: 0
     };
   },
   beforeDestroy() {},
   computed: {
-    ...mapState(["navOpen"])
+    ...mapState(["navOpen", "winresize"])
   },
   methods: {
     getMidPos() {
       if (this.horiz) {
         var left = this.$refs.imgCol.getBoundingClientRect().left;
-        var width = this.$refs.imgCol.getBoundingClientRect().width;
-        this.midPos = left - (window.innerWidth - width) / 2;
+        this.width = this.$refs.imgCol.getBoundingClientRect().width;
+        this.midPos = left - (window.innerWidth - this.width) / 2;
       } else {
         //for  vert
         var top = this.$refs.imgCol.getBoundingClientRect().top;
@@ -115,22 +122,19 @@ export default {
       if (this.horiz) {
         this.parallaxTransform = `transform: translateX(${this.parallax(
           this.midPos,
-          this.scrollObj.pos
-        ) * this.speedFactor}px)`;
+          this.scrollObj ? this.scrollObj.pos : 1
+        ) + this.offset}px)`;
       } else {
         this.parallaxTransform = `transform: translateY(${this.parallax(
           this.midPos,
-          this.scrollObj.pos
-        ) * this.speedFactor}px)`;
+          this.scrollObj ? this.scrollObj.pos : 1
+        ) + this.offset}px)`;
       }
     },
     parallax(midPos, scrollPos) {
       return (midPos - scrollPos) * 0.7;
     },
     getSize(width, height) {
-      // var colWidth = Math.min(window.innerWidth / 2, 400); //that hundred value's sorta random for now
-      // var newHeight = (colWidth / width) * height;
-      // var newWidth = colWidth;
       var newHeight, newWidth;
       if (this.imgInfo.heightResize) {
         var colHeight = Math.min(

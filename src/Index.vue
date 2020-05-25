@@ -89,9 +89,12 @@ export default {
       this.scrollToScrollPos = e;
     },
     dowinresize() {
+      var interval = window.innerWidth - this.$store.state.winresize.width;
       this.$store.commit("updateWinResize", {
         width: window.innerWidth,
-        height: window.innerHeight
+        height: window.innerHeight,
+        interval: interval,
+        dir: interval < 0 ? -1 : 1
       });
     },
     transition() {

@@ -21,9 +21,13 @@ export default new Vuex.Store({
     navOpen: false,
     gltfsLoaded: false,
     scrollAllowed: false,
-    winresize: null,
     wpindex: 0,
     route: null,
+    winresize: {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      interval: 0,
+    },
   },
 
   mutations: {
