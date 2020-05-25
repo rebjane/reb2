@@ -2,7 +2,7 @@
   <div class="carousel-vertical">
     <div ref="carousel" class="carousel" v-if="items.length">
       <transition v-for="(item, i) in items" :key="i">
-        <div class="image-wrap">
+        <div class="image-wrap" @click="doWorkPageIndex(data, i)">
           <router-link class="rl" :to="`/${data[i].type_of_work}/${data[i].uid}`">
             <ImageWrap
               class="image"
@@ -54,7 +54,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["signatureLoaded", "navOpen", "vertscroll"])
+    ...mapState(["signatureLoaded", "navOpen", "vertscroll", "wpindex"])
   },
   data() {
     return {
@@ -68,14 +68,18 @@ export default {
     };
   },
   methods: {
-    transition(i) {
-      console.log(i);
-    },
     isHovering(isHover) {
       this.ripple = isHover;
       if (this.ripple) {
         this.imageSizing;
       }
+    },
+    doWorkPageIndex(data, i) {
+      this.$store.commit("updateWorkPageIndex", {
+        data: data,
+        i: i
+      });
+      console.log(this.wpindex);
     },
     imagePos() {
       this.$refs.carousel.children.forEach((item, i) => {

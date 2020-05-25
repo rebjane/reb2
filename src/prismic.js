@@ -32,7 +32,7 @@ class Prismic {
                 // console.log(i.uid);
                 return { ...new Object(i.data), ...{ uid: i.uid } };
               });
-            // console.log(Vue.prototype.$work);
+            console.log("work rendered in prismic", Vue.prototype.$work);
             res();
           });
 

@@ -1,14 +1,19 @@
 <template>
   <div class="work-nav-menu">
+    <div class="back" @click="handlePrevPage">
+      <div class="arrow-wrap">
+        <Arrow class="arrow up" />
+      </div>
+      <p>BACK</p>
+    </div>
+
     <router-link to="/">
-      <div class="back">
-        <div class="arrow-wrap">
-          <Arrow class="arrow up" />
-        </div>
-        <p>BACK</p>
+      <div class="home-link">
+        <p>HOME</p>
       </div>
     </router-link>
-    <div class="next">
+
+    <div class="next" @click="handleNextPage">
       <p>NEXT</p>
       <div class="arrow-wrap">
         <Arrow class="arrow down" />
@@ -18,6 +23,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "WorkPageNavMenu",
   props: {
@@ -26,10 +33,36 @@ export default {
       default: null
     }
   },
-  data() {
-    return {};
+  computed: {
+    ...mapState(["wpindex"])
   },
-  methods: {},
+  watch: {
+    wpindex() {
+      this.count = this.wpindex.i;
+    }
+  },
+  data() {
+    return {
+      nextWorkLink: "/",
+      count: 0
+    };
+  },
+  methods: {
+    handlePrevPage() {
+      this.$router.go(-1);
+    },
+    handleNextPage() {
+      if (this.count === this.wpindex.data.length - 1) {
+        this.count = -1;
+      }
+      this.count++;
+      this.$router.push({
+        path: `/${this.wpindex.data[this.count].type_of_work}/${
+          this.wpindex.data[this.count].uid
+        }`
+      });
+    }
+  },
   mounted() {}
 };
 </script>
@@ -43,7 +76,8 @@ export default {
   margin: 2em 0;
 }
 .back,
-.next {
+.next,
+.home-link {
   margin: 0 2em;
   position: fixed;
   cursor: pointer;
@@ -56,14 +90,19 @@ export default {
     font-family: $acuminc;
   }
 }
-
+.home-link {
+  width: 3em;
+}
 .back {
   top: 0;
   .arrow {
     transform: rotate(-90deg);
   }
 }
-
+.home-link {
+  top: 50%;
+  transform: translateY(-50%);
+}
 .next {
   bottom: 0;
   .arrow {

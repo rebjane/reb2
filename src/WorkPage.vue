@@ -34,7 +34,6 @@ export default {
   watch: {
     data: {
       handler() {
-        console.log(this.data, "workpage");
         setTimeout(() => {
           this.scroll = new Scrolly(this.$refs.page, "v");
         }, 1000);
@@ -58,8 +57,23 @@ export default {
   computed: {
     ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
   },
-  methods: {},
-  mounted() {}
+  methods: {
+    whatWorkPageThisIs() {
+      //handles if your first landing is on a work page insetad of home page
+      var uid = this.$route.path.split("/"); //split your uid by '/'
+      var categorized = this.$work.filter(i => i.type_of_work === uid[1]); //what category (ie. work, illustration)
+      uid = uid[uid.length - 1]; // what the last portion of the slug is / work's title
+      var idx = categorized.indexOf(categorized.filter(i => i.uid === uid)[0]); //find what index in the $work array you're at
+
+      this.$store.commit("updateWorkPageIndex", {
+        data: categorized,
+        i: idx
+      });
+    }
+  },
+  mounted() {
+    this.whatWorkPageThisIs();
+  }
 };
 </script>
 

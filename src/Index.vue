@@ -1,8 +1,9 @@
 <template>
   <div id="index" ref="app">
     <keep-alive>
-      <transition :key="$route" appear name="view" v-if="isHomePage ? loaded : data && loaded">
+      <transition :key="$route.path" appear name="view" v-if="isHomePage ? loaded : data && loaded">
         <router-view
+          :key="$route.path"
           class="view"
           :scrollTo="scrollToScrollPos"
           :data="data"
@@ -79,7 +80,7 @@ export default {
       }, 1000);
     },
     url() {
-      if (!this.isHomePage) {
+      if (!this.isHomePage && this.$work) {
         var url = window.location.pathname.split("/");
         url = url[url.length - 1];
         this.data = this.$work.filter(i => i.uid === url)[0];

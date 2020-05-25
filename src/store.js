@@ -22,6 +22,7 @@ export default new Vuex.Store({
     gltfsLoaded: false,
     scrollAllowed: false,
     winresize: null,
+    wpindex: 0,
   },
 
   mutations: {
@@ -53,6 +54,9 @@ export default new Vuex.Store({
     },
     updateWinResize(state, winresize) {
       Vue.set(state, "winresize", winresize);
+    },
+    updateWorkPageIndex(state, wpindex) {
+      Vue.set(state, "wpindex", wpindex);
     },
   },
 
