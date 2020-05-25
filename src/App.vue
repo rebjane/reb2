@@ -131,7 +131,7 @@ export default {
 };
 </script>
 
-<style lang="scss"  >
+<style lang="scss">
 /* canvas {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);

@@ -1,7 +1,7 @@
 <template>
   <div id="index" ref="app">
     <keep-alive>
-      <transition :key="title" appear v-if="isHomePage ? loaded : data && loaded" name="up">
+      <transition :key="$route" appear name="view" v-if="isHomePage ? loaded : data && loaded">
         <router-view
           class="view"
           :scrollTo="scrollToScrollPos"
@@ -11,8 +11,9 @@
         />
       </transition>
     </keep-alive>
+    <div class="transition-curtain" ref="transition" />
     <!-- <Loading v-if="!loaded" /> -->
-    <Loading v-if="!loaded" />
+    <Loading v-if="!loaded" class="loadingcurtain" />
     <NavMenu v-if="loaded && isHomePage " @scrollTo="scrollTo" class="nav" />
     <WorkPageNavMenu v-else-if="loaded && !isHomePage" />
     <!-- && signatureLoaded -->
@@ -45,6 +46,7 @@ export default {
     $route() {
       this.isHomePage = window.location.pathname === "/";
       this.url();
+      this.transition();
     }
   },
   data() {
@@ -56,11 +58,7 @@ export default {
       transitionStyle:
         "transition: transform 750ms cubic-bezier(0.91, 0.02, 0.275, 1);",
       scrollIndex: 0,
-      scrollToScrollPos: null,
-      title:
-        window.location.pathname === "/"
-          ? "home"
-          : window.location.pathname.split("/").join("")
+      scrollToScrollPos: null
     };
   },
   methods: {
@@ -73,6 +71,12 @@ export default {
         width: window.innerWidth,
         height: window.innerHeight
       });
+    },
+    transition() {
+      this.$refs.transition.style = "height: 100%; bottom: 0";
+      setTimeout(() => {
+        this.$refs.transition.style = "height: 0%; top: 0";
+      }, 1000);
     },
     url() {
       if (!this.isHomePage) {
@@ -103,8 +107,30 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 @import "./styles/stylesheet.scss";
+.transition-curtain {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: $lbg;
+  z-index: 2;
+  height: 0;
+  @include ease(height);
+}
+.view {
+  transform: translateY(0%);
+  min-height: 100%;
+}
+.view-leave-active {
+  transition-delay: 750ms;
+}
+.loadingcurtain {
+  position: fixed;
+  z-index: 3;
+}
 #index {
   overflow: hidden;
   height: 100vh;
@@ -116,63 +142,4 @@ export default {
 .nav {
   position: fixed;
 }
-.scroll {
-  position: relative;
-  min-height: 100%;
-}
-
-// .left-enter,
-// .right-enter,
-// .left-leave-to,
-// .right-leave-to {
-//   max-height: 0% !important;
-// }
-// .left-enter-active,
-// .right-enter-active,
-// .left-leave-active,
-// .right-leave-active {
-//   @include ease(max-height);
-// }
-// .right-enter-active,
-// .right-leave-active {
-//   transition-delay: 100ms;
-// }
-
-// .leftpane,
-// .rightpane {
-//   max-height: 100%;
-//   background: $light;
-//   height: 100%;
-//   position: fixed;
-//   width: 50%;
-//   bottom: 0;
-//   z-index: 2;
-// }
-// .rightpane {
-//   right: 0;
-// }
-.title {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-}
-.view {
-  transform: translateY(0%);
-  min-height: 100%;
-}
-// .up-enter {
-//   transform: translateY(100%);
-// }
-// .up-leave-to {
-//   transform: translateY(-100%);
-// }
-// .up-enter-to {
-//   transform: translateY(0%);
-// }
-// .up-leave-active,
-// .up-enter-active {
-//   @include ease(transform);
-// }
 </style>

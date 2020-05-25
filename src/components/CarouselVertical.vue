@@ -3,16 +3,7 @@
     <div ref="carousel" class="carousel" v-if="items.length">
       <transition v-for="(item, i) in items" :key="i">
         <div class="image-wrap">
-          <!-- <div
-              :ref="`image-${i}`"
-              class="image"
-              :style="`height: ${item.height}px; width: ${item.width}px; background-image: url(${item.url});`"
-            >
-              <img style="opacity: 0;" :src="item.url" v-if="key !== i" />
-          </div>-->
-          <!-- <div class="bordering" /> -->
-          <!-- <p v-html="`/${data[i].type_of_work}/${data[i].uid}`" /> -->
-          <router-link :to="`/${data[i].type_of_work}/${data[i].uid}`">
+          <router-link class="rl" :to="`/${data[i].type_of_work}/${data[i].uid}`">
             <ImageWrap
               class="image"
               :imgInfo="{title: item.title,
@@ -28,9 +19,6 @@
               :scrollObj="carouselScroll"
             />
           </router-link>
-          <!-- <transition appear name="h3" v-if="showHover && key === i">
-            <h3>View.</h3>
-          </transition>-->
         </div>
       </transition>
       <!-- <RippleImage :key="key" :img="items[key].url" v-if="key" :resize="resizeObj" /> -->
@@ -228,6 +216,7 @@ export default {
   // border-left: 1px solid $lightgrey;
   // border-right: 1px solid $lightgrey;
 }
+
 .carousel {
   margin: auto;
   width: 100%;
@@ -235,6 +224,8 @@ export default {
 }
 
 .image {
+  transform: scale(1);
+
   background-repeat: no-repeat;
   background-size: contain;
   // max-width: 60%;
