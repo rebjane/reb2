@@ -7,8 +7,7 @@ export default class Scrolly {
     this.direction = direction; //either v for vertical, or h for horizontal
     this.elParent = el;
     this.el = this.elParent.children[0];
-    this.elWidth = this.elParent.children[0].getBoundingClientRect().width;
-    this.elHeight = this.elParent.children[0].getBoundingClientRect().height;
+    this.winresize();
     this.preDeafPos = null;
     this.pos = 0;
     this.dir = 0;
@@ -18,7 +17,6 @@ export default class Scrolly {
       this.max = this.el.offsetWidth - window.innerWidth;
     } else {
       this.max = this.el.offsetHeight - window.innerHeight;
-      console.log(this.el.offsetHeight);
     }
     this.eventListeners = this.eventListeners.bind(this);
     this.scroll = this.scroll.bind(this);
@@ -104,6 +102,17 @@ export default class Scrolly {
 
   listen() {
     this.deaf = false;
+  }
+
+  winresize() {
+    this.elWidth = this.elParent.children[0].getBoundingClientRect().width;
+    this.elHeight = this.elParent.children[0].getBoundingClientRect().height;
+    if (this.direction === "h") {
+      this.max = this.el.offsetWidth - window.innerWidth;
+    } else {
+      this.max = this.el.offsetHeight - window.innerHeight;
+    }
+    // this.scrollTo(this.pos);
   }
 
   destroy() {

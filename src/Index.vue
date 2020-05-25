@@ -2,7 +2,13 @@
   <div id="index" ref="app">
     <keep-alive>
       <transition :key="title" appear v-if="isHomePage ? loaded : data && loaded" name="up">
-        <router-view class="view" :scrollTo="scrollToScrollPos" :data="data" :route="$route" />
+        <router-view
+          class="view"
+          :scrollTo="scrollToScrollPos"
+          :data="data"
+          :route="$route"
+          :winresize="winresize"
+        />
       </transition>
     </keep-alive>
     <!-- <Loading v-if="!loaded" /> -->
@@ -62,6 +68,12 @@ export default {
       //clicking top nav items
       this.scrollToScrollPos = e;
     },
+    dowinresize() {
+      this.$store.commit("updateWinResize", {
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    },
     url() {
       if (!this.isHomePage) {
         var url = window.location.pathname.split("/");
@@ -77,9 +89,17 @@ export default {
     }
   },
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
+    ...mapState([
+      "signatureLoaded",
+      "loadPct",
+      "loaded",
+      "navOpen",
+      "winresize"
+    ])
   },
-  mounted() {}
+  mounted() {
+    window.addEventListener("resize", this.dowinresize);
+  }
 };
 </script>
 

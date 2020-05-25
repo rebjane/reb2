@@ -21,6 +21,7 @@ export default new Vuex.Store({
     navOpen: false,
     gltfsLoaded: false,
     scrollAllowed: false,
+    winresize: null,
   },
 
   mutations: {
@@ -50,6 +51,9 @@ export default new Vuex.Store({
     allowScroll(state, scrollAllowed) {
       Vue.set(state, "scrollAllowed", scrollAllowed);
     },
+    updateWinResize(state, winresize) {
+      Vue.set(state, "winresize", winresize);
+    },
   },
 
   actions: {
@@ -74,6 +78,9 @@ export default new Vuex.Store({
     },
     allowScroll(context, scrollAllowed) {
       context.commit("allowScroll", scrollAllowed);
+    },
+    setWinResize(context, winresize) {
+      context.commit("setWinResize", winresize);
     },
   },
 });

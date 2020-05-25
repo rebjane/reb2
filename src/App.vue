@@ -31,14 +31,19 @@ export default {
   name: "Index",
   props: {
     scrollTo: Number,
-    route: Object
+    route: Object,
+    winresize: Object
   },
+
   watch: {
+    winresize: {
+      handler() {
+        if (this.globalscroll) this.globalscroll.winresize();
+      }
+    },
     scrollTo: {
       handler(pos) {
-        if (this.globalscroll) {
-          this.globalscroll.scrollTo(pos);
-        }
+        if (this.globalscroll) this.globalscroll.scrollTo(pos);
       },
       deep: true
     },
