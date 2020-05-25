@@ -13,6 +13,7 @@ import bumpmap from "../assets/frosted-glass-texture.jpg";
 import envmap from "../assets/studio-envMap.jpg";
 export default {
   name: "Signature",
+  props: {},
   watch: {},
   data() {
     var camera;
@@ -43,6 +44,7 @@ export default {
       when: performance.now()
     };
   },
+
   methods: {
     mouseListener() {
       window.addEventListener("mousemove", e => {

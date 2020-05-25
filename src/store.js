@@ -23,6 +23,7 @@ export default new Vuex.Store({
     scrollAllowed: false,
     winresize: null,
     wpindex: 0,
+    route: null,
   },
 
   mutations: {
@@ -57,6 +58,9 @@ export default new Vuex.Store({
     },
     updateWorkPageIndex(state, wpindex) {
       Vue.set(state, "wpindex", wpindex);
+    },
+    updateRoute(state, route) {
+      Vue.set(state, "route", route);
     },
   },
 

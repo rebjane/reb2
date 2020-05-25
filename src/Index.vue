@@ -59,7 +59,10 @@ export default {
     },
     $route() {
       this.isHomePage = window.location.pathname === "/";
-
+      this.$store.commit("updateRoute", {
+        path: this.$route.path,
+        isHome: this.$route.path === "/"
+      });
       setTimeout(() => {
         this.showMainNav = this.isHomePage;
       }, 750);

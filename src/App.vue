@@ -11,7 +11,7 @@
             :class="`component ${scroll.pos > i * (winw * 0.75) ? 'inview' : 'hidden'}`"
           >
             <component
-              :inview="scroll.pos > i * (winw * 0.75) ? true : false"
+              :inview="handleInview(i)"
               :is="item.slice_type"
               :data="item"
               @deafenGlobalScroll="deafenGlobalScroll"
@@ -31,7 +31,6 @@ export default {
   name: "Index",
   props: {
     scrollTo: Number,
-    route: Object,
     winresize: Object
   },
 
@@ -93,6 +92,9 @@ export default {
     ])
   },
   methods: {
+    handleInview(i) {
+      return this.scroll.pos > i * (this.winw * 0.75) ? true : false;
+    },
     initScroll() {
       if (!this.globalscroll)
         this.$nextTick(

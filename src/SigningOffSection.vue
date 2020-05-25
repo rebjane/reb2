@@ -41,7 +41,7 @@ export default {
   },
   beforeDestroy() {},
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
+    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen", "route"])
   },
   methods: {},
   mounted() {}

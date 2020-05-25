@@ -103,15 +103,15 @@ export default {
         this.$refs.image.removeEventListener("mousemove", this.doRipple);
         cancelAnimationFrame(this.render);
         PIXI.utils.clearTextureCache();
-        this.displacementSprite.destroy();
-        this.displacementFilter.destroy();
-        this.image.destroy();
-        this.stage.removeChildren();
-        this.stage.destroy();
-        this.app.stage.removeChild(this.stage);
-        this.app.stage.destroy();
-        this.app.destroy();
-        this.renderer.destroy();
+        // this.displacementSprite.destroy();
+        // this.displacementFilter.destroy();
+        // this.stage.removeChildren();
+        // this.stage.destroy();
+        // this.image.destroy();
+        // this.app.stage.removeChild(this.stage);
+        // this.app.stage.destroy();
+        // this.app.destroy();
+        // this.renderer.destroy();
         res();
       });
     },

@@ -79,7 +79,6 @@ export default {
         data: data,
         i: i
       });
-      console.log(this.wpindex);
     },
     imagePos() {
       this.$refs.carousel.children.forEach((item, i) => {
