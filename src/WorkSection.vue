@@ -6,7 +6,7 @@
     />
 
     <div class="scroll outer" ref="scroll">
-      <div ref="work" class="worksection">
+      <div ref="work" class="worksection carousel">
         <CarouselVertical
           ref="carousel"
           class="carousel"

@@ -29,8 +29,8 @@
             />
           </div>
         </transition>
-        <div class="submit">
-          <input type="submit" value="submit" />
+        <div class="submit link">
+          <input type="submit" class="link" value="submit" />
           <Arrow class="arrow" />
         </div>
       </form>

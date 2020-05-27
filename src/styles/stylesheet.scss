@@ -121,8 +121,15 @@ html {
   overflow: hidden;
   height: 100%;
 }
+* {
+  cursor: none;
+}
 
 body {
   height: 100%;
   overflow: auto;
+}
+a {
+  text-decoration: none;
+  color: white;
 }

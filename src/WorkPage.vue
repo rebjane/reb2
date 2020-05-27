@@ -98,7 +98,7 @@ export default {
   position: relative;
   .inner {
     position: fixed;
-
+    width: 100%;
     .component {
       width: 100%;
       min-width: 100vw;

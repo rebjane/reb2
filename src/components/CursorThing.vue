@@ -1,5 +1,7 @@
 <template>
-  <div class="cursor" v-show="!outOfBounds" ref="cursor"></div>
+  <div v-show="!outOfBounds" class="cursor" ref="cursor">
+    <component :fill="`white`" :is="curComponent" />
+  </div>
 </template>
 
 <script>
@@ -16,12 +18,30 @@ export default {
   data() {
     return {
       timeline: new TimelineMax(),
-      outOfBounds: false
+      outOfBounds: false,
+      curComponent: "ArrowCursor",
+      topRightStyle: "top: 0; left: -80px;",
+      centerStyle: "top: -40px; left: -40px;"
     };
   },
   methods: {
+    cursorType(targ) {
+      if (targ.includes("link")) {
+        this.curComponent = "CircleCursor";
+        this.$refs.cursor.style = this.centerStyle;
+      } else if (targ.includes("carousel")) {
+        this.curComponent = "VertArrowCursor";
+        this.$refs.cursor.style = this.centerStyle;
+      } else {
+        this.curComponent = "ArrowCursor";
+        this.$refs.cursor.style = this.topRightStyle;
+      }
+    },
     cursorMove() {
       window.addEventListener("mousemove", e => {
+        e.stopPropagation();
+        this.cursorType(e.target.className);
+        // console.log(e.target.className);
         if (
           e.clientX <= 10 ||
           e.clientX >= window.innerWidth - 10 ||
@@ -54,20 +74,14 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .cursor {
-  width: 100px;
-  height: 100px;
-  // background: white;
-  border: 1px solid white;
+  width: 80px;
+  height: 80px;
+  // border: 1px solid white;
   mix-blend-mode: difference;
-  // opacity: 0.2;
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
-  // background-blend-mode: screen;
+
   pointer-events: none;
   border-radius: 500px;
   position: fixed;
   z-index: 10;
-  top: -50px;
-  left: -50px;
 }
 </style>

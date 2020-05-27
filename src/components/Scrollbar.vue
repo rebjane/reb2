@@ -3,7 +3,9 @@
     <div class="scroll-line" ref="scrollline">
       <ul>
         <li v-for="(item, i) in menu" :key="i" @click="$emit('scrollTo', i * ww)">
-          <span>{{item.title}}</span>
+          <span>
+            <router-link to>{{item.title}}</router-link>
+          </span>
         </li>
       </ul>
       <div ref="scrollbar" class="scroll-bar"></div>
@@ -39,26 +41,7 @@ export default {
       slwidth: null,
       sbwidth: null,
       ww: window.innerWidth,
-      menu: [
-        {
-          title: "INTRO"
-        },
-        {
-          title: "DESIGN"
-        },
-        {
-          title: "ILLUSTRATION"
-        },
-        {
-          title: "ABOUT"
-        },
-        {
-          title: "CONTACT"
-        },
-        {
-          title: "SIGNING OFF"
-        }
-      ]
+      menu: this.$nav
     };
   },
   computed: {
@@ -92,7 +75,7 @@ export default {
   position: absolute;
   // bottom: 0;
   top: 0;
-
+  white-space: nowrap;
   // padding-bottom: 2em;
   margin-top: 1em;
 
@@ -121,14 +104,15 @@ ul {
 
   li {
     display: inline-block;
-    padding: 0 2em;
-    cursor: pointer;
+    // cursor: pointer;
 
     position: relative;
     font-size: 12px;
     text-align: left;
     // width: 100px;
-
+    a {
+      padding: 0 2em;
+    }
     span {
       font-family: $acuminc;
     }

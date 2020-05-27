@@ -2,8 +2,8 @@
   <div class="carousel-vertical">
     <div ref="carousel" class="carousel" v-if="items.length">
       <transition v-for="(item, i) in items" :key="i">
-        <div class="image-wrap" @click="doWorkPageIndex(data, i)">
-          <router-link class="rl" :to="`/${data[i].type_of_work}/${data[i].uid}`">
+        <router-link class="rl" :to="`/${data[i].type_of_work}/${data[i].uid}`">
+          <div class="image-wrap link" @click="doWorkPageIndex(data, i)">
             <ImageWrap
               class="image"
               :imgInfo="{title: item.title,
@@ -18,10 +18,9 @@
               :horiz="horiz"
               :scrollObj="carouselScroll"
             />
-          </router-link>
-        </div>
+          </div>
+        </router-link>
       </transition>
-      <!-- <RippleImage :key="key" :img="items[key].url" v-if="key" :resize="resizeObj" /> -->
     </div>
   </div>
 </template>
@@ -181,7 +180,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.data);
+    // console.log(this.data);
     if (this.data.length) {
       new Promise(res => {
         this.data.forEach(item => {
@@ -201,7 +200,7 @@ export default {
           date: this.items[0].date,
           key: 0
         });
-        window.addEventListener("resize", this.imageSizing);
+        // window.addEventListener("resize", this.imageSizing);
       });
     }
   }
@@ -228,7 +227,7 @@ export default {
 
 .image {
   transform: scale(1);
-
+  pointer-events: none;
   background-repeat: no-repeat;
   background-size: contain;
   // max-width: 60%;
@@ -240,7 +239,7 @@ export default {
   @include ease(filter);
   position: relative;
   filter: brightness(100%);
-  cursor: pointer;
+  // cursor: pointer;
   &:hover {
     filter: brightness(50%);
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="work-nav-menu">
-    <div class="back" @click="handlePrevPage">
+    <div class="back link" @click="handlePrevPage">
       <div class="arrow-wrap">
         <Arrow class="arrow up" :fill="'white'" />
       </div>
@@ -13,7 +13,7 @@
       </div>
     </router-link>
 
-    <div class="next" @click="handleNextPage">
+    <div class="next link" @click="handleNextPage">
       <p>NEXT</p>
       <div class="arrow-wrap">
         <Arrow class="arrow down" :fill="'white'" />
@@ -81,7 +81,7 @@ export default {
 .home-link {
   margin: 0 2em;
   position: fixed;
-  cursor: pointer;
+  // cursor: pointer;
   //   height: 50%;
 
   p {

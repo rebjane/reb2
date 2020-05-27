@@ -21,6 +21,23 @@ class LoadComponents {
       Vue.component("Arrow", require("./components/Arrow.vue").default);
       Vue.component("TextSlice", require("./components/TextSlice.vue").default);
       Vue.component(
+        "ArrowCursor",
+        require("./components/ArrowCursor.vue").default
+      );
+      Vue.component(
+        "VertArrowCursor",
+        require("./components/VertArrowCursor.vue").default
+      );
+      Vue.component(
+        "CircleCursor",
+        require("./components/CircleCursor.vue").default
+      );
+      Vue.component(
+        "ImageOrVideo",
+        require("./components/ImageOrVideo.vue").default
+      );
+
+      Vue.component(
         "WorkPageNavMenu",
         require("./components/WorkPageNavMenu.vue").default
       );

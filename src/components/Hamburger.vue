@@ -30,6 +30,6 @@ svg {
   fill: white;
 }
 .hamburger {
-  cursor: pointer;
+  // cursor: pointer;
 }
 </style>

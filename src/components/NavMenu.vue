@@ -1,11 +1,11 @@
 <template>
   <div class="nav">
     <div class="main-menu-wrapper">
-      <p class="rebecca">
+      <div class="rebecca">
         <router-link exact to="/">
           <Reb2Logo class="logo" :fill="'white'" />
         </router-link>
-      </p>
+      </div>
     </div>
     <transition appear v-if="time.timeString" name="time">
       <p class="time">{{ time.timeString }}</p>
@@ -15,7 +15,9 @@
     <div class="socials">
       <ul>
         <li v-for="(item, i) in socialmedia" :key="i">
-          <span>{{item.title}}</span>
+          <span>
+            <router-link to>{{item.title}}</router-link>
+          </span>
         </li>
       </ul>
     </div>
@@ -87,6 +89,7 @@ export default {
   transform: translateY(-100%);
 }
 .logo {
+  pointer-events: none;
   width: 50px;
   margin-top: 2em;
   margin-left: 2em;
@@ -196,14 +199,24 @@ p {
   overflow: visible;
   margin-left: 1em;
   .rebecca {
+    position: relative;
+    a {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
     text-align: center;
     font-family: $suisse;
     // color: white;
     color: white;
 
     font-size: 12px;
-    margin-left: 3em;
+    // margin-left: 3em;
     width: 6em;
+    height: 6em;
+
     float: left;
   }
   .main-menu {
@@ -224,7 +237,7 @@ p {
       // padding-bottom: 2em;
       padding-right: 2em;
       font-size: 18px;
-      cursor: pointer;
+      // cursor: pointer;
       // &:last-child {
       //   padding-bottom: 1em;
       // }
@@ -245,11 +258,11 @@ p {
   ul {
     list-style: none;
     padding: 0;
-    cursor: pointer;
+    // cursor: pointer;
 
     li {
       display: inline-block;
-      padding-right: 2em;
+
       position: relative;
       font-size: 12px;
       // &:after {
@@ -263,6 +276,9 @@ p {
 
       //   height: calc(100% + 3px);
       // }
+      a {
+        padding: 0 2em;
+      }
       :not(:last-child) {
         padding-right: 0;
       }

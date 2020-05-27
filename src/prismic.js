@@ -32,8 +32,21 @@ class Prismic {
                 // console.log(i.uid);
                 return { ...new Object(i.data), ...{ uid: i.uid } };
               });
-            console.log("work rendered in prismic", Vue.prototype.$work);
-            res();
+            // console.log("work rendered in prismic", Vue.prototype.$work);
+            res(Vue.prototype.$work);
+          });
+
+          //HomeOverlay
+          const HomeNav = new Promise((res) => {
+            Vue.prototype.$nav = this.data
+              .filter((e) => e.type === "home_page")[0]
+              .data.body.map((i) => {
+                return {
+                  title: Vue.prototype.$cms.textField(i.primary.nav_title),
+                };
+              });
+            console.log(Vue.prototype.$nav);
+            res(Vue.prototype.$nav);
           });
 
           //HomeOverlay
@@ -44,7 +57,7 @@ class Prismic {
             res(Vue.prototype.$home);
           });
 
-          Promise.all([WorkSectionSection, HomeSlices]).then(() =>
+          Promise.all([WorkSectionSection, HomeNav, HomeSlices]).then(() =>
             res("prismic all loaded")
           );
         });

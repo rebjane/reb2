@@ -37,6 +37,9 @@ export default {
       //when resizing, need to offset for horizontal parallax so it doesn't fall off the view
       this.offset += e.interval * 2;
       this.transform();
+      if (this.isParallax) {
+        this.$refs.image.style = this.parallaxTransform;
+      }
     },
     scrollObj: {
       handler() {
