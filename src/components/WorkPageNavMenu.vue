@@ -79,7 +79,15 @@ export default {
 .back,
 .next,
 .home-link {
-  margin: 0 2em;
+  // margin: 0 2em;
+  @include above($tablet) {
+    margin-left: 2em;
+    margin-right: 2em;
+  }
+  // @include below($tablet) {
+  //   margin-left: 1em;
+  //   margin-right: 1em;
+  // }
   position: fixed;
   // cursor: pointer;
   //   height: 50%;

@@ -100,10 +100,34 @@ export default {
 }
 .info {
   position: relative;
-  //   display: inline-block;
-  width: 50%;
-  height: 100%;
+  height: 50%;
+  width: 100%;
+  @include above($tablet) {
+    width: 50%;
+    height: 100%;
+  }
+
   float: left;
+}
+.form {
+  height: 50%;
+  width: 100%;
+
+  @include above($tablet) {
+    width: 40%;
+    height: 100%;
+  }
+  position: relative;
+  float: left;
+  .form-inner {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  span {
+    width: 100%;
+  }
 }
 p {
   color: black;
@@ -156,21 +180,5 @@ label {
   position: relative;
   padding: 1em 0;
   border-bottom: 1px solid $bg;
-}
-.form {
-  //   display: inline-block;
-  width: 40%;
-  height: 100%;
-  position: relative;
-  float: left;
-  .form-inner {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  span {
-    width: 100%;
-  }
 }
 </style>

@@ -12,11 +12,14 @@
     </transition>
     <!-- main menu is in this component -->
     <Scrollbar v-if=" !navOpen" class="mainnav" @scrollTo="handleScrollTo" />
-    <div class="socials">
+    <div class="socials link">
       <ul>
         <li v-for="(item, i) in socialmedia" :key="i">
           <span>
-            <router-link to>{{item.title}}</router-link>
+            <a
+              :target="item.link.url ? '_blank' : null"
+              :href="item.link.url ? item.link.url : null"
+            >{{$cms.textField(item.label)}}</a>
           </span>
         </li>
       </ul>
@@ -46,20 +49,7 @@ export default {
   data() {
     return {
       time: new Time(),
-      socialmedia: [
-        {
-          title: "instagram",
-          link: ""
-        },
-        {
-          title: "behance",
-          link: ""
-        },
-        {
-          title: "creative market",
-          link: ""
-        }
-      ]
+      socialmedia: this.$navsocials
     };
   },
   computed: {

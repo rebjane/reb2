@@ -17,6 +17,44 @@ $pad: 124px;
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: $col;
 }
+
+$mobile: 600px;
+$tablet: 800px;
+$notebook: 1024px;
+$laptop: 1440px;
+$desktop: 1600px;
+$ultra: 1920px;
+
+$pad: 20%;
+$medpad: 5em;
+$mobilepad: 3em;
+
+@mixin padding() {
+  @include above($tablet) {
+    margin-left: $medpad;
+    margin-right: $medpad;
+  }
+  @include above($notebook) {
+    margin-left: $pad;
+    margin-right: $pad;
+  }
+  @include below($tablet) {
+    margin-left: $mobilepad;
+    margin-right: $mobilepad;
+  }
+}
+
+@mixin above($size) {
+  @media screen and (min-width: $size + 1) {
+    @content;
+  }
+}
+
+@mixin below($size) {
+  @media screen and (max-width: $size) {
+    @content;
+  }
+}
 .suisse {
   font-family: $suisse !important;
 }

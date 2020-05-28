@@ -46,7 +46,8 @@ export default {
 @import "../styles/stylesheet.scss";
 .media-img-or-vid {
   position: relative;
-  padding: 4em;
+  // padding: 4em;
+  @include padding();
 }
 .video {
   width: 100%;

@@ -116,7 +116,6 @@ export default {
 }
 
 h1 {
-  font-size: 80px;
   position: relative;
   margin: 0;
   margin-bottom: 0;
@@ -124,7 +123,9 @@ h1 {
   // @include outline($bg);
   // font-family: $suisse;
   font-family: $acumin;
-  font-size: 80px;
+  @include above($tablet) {
+    font-size: 80px;
+  }
 }
 .intro {
   height: 100vh;

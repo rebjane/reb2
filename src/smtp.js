@@ -1,7 +1,7 @@
 ﻿/* SmtpJS.com - v3.0.0 */
 export const smtp = {
   send(a) {
-    return new Promise(function(n, e) {
+    return new Promise(function(n) {
       (a.nocache = Math.floor(1e6 * Math.random() + 1)), (a.Action = "Send");
       var t = JSON.stringify(a);
       smtp.ajaxPost("https://smtpjs.com/v3/smtpjs.aspx?", t, function(e) {
@@ -32,7 +32,8 @@ export const smtp = {
       "withCredentials" in t
         ? t.open(e, n, !0)
         : "undefined" != typeof XDomainRequest
-        ? (t = new XDomainRequest()).open(e, n)
+        ? /* eslint-disable no-undef */
+          (t = new XDomainRequest()).open(e, n)
         : (t = null),
       t
     );

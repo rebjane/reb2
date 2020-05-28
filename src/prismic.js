@@ -36,7 +36,7 @@ class Prismic {
             res(Vue.prototype.$work);
           });
 
-          //HomeOverlay
+          //Scrollbar Nav
           const HomeNav = new Promise((res) => {
             Vue.prototype.$nav = this.data
               .filter((e) => e.type === "home_page")[0]
@@ -45,8 +45,16 @@ class Prismic {
                   title: Vue.prototype.$cms.textField(i.primary.nav_title),
                 };
               });
-            console.log(Vue.prototype.$nav);
             res(Vue.prototype.$nav);
+          });
+
+          //Socials Nav
+          const NavSocials = new Promise((res) => {
+            Vue.prototype.$navsocials = this.data.filter(
+              (e) => e.type === "navsocials"
+            )[0].data.links;
+            console.log(Vue.prototype.$navsocials);
+            res(Vue.prototype.$navsocials);
           });
 
           //HomeOverlay
@@ -57,9 +65,12 @@ class Prismic {
             res(Vue.prototype.$home);
           });
 
-          Promise.all([WorkSectionSection, HomeNav, HomeSlices]).then(() =>
-            res("prismic all loaded")
-          );
+          Promise.all([
+            WorkSectionSection,
+            HomeNav,
+            NavSocials,
+            HomeSlices,
+          ]).then(() => res("prismic all loaded"));
         });
     });
   }

@@ -36,10 +36,11 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
 .textsection {
-  padding: 4em;
+  // padding: 4em;
+  @include padding();
 }
 .text-rows {
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
 .text-row {
