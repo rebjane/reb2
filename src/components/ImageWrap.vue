@@ -35,10 +35,12 @@ export default {
   watch: {
     winresize(e) {
       //when resizing, need to offset for horizontal parallax so it doesn't fall off the view
-      this.offset += e.interval * 2;
-      this.transform();
       if (this.isParallax) {
-        this.$refs.image.style = this.parallaxTransform;
+        this.offset += e.interval * 2;
+        this.transform();
+        if (this.isParallax) {
+          this.$refs.image.style = this.parallaxTransform;
+        }
       }
     },
     scrollObj: {
@@ -70,7 +72,7 @@ export default {
     },
     isParallax: {
       type: Boolean,
-      default: true
+      default: false
     },
     horiz: {
       type: Boolean,

@@ -110,6 +110,7 @@ p {
   margin-top: 0;
 }
 .intro-wrap {
+  // @include padding();
   width: 100%;
   display: inline-block;
   text-align: center;

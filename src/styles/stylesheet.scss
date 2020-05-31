@@ -31,12 +31,10 @@ $mobilepad: 3em;
 
 @mixin padding() {
   @include above($tablet) {
-    margin-left: $medpad;
-    margin-right: $medpad;
+    margin: $medpad $medpad;
   }
   @include above($notebook) {
-    margin-left: $pad;
-    margin-right: $pad;
+    margin: $medpad $pad;
   }
   @include below($tablet) {
     margin-left: $mobilepad;
@@ -161,6 +159,7 @@ html {
 }
 * {
   cursor: none;
+  overscroll-behavior-x: contain;
 }
 
 body {

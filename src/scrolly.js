@@ -37,10 +37,14 @@ export default class Scrolly {
       if (this.deaf) {
         return;
       }
-
-      this.dir = Math.abs(e.deltaY) / e.deltaY;
-
-      this.scrollDestination += e.deltaY;
+      e.stopPropagation();
+      if (e.deltaX) {
+        this.dir = Math.abs(e.deltaX) / e.deltaX;
+        this.scrollDestination += e.deltaX;
+      } else {
+        this.dir = Math.abs(e.deltaY) / e.deltaY;
+        this.scrollDestination += e.deltaY;
+      }
 
       this.scrollDestination = this.limit(this.scrollDestination, this.max);
       if (!this.isScrolling && !this.deaf) {
