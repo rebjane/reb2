@@ -27,6 +27,7 @@ export default {
   watch: {
     scroll: {
       handler(e) {
+        // console.log(e);
         this.$refs.scrollbar.style = `width: ${this.width(
           this.sbwidth,
           this.slwidth,

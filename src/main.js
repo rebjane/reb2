@@ -85,11 +85,13 @@ async function loadingPct() {
     var loading = setInterval(async () => {
       if (store.state.loadPct === 100) {
         clearInterval(loading);
+        store.commit("setLoadPct", "");
+
         res();
       } else {
-        store.commit("setLoadPct", store.state.loadPct + 1);
+        store.commit("setLoadPct", store.state.loadPct + 50);
       }
-    }, 0);
+    }, 500);
   });
 }
 

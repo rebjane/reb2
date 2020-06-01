@@ -23,6 +23,8 @@ export default class Scrolly {
   }
 
   size() {
+    this.elWidth = this.elParent.children[0].getBoundingClientRect().width;
+    this.elHeight = this.elParent.children[0].getBoundingClientRect().height;
     if (this.direction === "h") {
       this.max = this.el.offsetWidth - window.innerWidth;
     } else {
