@@ -242,7 +242,13 @@ export default {
     margin-right: 1em;
   }
 }
-
+.rl {
+  // @include above($tablet) {
+  //   display: inline-block;
+  //   width: 50%;
+  // }
+  width: 100%;
+}
 .image {
   transform: scale(1);
   pointer-events: none;
@@ -276,10 +282,10 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  @include above($tablet) {
-    margin: 1em;
-    padding: 1em;
-  }
+  // @include above($tablet) {
+  //   margin: 1em;
+  //   padding: 1em;
+  // }
 
   display: inline-block;
   position: relative;

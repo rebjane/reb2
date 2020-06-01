@@ -73,13 +73,14 @@ export default {
 
 .arrow-wrap {
   //   height: 3em;
-  width: 3em;
+  width: 2em;
   margin: 2em 0;
 }
 .back,
 .next,
 .home-link {
   // margin: 0 2em;
+  border-right: 1px solid white;
   @include above($tablet) {
     margin-left: 2em;
     margin-right: 2em;
@@ -98,10 +99,11 @@ export default {
     margin: auto;
     font-family: $acuminc;
     color: white;
+    font-size: 12px;
   }
 }
 .home-link {
-  width: 3em;
+  width: 2em;
 }
 .back {
   top: 0;

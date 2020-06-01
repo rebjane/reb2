@@ -145,6 +145,7 @@ export default {
   height: 100%;
 }
 .scrollouter {
+  border-top: 1px solid black;
   height: 100%;
   width: 100%;
   @include above($tablet) {
@@ -159,7 +160,11 @@ export default {
   // display: inline-block;
   position: relative;
   background: $lbg;
-  padding-bottom: 3em;
+  padding-bottom: 5em;
+
+  @include above($tablet) {
+    padding-top: 5em;
+  }
 
   @include ease(background);
   // &:hover {

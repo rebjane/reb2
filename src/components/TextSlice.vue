@@ -55,7 +55,7 @@ h2 {
   font-weight: normal;
   margin: 0;
   @include below($tablet) {
-    margin-bottom: 2em;
+    margin: 1em 0;
   }
 }
 p {

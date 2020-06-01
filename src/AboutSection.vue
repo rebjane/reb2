@@ -78,10 +78,13 @@ export default {
   left: 0;
   top: -$top;
   background: $bg;
-  z-index: 0;
+  z-index: -1;
 }
 .bio {
   // right: -100%;
+  @include below($tablet) {
+    padding-top: 3em;
+  }
   @include above($tablet) {
     right: 10%;
     position: absolute;

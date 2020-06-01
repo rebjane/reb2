@@ -212,7 +212,7 @@ p {
 }
 .main-menu-wrapper {
   mix-blend-mode: difference;
-
+  border-bottom: 1px solid white;
   position: fixed;
   // top: 50%;
   top: 0;
