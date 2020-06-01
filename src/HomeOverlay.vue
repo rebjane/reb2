@@ -123,6 +123,7 @@ h1 {
   // @include outline($bg);
   // font-family: $suisse;
   font-family: $acumin;
+  font-size: 50px;
   @include above($tablet) {
     font-size: 80px;
   }

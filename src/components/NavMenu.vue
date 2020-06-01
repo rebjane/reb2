@@ -6,12 +6,15 @@
           <Reb2Logo class="logo" :fill="'white'" />
         </router-link>
       </div>
+      <div class="header" v-if="winresize.tablet">
+        <h2>{{header}}</h2>
+      </div>
     </div>
-    <transition appear v-if="time.timeString" name="time">
+    <transition appear v-if="time.timeString && !winresize.tablet" name="time">
       <p class="time">{{ time.timeString }}</p>
     </transition>
     <!-- main menu is in this component -->
-    <Scrollbar v-if=" !navOpen" class="mainnav" @scrollTo="handleScrollTo" />
+    <Scrollbar v-if=" !navOpen && winresize.desktop" class="mainnav" @scrollTo="handleScrollTo" />
     <div class="socials link">
       <ul>
         <li v-for="(item, i) in socialmedia" :key="i">
@@ -34,7 +37,15 @@ import Reb2Logo from "./Reb2Logo";
 // import Hamburger from "./Hamburger";
 
 export default {
-  watch: {},
+  watch: {
+    scroll() {
+      if (this.header) {
+        this.header = this.$nav[
+          Math.floor(this.scroll.pos / window.innerWidth)
+        ].title;
+      }
+    }
+  },
   components: {
     Reb2Logo
     // Hamburger
@@ -49,11 +60,12 @@ export default {
   data() {
     return {
       time: new Time(),
-      socialmedia: this.$navsocials
+      socialmedia: this.$navsocials,
+      header: this.$nav[0].title
     };
   },
   computed: {
-    ...mapState(["navOpen", "signatureLoaded"])
+    ...mapState(["navOpen", "signatureLoaded", "winresize", "scroll"])
   },
   methods: {
     handleScrollTo(e) {
@@ -103,6 +115,16 @@ export default {
   top: 0;
   top: 40px;
   right: 40px;
+}
+
+.header {
+  display: inline-block;
+  margin-left: 1em;
+  h2 {
+    font-family: $acuminc;
+    color: white;
+    font-size: 20px;
+  }
 }
 
 .bottom-text {

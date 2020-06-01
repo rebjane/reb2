@@ -3,7 +3,11 @@
     <div ref="carousel" class="carousel" v-if="items.length">
       <transition v-for="(item, i) in items" :key="i">
         <router-link class="rl" :to="`/${data[i].type_of_work}/${data[i].uid}`">
-          <div class="image-wrap link" @click="doWorkPageIndex(data, i)">
+          <div
+            class="image-wrap link"
+            @click="doWorkPageIndex(data, i)"
+            :style="winresize.tablet ? `background-image: url(${item.url})` : null"
+          >
             <ImageWrap
               class="image"
               :imgInfo="{title: item.title,
@@ -17,8 +21,10 @@
               :isParallax="false"
               :horiz="horiz"
               :scrollObj="carouselScroll"
+              :style="winresize.tablet ? `opacity: 0` : null"
             />
           </div>
+          <p>{{item.title}}</p>
         </router-link>
       </transition>
     </div>
@@ -53,7 +59,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(["signatureLoaded", "navOpen", "vertscroll", "wpindex"])
+    ...mapState([
+      "signatureLoaded",
+      "navOpen",
+      "vertscroll",
+      "wpindex",
+      "winresize"
+    ])
   },
   data() {
     return {
@@ -221,8 +233,14 @@ export default {
 
 .carousel {
   margin: auto;
-  width: 100%;
   height: 100%;
+  @include above($tablet) {
+    width: 100%;
+  }
+  @include below($tablet) {
+    margin-left: 1em;
+    margin-right: 1em;
+  }
 }
 
 .image {
@@ -255,13 +273,21 @@ export default {
   //   margin-left: -30%;
   //   margin-right: -30%;
   // }
-  margin: 1em;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  @include above($tablet) {
+    margin: 1em;
+    padding: 1em;
+  }
 
-  padding: 1em;
   display: inline-block;
   position: relative;
   overflow: visible;
-  width: 40%;
+  @include below($tablet) {
+    width: 100%;
+  }
+  // width: calc(50% - 1em);
   .bordering {
     position: absolute;
     bottom: 0;

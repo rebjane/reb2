@@ -32,7 +32,7 @@
 
     <!-- && signatureLoaded -->
     <NavScreen v-if="navOpen" />
-    <CursorThing v-if="loaded" />
+    <CursorThing v-if="loaded && winresize.desktop" />
   </div>
 </template>
 
@@ -89,12 +89,43 @@ export default {
       this.scrollToScrollPos = e;
     },
     dowinresize() {
+      var tablet = (() => {
+        function Android() {
+          return navigator.userAgent.match(/Android/i);
+        }
+        function BlackBerry() {
+          return navigator.userAgent.match(/BlackBerry/i);
+        }
+        function iOS() {
+          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        }
+
+        function Opera() {
+          return navigator.userAgent.match(/Opera Mini/i);
+        }
+        function Windows() {
+          return (
+            navigator.userAgent.match(/IEMobile/i) ||
+            navigator.userAgent.match(/WPDesktop/i)
+          );
+        }
+        // return Android() || BlackBerry() || iOS() || Opera() || Windows();
+        if (Android() || BlackBerry() || iOS() || Opera() || Windows()) {
+          return true;
+        } else {
+          return false;
+        }
+      })();
+      var desktop = !tablet;
+
       var interval = window.innerWidth - this.$store.state.winresize.width;
       this.$store.commit("updateWinResize", {
         width: window.innerWidth,
         height: window.innerHeight,
         interval: interval,
-        dir: interval < 0 ? -1 : 1
+        dir: interval < 0 ? -1 : 1,
+        tablet: tablet,
+        desktop: desktop
       });
     },
     transition() {
@@ -127,6 +158,7 @@ export default {
     ])
   },
   mounted() {
+    this.dowinresize();
     window.addEventListener("resize", this.dowinresize);
   }
 };

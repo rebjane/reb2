@@ -163,6 +163,9 @@ export default {
     .component {
       width: 100%;
       min-width: 100vw;
+      @include below($tablet) {
+        margin-top: 5em;
+      }
     }
   }
 }

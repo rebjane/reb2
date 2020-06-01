@@ -156,10 +156,10 @@ h6 {
 html {
   overflow: hidden;
   height: 100%;
+  overscroll-behavior-x: contain;
 }
 * {
   cursor: none;
-  overscroll-behavior-x: contain;
 }
 
 body {

@@ -1,13 +1,17 @@
 <template>
   <div class="head-text">
-    <h2 v-if="title" :style="`color: ${color}; border-bottom: 1px solid ${color};`">{{title}}</h2>
+    <h2
+      v-if="title && winresize.desktop"
+      :style="`color: ${color}; border-bottom: 1px solid ${color};`"
+    >{{title}}</h2>
     <p v-if="body" :style="`color: ${color};`">{{body}}</p>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
-  name: "Template",
+  name: "HeadText",
   props: {
     title: {
       type: String,
@@ -22,6 +26,9 @@ export default {
       default: "black"
     }
   },
+  computed: {
+    ...mapState(["winresize"])
+  },
   data() {
     return {};
   },
@@ -35,16 +42,22 @@ export default {
 @import "../styles/stylesheet.scss";
 .head-text {
   // margin-top: 10%;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: 3em;
-  position: fixed;
-  text-align: left;
-  // max-width: 20%;
-  width: 300px;
-  // border-right: 1px solid $bg;
-  padding-right: 2em;
-  z-index: 4;
+  @include above($tablet) {
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 3em;
+    position: fixed;
+    text-align: left;
+    // max-width: 20%;
+    width: 300px;
+    // border-right: 1px solid $bg;
+    padding-right: 2em;
+    z-index: 4;
+  }
+  @include below($tablet) {
+    text-align: left;
+    @include padding();
+  }
   h2 {
     font-size: 50px;
     // border-bottom: 1px solid $bg;

@@ -18,9 +18,12 @@ export default class Scrolly {
     } else {
       this.max = this.el.offsetHeight - window.innerHeight;
     }
+    this.prev = 0;
+
     this.eventListeners = this.eventListeners.bind(this);
     this.scroll = this.scroll.bind(this);
     this.eventListeners();
+    this.touchEventListeners();
   }
 
   scrollTo(destination) {
@@ -32,19 +35,56 @@ export default class Scrolly {
     }
   }
 
+  touchEventListeners() {
+    window.addEventListener("touchstart", (e) => {
+      if (this.direction === "h") {
+        this.start = e.changedTouches[0].pageX;
+      } else {
+        this.start = e.changedTouches[0].pageY;
+      }
+      e.stopPropagation();
+    });
+    window.addEventListener("touchmove", (e) => {
+      if (this.deaf) {
+        return;
+      }
+      var pos;
+      if (this.direction === "h") {
+        pos = e.changedTouches[0].pageX;
+      } else {
+        pos = e.changedTouches[0].pageY;
+      }
+      console.log(pos);
+      if (pos > this.start) {
+        this.dir = Math.abs(pos) / pos;
+        this.scrollDestination -= Math.abs((pos - this.start) * 1.5);
+      } else {
+        this.dir = Math.abs(pos) / pos - this.start;
+        this.scrollDestination += Math.abs((pos - this.start) * 1.5);
+      }
+
+      this.start = pos;
+
+      this.scrollDestination = this.limit(this.scrollDestination, this.max);
+      if (!this.isScrolling && !this.deaf) {
+        this.scroll();
+        this.isScrolling = true;
+      }
+      e.stopPropagation();
+    });
+  }
+
   eventListeners() {
     window.addEventListener("mousewheel", (e) => {
       if (this.deaf) {
         return;
       }
-      e.stopPropagation();
-      if (e.deltaX) {
+      if (e.deltaX && this.direction === "h") {
         this.dir = Math.abs(e.deltaX) / e.deltaX;
         this.scrollDestination += e.deltaX;
-      } else {
-        this.dir = Math.abs(e.deltaY) / e.deltaY;
-        this.scrollDestination += e.deltaY;
       }
+      this.dir = Math.abs(e.deltaY) / e.deltaY;
+      this.scrollDestination += e.deltaY;
 
       this.scrollDestination = this.limit(this.scrollDestination, this.max);
       if (!this.isScrolling && !this.deaf) {

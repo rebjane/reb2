@@ -20,7 +20,7 @@
         <img :style="`width: ${
             resizeObj.imgWidth
           }px;`" :src="img" />
-        <p v-if="imgInfo.title">{{imgInfo.title}}</p>
+        <!-- <p v-if="imgInfo.title">{{imgInfo.title}}</p> -->
       </div>
     </div>
   </div>

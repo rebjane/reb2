@@ -63,7 +63,8 @@ export default {
       "loadPct",
       "loaded",
       "navOpen",
-      "vertscroll"
+      "vertscroll",
+      "winresize"
     ])
   },
   methods: {
@@ -101,13 +102,24 @@ export default {
     this.newscroll.deafen();
 
     //listener for when you want to scroll out of
-    this.$refs.workwrap.addEventListener("mousemove", e => {
-      if (e.target.className.includes("outer")) {
-        this.toggleScroll(false);
-        return;
-      }
-      this.toggleScroll(true);
-    });
+    if (this.winresize.desktop) {
+      this.$refs.workwrap.addEventListener("mousemove", e => {
+        if (e.target.className.includes("outer")) {
+          this.toggleScroll(false);
+          return;
+        }
+        this.toggleScroll(true);
+      });
+    } else {
+      this.$refs.workwrap.addEventListener("touchstart", e => {
+        console.log(e.target.className);
+        if (e.target.className.includes("worksection-wrapper")) {
+          this.toggleScroll(false);
+          return;
+        }
+        this.toggleScroll(true);
+      });
+    }
   }
 };
 </script>
@@ -126,9 +138,9 @@ export default {
   background: $lbg;
 
   @include ease(background);
-  &:hover {
-    background: white;
-  }
+  // &:hover {
+  //   background: white;
+  // }
 }
 
 .info {
@@ -156,9 +168,11 @@ export default {
 }
 
 .scroll {
-  // display: inline-block;
-  padding: 0 15% 0 30%;
-  max-width: 90%;
+  // // display: inline-block;
+  @include above($tablet) {
+    padding: 0 15% 0 30%;
+    max-width: 90%;
+  }
 }
 
 .title {

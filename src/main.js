@@ -22,6 +22,12 @@ new Vue({
   render: (h) => h(Index),
 }).$mount("#app");
 
+Vue.prototype.$agent = (() => {
+  return navigator;
+})();
+
+console.log(Vue.prototype.$agent);
+
 preLoading();
 async function loadingPct() {
   return new Promise((res) => {
