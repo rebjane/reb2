@@ -31,6 +31,11 @@ export default {
     // inview() {
     //   this.toggleScroll(this.inview);
     // }
+    winresize() {
+      if (this.newscroll) {
+        this.newscroll.size();
+      }
+    }
   },
   components: {
     // Scrollbar
@@ -131,9 +136,16 @@ export default {
 @import "./styles/stylesheet.scss";
 .worksection-wrapper {
   position: relative;
-  height: 100vh;
+  @include above($tablet) {
+    height: 100%;
+  }
+  // height: 100%;
+}
+.scroll {
+  height: 100%;
 }
 .scrollouter {
+  height: 100%;
   width: 100%;
   @include above($tablet) {
     width: 50%;
@@ -147,6 +159,7 @@ export default {
   // display: inline-block;
   position: relative;
   background: $lbg;
+  padding-bottom: 3em;
 
   @include ease(background);
   // &:hover {
@@ -176,15 +189,6 @@ export default {
     margin-bottom: 3em;
   }
   pointer-events: none;
-}
-
-.scroll {
-  // // display: inline-block;
-  // @include above($tablet) {
-  //   padding: 0 15% 0 30%;
-  //   max-width: 90%;
-  // }
-  height: 100vh;
 }
 
 .title {

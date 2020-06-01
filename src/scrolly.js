@@ -7,24 +7,36 @@ export default class Scrolly {
     this.direction = direction; //either v for vertical, or h for horizontal
     this.elParent = el;
     this.el = this.elParent.children[0];
-    this.winresize();
     this.preDeafPos = null;
     this.pos = 0;
     this.dir = 0;
     this.isScrolling = false;
     this.scrollDestination = 0;
-    // console.log(this.elParent, this.el);
-    if (direction === "h") {
-      this.max = this.el.offsetWidth - window.innerWidth;
-    } else {
-      this.max = this.el.offsetHeight - window.innerHeight;
-    }
+    this.size();
     this.prev = 0;
-    console.log(this.el, this.el.offsetHeight);
+    // console.log(this.el, this.el.offsetHeight);
     this.eventListeners = this.eventListeners.bind(this);
     this.scroll = this.scroll.bind(this);
     this.eventListeners();
     this.touchEventListeners();
+  }
+
+  size() {
+    if (this.direction === "h") {
+      this.max = this.el.offsetWidth - window.innerWidth;
+    } else {
+      this.max =
+        this.el.offsetHeight -
+        (this.elParent.offsetHeight -
+          (window.innerHeight - this.elParent.offsetHeight));
+      // console.log(
+      //   this.elParent.offsetHeight,
+      //   this.el.offsetHeight,
+      //   this.elParent.offsetHeight -
+      //     (window.innerHeight - this.elParent.offsetHeight)
+      // );
+      // console.log(this.max);
+    }
   }
 
   scrollTo(destination) {
@@ -147,17 +159,6 @@ export default class Scrolly {
 
   listen() {
     this.deaf = false;
-  }
-
-  winresize() {
-    this.elWidth = this.elParent.children[0].getBoundingClientRect().width;
-    this.elHeight = this.elParent.children[0].getBoundingClientRect().height;
-    if (this.direction === "h") {
-      this.max = this.el.offsetWidth - window.innerWidth;
-    } else {
-      this.max = this.el.offsetHeight - window.innerHeight;
-    }
-    // this.scrollTo(this.pos);
   }
 
   destroy() {

@@ -37,7 +37,7 @@ export default {
   watch: {
     winresize: {
       handler() {
-        if (this.globalscroll) this.globalscroll.winresize();
+        if (this.globalscroll) this.globalscroll.size();
       }
     },
     scrollTo: {
@@ -159,6 +159,7 @@ export default {
     display: flex;
     flex-direction: row;
     position: fixed;
+    height: 100%;
 
     .component {
       width: 100%;
@@ -166,7 +167,8 @@ export default {
       position: relative;
       @include below($tablet) {
         > div:first-child {
-          padding-top: 5em;
+          margin-top: 5em;
+          height: calc(100vh - 5em);
         }
       }
     }
