@@ -37,6 +37,7 @@ export default {
   watch: {
     winresize: {
       handler() {
+        this.winw = window.innerWidth;
         if (this.globalscroll) this.globalscroll.size();
       }
     },

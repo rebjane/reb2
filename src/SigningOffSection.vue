@@ -5,7 +5,7 @@
       :body="$cms.textField(data.primary.so_body)"
       class="text"
     />
-    <Signature v-if="this.playOnce" />
+    <Signature v-if="playOnce && winresize.userAgent.desktop" />
   </div>
 </template>
 

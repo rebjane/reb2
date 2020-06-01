@@ -32,10 +32,10 @@ $mobilepad: 3em;
 
 @mixin padding() {
   @include above($tablet) {
-    margin: $medpad $medpad;
+    margin: 0 $medpad;
   }
   @include above($notebook) {
-    margin: $medpad $pad;
+    margin: 0 $pad;
   }
   @include below($tablet) {
     margin-left: $mobilepad;

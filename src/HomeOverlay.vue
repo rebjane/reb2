@@ -123,13 +123,14 @@ h1 {
   // @include outline($bg);
   // font-family: $suisse;
   font-family: $acumin;
-  font-size: 50px;
+  font-size: 40px;
   @include above($tablet) {
     font-size: 80px;
   }
 }
 .intro {
-  height: 100vh;
+  margin-top: 0 !important;
+  height: 100vh !important;
   // @include waveLink(white);
   position: relative;
   @include waveLink(#161616);
@@ -160,7 +161,11 @@ span {
   display: table;
 
   margin-right: auto;
-  margin-left: 20%;
+  // margin-left: 20%;
+  @include padding();
+  margin-top: 0;
+  margin-bottom: 0;
+
   text-align: left;
   // transform: translateX(-50%);
 

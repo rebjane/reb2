@@ -86,11 +86,11 @@ export default {
     right: 10%;
     position: absolute;
   }
-  @include below($tablet) {
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 3em;
-  }
+  // @include below($tablet) {
+  //   position: absolute;
+  //   bottom: 0;
+  //   margin-bottom: 3em;
+  // }
 }
 .parallaximage-cont {
   padding-top: 2em;

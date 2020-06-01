@@ -54,21 +54,27 @@ export default {
 .col {
   position: relative;
   // width: 50%;
-  min-width: calc(50% - 2em);
-  margin: 1em;
+  min-width: 100%;
+  text-align: center;
+  @include above($tablet) {
+    min-width: calc(50% - 2em);
+    margin: 1em;
+    &:nth-child(odd) {
+      text-align: right;
+    }
+    &:nth-child(even) {
+      text-align: left;
+    }
+  }
   height: 100%;
   display: inline-block;
-  &:nth-child(odd) {
-    text-align: right;
-  }
-  &:nth-child(even) {
-    text-align: left;
-  }
+
   .image {
     // position: absolute;
     // left: 50%;
     // top: 50%;
     // transform: translate3d(-50%, -50%, 0);
+    min-width: 100%;
   }
 }
 </style>

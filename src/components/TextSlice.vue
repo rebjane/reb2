@@ -54,6 +54,9 @@ h2 {
   font-size: 30px;
   font-weight: normal;
   margin: 0;
+  @include below($tablet) {
+    margin-bottom: 2em;
+  }
 }
 p {
   font-family: $suisse;
@@ -69,6 +72,9 @@ p {
   display: inline-block;
   vertical-align: top;
   height: 100%;
-  width: 50%;
+  width: 100%;
+  @include above($tablet) {
+    width: 50%;
+  }
 }
 </style>

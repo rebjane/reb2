@@ -12,8 +12,9 @@ export default class Scrolly {
     this.dir = 0;
     this.isScrolling = false;
     this.scrollDestination = 0;
-    this.size();
     this.prev = 0;
+    this.size();
+
     // console.log(this.el, this.el.offsetHeight);
     this.eventListeners = this.eventListeners.bind(this);
     this.scroll = this.scroll.bind(this);
@@ -28,12 +29,13 @@ export default class Scrolly {
       this.max =
         this.el.offsetHeight -
         (this.elParent.offsetHeight -
-          (window.innerHeight - this.elParent.offsetHeight));
+          Math.floor(window.innerHeight - this.elParent.offsetHeight));
       // console.log(
       //   this.elParent.offsetHeight,
       //   this.el.offsetHeight,
       //   this.elParent.offsetHeight -
-      //     (window.innerHeight - this.elParent.offsetHeight)
+      //     (window.innerHeight - this.elParent.offsetHeight),
+      //   this.max
       // );
       // console.log(this.max);
     }
@@ -50,11 +52,15 @@ export default class Scrolly {
 
   touchEventListeners() {
     window.addEventListener("touchstart", (e) => {
+      if (this.deaf) {
+        return;
+      }
       if (this.direction === "h") {
         this.start = e.changedTouches[0].pageX;
       } else {
         this.start = e.changedTouches[0].pageY;
       }
+
       e.stopPropagation();
     });
     window.addEventListener("touchmove", (e) => {

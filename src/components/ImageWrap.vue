@@ -33,26 +33,30 @@ import { mapState } from "vuex";
 export default {
   name: "ImageWrap",
   watch: {
-    winresize(e) {
-      //when resizing, need to offset for horizontal parallax so it doesn't fall off the view
-      this.resizeObj = {
-        canvasWidth: this.getSize(this.imgInfo.width, this.imgInfo.height)
-          .width,
-        canvasHeight: this.getSize(this.imgInfo.width, this.imgInfo.height)
-          .height,
-        scale: 1,
-        imgWidth: this.getSize(this.imgInfo.width, this.imgInfo.height).width,
-        imgHeight: this.getSize(this.imgInfo.width, this.imgInfo.height).height,
-        canvasLeft: 0,
-        canvasTop: 0,
-        midPos: null
-      };
-
-      if (this.isParallax) {
-        this.offset += e.interval * 2;
-        this.transform();
+    winresize: {
+      handler(e) {
+        // this.getMidPos();
+        //when resizing, need to offset for horizontal parallax so it doesn't fall off the view
+        this.resizeObj = {
+          canvasWidth: this.getSize(this.imgInfo.width, this.imgInfo.height)
+            .width,
+          canvasHeight: this.getSize(this.imgInfo.width, this.imgInfo.height)
+            .height,
+          scale: 1,
+          imgWidth: this.getSize(this.imgInfo.width, this.imgInfo.height).width,
+          imgHeight: this.getSize(this.imgInfo.width, this.imgInfo.height)
+            .height,
+          canvasLeft: 0,
+          canvasTop: 0,
+          midPos: null
+        };
+        //parallax re-positioning based on win resize
         if (this.isParallax) {
-          this.$refs.image.style = this.parallaxTransform;
+          this.offset += e.interval * 2;
+          this.transform();
+          if (this.isParallax) {
+            this.$refs.image.style = this.parallaxTransform;
+          }
         }
       }
     },
@@ -119,7 +123,7 @@ export default {
   },
   beforeDestroy() {},
   computed: {
-    ...mapState(["navOpen", "winresize"])
+    ...mapState(["navOpen", "winresize", "scroll"])
   },
   methods: {
     getMidPos() {

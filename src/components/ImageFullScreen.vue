@@ -17,6 +17,13 @@ import { mapState } from "vuex";
 export default {
   name: "ImageFullScreen",
   watch: {
+    winresize(e) {
+      this.height = this.$refs.image_wrap.getBoundingClientRect().height;
+      this.focalPos = this.top - (window.innerHeight - this.height) / 2;
+
+      this.offset = e.interval * 1.4;
+      this.parallax(this.vertscroll.pos + this.offset);
+    },
     vertscroll() {
       if (this.vertscroll.direction === "v") {
         this.parallax(this.vertscroll.pos);
@@ -33,13 +40,22 @@ export default {
   data() {
     return {
       parallaxStyle: null,
-      focalPos: 0
+      focalPos: 0,
+      top: 0,
+      height: 0,
+      offset: 0
     };
   },
   computed: {
-    ...mapState(["vertscroll"])
+    ...mapState(["vertscroll", "winresize"])
   },
   methods: {
+    calculate() {
+      this.height = this.$refs.image_wrap.getBoundingClientRect().height;
+      this.top = this.$refs.image_wrap.getBoundingClientRect().top;
+
+      this.focalPos = this.top - (window.innerHeight - this.height) / 2;
+    },
     parallax(pos) {
       this.parallaxStyle = `transform: translateY(${this.math(
         this.focalPos,
@@ -48,15 +64,12 @@ export default {
       this.$refs.image = this.parallaxStyle;
     },
     math(midPos, scrollPos) {
-      return (midPos - scrollPos) * 0.7;
+      return (midPos - scrollPos) * 0.4;
     }
   },
   mounted() {
     setTimeout(() => {
-      var height = this.$refs.image_wrap.getBoundingClientRect().height;
-      var top = this.$refs.image_wrap.getBoundingClientRect().top;
-
-      this.focalPos = top - (window.innerHeight - height) / 2;
+      this.calculate();
     }, 1000);
   }
 };
@@ -69,6 +82,9 @@ export default {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  @include below($tablet) {
+    height: 40vh;
+  }
 }
 .full-image {
   height: 100vh;
@@ -76,5 +92,8 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  @include below($tablet) {
+    height: 40vh;
+  }
 }
 </style>

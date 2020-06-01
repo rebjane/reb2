@@ -15,6 +15,63 @@ import { prismic } from "./prismic.js";
 Vue.prototype.$loadPct = (prog) => (prog / 2) * 100;
 Vue.prototype.$loaded = 0;
 
+Vue.prototype.$dowinresize = async () => {
+  return new Promise((res) => {
+    Vue.prototype.$agent = (() => {
+      return navigator;
+    })();
+    // console.log(Vue.prototype.$agent);
+
+    Vue.prototype.$tablet = (() => {
+      function Android() {
+        return navigator.userAgent.match(/Android/i);
+      }
+      function BlackBerry() {
+        return navigator.userAgent.match(/BlackBerry/i);
+      }
+      function iOS() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      }
+
+      function Opera() {
+        return navigator.userAgent.match(/Opera Mini/i);
+      }
+      function Windows() {
+        return (
+          navigator.userAgent.match(/IEMobile/i) ||
+          navigator.userAgent.match(/WPDesktop/i)
+        );
+      }
+      // return Android() || BlackBerry() || iOS() || Opera() || Windows();
+      if (Android() || BlackBerry() || iOS() || Opera() || Windows()) {
+        return true;
+      } else {
+        return false;
+      }
+    })();
+
+    var desktop = !Vue.prototype.$tablet;
+    var interval = window.innerWidth - store.state.winresize.width;
+    store.commit("updateWinResize", {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      interval: interval,
+      dir: interval < 0 ? -1 : 1,
+      size: {
+        tablet: window.innerWidth <= 800,
+        desktop: window.innerWidth > 800,
+      },
+      userAgent: {
+        tablet: Vue.prototype.$tablet,
+        desktop: desktop,
+      },
+      // userAgent: userAgent
+    });
+    // console.log(Vue.prototype.$tablet);
+    res(Vue.prototype.$tablet);
+  });
+};
+
 Vue.use(store);
 new Vue({
   store,
@@ -22,17 +79,11 @@ new Vue({
   render: (h) => h(Index),
 }).$mount("#app");
 
-Vue.prototype.$agent = (() => {
-  return navigator;
-})();
-
-console.log(Vue.prototype.$agent);
-
 preLoading();
 async function loadingPct() {
   return new Promise((res) => {
     var loading = setInterval(async () => {
-      if (store.state.loadPct === 99) {
+      if (store.state.loadPct === 100) {
         clearInterval(loading);
         res();
       } else {
@@ -42,18 +93,29 @@ async function loadingPct() {
   });
 }
 
+async function threeLoad() {
+  return new Promise((resolve) => {
+    if (Vue.prototype.$tablet) {
+      resolve();
+      return;
+    }
+    threeLoader.loadGLTF(signature).then((res) => resolve(res));
+  });
+}
+
 async function preLoading() {
-  await threeLoader.loadGLTF(signature).then(() => {
-    store.commit("setLoadedGLTFs", true);
-    Promise.all([
-      loadingPct(),
-      loader.loadTheComponents(),
-      prismic.fetchData(),
-    ]).then((res) => {
-      console.log("res", res);
-      setTimeout(() => {
-        store.commit("setLoaded", true);
-      }, 800); //to allow for loading to transition out
+  Vue.prototype.$dowinresize().then(() => {
+    threeLoad().then(() => {
+      store.commit("setLoadedGLTFs", true);
+      Promise.all([
+        loadingPct(),
+        loader.loadTheComponents(),
+        prismic.fetchData(),
+      ]).then(() => {
+        setTimeout(() => {
+          store.commit("setLoaded", true);
+        }, 800); //to allow for loading to transition out
+      });
     });
   });
 }

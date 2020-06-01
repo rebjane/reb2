@@ -11,12 +11,10 @@ class LoadComponents {
       Vue.component("Reb2Logo", require("./components/Reb2Logo.vue").default);
       Vue.component("NavMenu", require("./components/NavMenu.vue").default);
       Vue.component("Hamburger", require("./components/Hamburger.vue").default);
-      Vue.component("NavScreen", require("./components/NavScreen.vue").default);
       Vue.component("Scrollbar", require("./components/Scrollbar.vue").default);
       Vue.component("WorkSection", require("./WorkSection.vue").default);
       Vue.component("AboutSection", require("./AboutSection.vue").default);
       Vue.component("HomeOverlay", require("./HomeOverlay.vue").default);
-      Vue.component("Smiley", require("./components/Smiley.vue").default);
       Vue.component("HeadText", require("./components/HeadText.vue").default);
       Vue.component("Arrow", require("./components/Arrow.vue").default);
       Vue.component("TextSlice", require("./components/TextSlice.vue").default);

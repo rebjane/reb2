@@ -128,10 +128,13 @@ export default {
 .header {
   display: inline-block;
   margin-left: 1em;
+  margin-top: 2em;
+  transform: translateY(-50%);
+
   h2 {
     font-family: $acuminc;
     color: white;
-    font-size: 50px;
+    font-size: 20px;
     margin: 0;
   }
 }

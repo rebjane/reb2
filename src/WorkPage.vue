@@ -32,6 +32,9 @@ export default {
     Scrollbar
   },
   watch: {
+    winresize() {
+      if (this.scroll) this.scroll.size();
+    },
     data: {
       handler() {
         setTimeout(() => {
@@ -55,7 +58,13 @@ export default {
   },
   beforeDestroy() {},
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
+    ...mapState([
+      "signatureLoaded",
+      "loadPct",
+      "loaded",
+      "navOpen",
+      "winresize"
+    ])
   },
   methods: {
     whatWorkPageThisIs() {
@@ -99,6 +108,7 @@ export default {
   .inner {
     position: fixed;
     width: 100%;
+    padding-bottom: 3em;
     .component {
       width: 100%;
       min-width: 100vw;
@@ -126,5 +136,9 @@ h1 {
   font-family: $suisse;
   font-size: 60px;
   font-weight: normal;
+  @include below($tablet) {
+    font-size: 40px;
+    margin-left: 1em;
+  }
 }
 </style>

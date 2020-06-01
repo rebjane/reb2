@@ -57,6 +57,7 @@ export default {
     loaded() {
       this.url();
     },
+
     $route() {
       this.isHomePage = window.location.pathname === "/";
       this.$store.commit("updateRoute", {
@@ -81,6 +82,7 @@ export default {
       scrollIndex: 0,
       scrollToScrollPos: null,
       showMainNav: true
+      // prev: 0
     };
   },
   methods: {
@@ -89,37 +91,44 @@ export default {
       this.scrollToScrollPos = e;
     },
     dowinresize() {
-      var tablet = (() => {
-        function Android() {
-          return navigator.userAgent.match(/Android/i);
-        }
-        function BlackBerry() {
-          return navigator.userAgent.match(/BlackBerry/i);
-        }
-        function iOS() {
-          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        }
+      // if (this.prev === window.innerWidth) {
+      //   setTimeout(() => {
+      //     cancelAnimationFrame(this.dowinresize);
+      //   }, 500);
 
-        function Opera() {
-          return navigator.userAgent.match(/Opera Mini/i);
-        }
-        function Windows() {
-          return (
-            navigator.userAgent.match(/IEMobile/i) ||
-            navigator.userAgent.match(/WPDesktop/i)
-          );
-        }
-        // return Android() || BlackBerry() || iOS() || Opera() || Windows();
-        if (Android() || BlackBerry() || iOS() || Opera() || Windows()) {
-          return true;
-        } else {
-          return false;
-        }
-      })();
+      //   return;
+      // }
+      // requestAnimationFrame(this.dowinresize);
+      // var tablet = (() => {
+      //   function Android() {
+      //     return navigator.userAgent.match(/Android/i);
+      //   }
+      //   function BlackBerry() {
+      //     return navigator.userAgent.match(/BlackBerry/i);
+      //   }
+      //   function iOS() {
+      //     return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      //   }
+
+      //   function Opera() {
+      //     return navigator.userAgent.match(/Opera Mini/i);
+      //   }
+      //   function Windows() {
+      //     return (
+      //       navigator.userAgent.match(/IEMobile/i) ||
+      //       navigator.userAgent.match(/WPDesktop/i)
+      //     );
+      //   }
+      //   // return Android() || BlackBerry() || iOS() || Opera() || Windows();
+      //   if (Android() || BlackBerry() || iOS() || Opera() || Windows()) {
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
+      // })();
       // var tablet = window.innerWidth <= 800;
       // var desktop = window.innerWidth > 800;
-      var desktop = !tablet;
-
+      var desktop = !this.$tablet;
       var interval = window.innerWidth - this.$store.state.winresize.width;
       this.$store.commit("updateWinResize", {
         width: window.innerWidth,
@@ -131,11 +140,12 @@ export default {
           desktop: window.innerWidth > 800
         },
         userAgent: {
-          tablet: tablet,
+          tablet: this.$tablet,
           desktop: desktop
         }
         // userAgent: userAgent
       });
+      this.prev = window.innerWidth;
     },
     transition() {
       this.$refs.transition.style = "height: 100%; bottom: 0";
@@ -168,7 +178,8 @@ export default {
   },
   mounted() {
     this.dowinresize();
-    window.addEventListener("resize", this.dowinresize);
+    window.addEventListener("resize", this.$dowinresize);
+    window.addEventListener("mouseup", this.$dowinresize);
   }
 };
 </script>
