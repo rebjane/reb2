@@ -13,13 +13,14 @@ export default class Scrolly {
     this.dir = 0;
     this.isScrolling = false;
     this.scrollDestination = 0;
+    // console.log(this.elParent, this.el);
     if (direction === "h") {
       this.max = this.el.offsetWidth - window.innerWidth;
     } else {
       this.max = this.el.offsetHeight - window.innerHeight;
     }
     this.prev = 0;
-
+    console.log(this.el, this.el.offsetHeight);
     this.eventListeners = this.eventListeners.bind(this);
     this.scroll = this.scroll.bind(this);
     this.eventListeners();
@@ -132,7 +133,7 @@ export default class Scrolly {
         break;
       }
     }
-
+    // console.log(this.pos);
     if (this.direction === "h") {
       this.el.style.transform = `translate3d(${-1 * this.pos}px, 0,0)`; //horizontal
     } else {

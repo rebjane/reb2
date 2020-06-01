@@ -1,20 +1,20 @@
 <template>
-  <div ref="workwrap" class="worksection-wrapper">
+  <div ref="workwrap" class="worksection-wrapper outer">
     <HeadText
       :title="$cms.textField(data.primary.heading)"
       :body="$cms.textField(data.primary.desc)"
     />
-
-    <div class="scroll outer" ref="scroll">
-      <div ref="work" class="worksection carousel">
-        <CarouselVertical
-          ref="carousel"
-          class="carousel"
-          :horiz="horiz"
-          @info="handleInfo"
-          :data="carouselData"
-          v-if="carouselData"
-        />
+    <div class="scrollouter">
+      <div class="scroll" ref="scroll">
+        <div ref="work" class="worksection carousel">
+          <CarouselVertical
+            ref="carousel"
+            :horiz="horiz"
+            @info="handleInfo"
+            :data="carouselData"
+            v-if="carouselData"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -97,29 +97,31 @@ export default {
       i => i.type_of_work === this.data.primary.type_of_work
     );
 
-    //initialize a new vertical scroll and deafen
-    this.newscroll = new Scrolly(this.$refs.scroll, "v");
-    this.newscroll.deafen();
+    setTimeout(() => {
+      //initialize a new vertical scroll and deafen
+      this.newscroll = new Scrolly(this.$refs.scroll, "v");
+      this.newscroll.deafen();
 
-    //listener for when you want to scroll out of
-    if (this.winresize.desktop) {
-      this.$refs.workwrap.addEventListener("mousemove", e => {
-        if (e.target.className.includes("outer")) {
-          this.toggleScroll(false);
-          return;
-        }
-        this.toggleScroll(true);
-      });
-    } else {
-      this.$refs.workwrap.addEventListener("touchstart", e => {
-        console.log(e.target.className);
-        if (e.target.className.includes("worksection-wrapper")) {
-          this.toggleScroll(false);
-          return;
-        }
-        this.toggleScroll(true);
-      });
-    }
+      //listener for when you want to scroll out of
+
+      if (this.winresize.userAgent.desktop) {
+        this.$refs.workwrap.addEventListener("mousemove", e => {
+          if (e.target.className.includes("outer")) {
+            this.toggleScroll(false);
+            return;
+          }
+          this.toggleScroll(true);
+        });
+      } else {
+        this.$refs.workwrap.addEventListener("touchstart", e => {
+          if (e.target.className.includes("outer")) {
+            this.toggleScroll(false);
+            return;
+          }
+          this.toggleScroll(true);
+        });
+      }
+    }, 1000);
   }
 };
 </script>
@@ -131,9 +133,18 @@ export default {
   position: relative;
   height: 100vh;
 }
+.scrollouter {
+  width: 100%;
+  @include above($tablet) {
+    width: 50%;
+  }
+  overflow: hidden;
+  display: inline-block;
+}
 .worksection {
-  height: 100%;
-  min-height: 200vh;
+  // height: 100%;
+  // min-height: 200vh;
+  // display: inline-block;
   position: relative;
   background: $lbg;
 
@@ -169,10 +180,11 @@ export default {
 
 .scroll {
   // // display: inline-block;
-  @include above($tablet) {
-    padding: 0 15% 0 30%;
-    max-width: 90%;
-  }
+  // @include above($tablet) {
+  //   padding: 0 15% 0 30%;
+  //   max-width: 90%;
+  // }
+  height: 100vh;
 }
 
 .title {

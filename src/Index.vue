@@ -32,7 +32,7 @@
 
     <!-- && signatureLoaded -->
     <NavScreen v-if="navOpen" />
-    <CursorThing v-if="loaded && winresize.desktop" />
+    <CursorThing v-if="loaded && winresize.userAgent.desktop" />
   </div>
 </template>
 
@@ -116,6 +116,8 @@ export default {
           return false;
         }
       })();
+      // var tablet = window.innerWidth <= 800;
+      // var desktop = window.innerWidth > 800;
       var desktop = !tablet;
 
       var interval = window.innerWidth - this.$store.state.winresize.width;
@@ -124,8 +126,15 @@ export default {
         height: window.innerHeight,
         interval: interval,
         dir: interval < 0 ? -1 : 1,
-        tablet: tablet,
-        desktop: desktop
+        size: {
+          tablet: window.innerWidth <= 800,
+          desktop: window.innerWidth > 800
+        },
+        userAgent: {
+          tablet: tablet,
+          desktop: desktop
+        }
+        // userAgent: userAgent
       });
     },
     transition() {

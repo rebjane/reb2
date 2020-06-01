@@ -163,8 +163,11 @@ export default {
     .component {
       width: 100%;
       min-width: 100vw;
+      position: relative;
       @include below($tablet) {
-        margin-top: 5em;
+        > div:first-child {
+          padding-top: 5em;
+        }
       }
     }
   }

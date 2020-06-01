@@ -6,7 +6,7 @@
           <div
             class="image-wrap link"
             @click="doWorkPageIndex(data, i)"
-            :style="winresize.tablet ? `background-image: url(${item.url})` : null"
+            :style="winresize.size.tablet ? `background-image: url(${item.url})` : null"
           >
             <ImageWrap
               class="image"
@@ -21,7 +21,7 @@
               :isParallax="false"
               :horiz="horiz"
               :scrollObj="carouselScroll"
-              :style="winresize.tablet ? `opacity: 0` : null"
+              :style="winresize.size.tablet ? `opacity: 0` : null"
             />
           </div>
           <p>{{item.title}}</p>
@@ -223,9 +223,9 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
 .carousel-vertical {
-  max-height: 100vh;
+  // max-height: 100vh;
   // padding-bottom: 200px;
-  height: 100%;
+  // height: 100%;
   margin: auto;
   // border-left: 1px solid $lightgrey;
   // border-right: 1px solid $lightgrey;

@@ -6,15 +6,19 @@
           <Reb2Logo class="logo" :fill="'white'" />
         </router-link>
       </div>
-      <div class="header" v-if="winresize.tablet">
+      <div class="header" v-if="winresize.size.tablet">
         <h2>{{header}}</h2>
       </div>
     </div>
-    <transition appear v-if="time.timeString && !winresize.tablet" name="time">
+    <transition appear v-if="time.timeString && !winresize.size.tablet" name="time">
       <p class="time">{{ time.timeString }}</p>
     </transition>
     <!-- main menu is in this component -->
-    <Scrollbar v-if=" !navOpen && winresize.desktop" class="mainnav" @scrollTo="handleScrollTo" />
+    <Scrollbar
+      v-if=" !navOpen && winresize.size.desktop"
+      class="mainnav"
+      @scrollTo="handleScrollTo"
+    />
     <div class="socials link">
       <ul>
         <li v-for="(item, i) in socialmedia" :key="i">

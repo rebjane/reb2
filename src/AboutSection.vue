@@ -16,13 +16,13 @@
         v-if="data.primary.bottom_text.length"
         class="bottomtitle"
       >{{$cms.textField(data.primary.bottom_text)}}</h2>
-      <HeadText
-        class="bio"
-        :color="'white'"
-        :title="$cms.textField(data.primary.about_title)"
-        :body="$cms.textField(data.primary.about_body)"
-      />
     </div>
+    <HeadText
+      class="bio"
+      :color="'white'"
+      :title="$cms.textField(data.primary.about_title)"
+      :body="$cms.textField(data.primary.about_body)"
+    />
   </div>
 </template>
 
@@ -69,26 +69,33 @@ export default {
   // height: 100%;
 }
 .bio {
-  right: -100%;
+  // right: -100%;
+  @include above($tablet) {
+    left: 50%;
+  }
 }
 .parallaximage {
-  height: auto;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate3d(-100%, -50%, 0);
-  display: inline-block;
+  @include above($tablet) {
+    height: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-100%, -50%, 0);
+    display: inline-block;
+  }
   mix-blend-mode: difference;
 
   .toptitle,
   .bottomtitle {
     font-family: $suisse;
     font-size: 60px;
-    position: absolute;
-    margin: 0;
-    z-index: 2;
-    width: 100%;
     color: white;
+    width: 100%;
+    @include above($tablet) {
+      position: absolute;
+      margin: 0;
+      z-index: 2;
+    }
   }
   .toptitle {
     left: 50%;
@@ -96,9 +103,11 @@ export default {
     transform: translateX(-75%) translateY(-50%);
   }
   .bottomtitle {
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-75%) translateY(50%);
+    @include above($tablet) {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-75%) translateY(50%);
+    }
   }
 }
 </style>
