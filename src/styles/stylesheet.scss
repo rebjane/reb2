@@ -10,6 +10,7 @@ $lightgrey: #a0a0a0;
 $lbg: #e5e5e5;
 $light: #f2e3e3;
 $pad: 124px;
+$top: 7em;
 @mixin outline($col) {
   color: $col;
   // -webkit-text-fill-color: white; /* Will override color (regardless of order) */

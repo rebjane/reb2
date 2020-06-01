@@ -29,7 +29,7 @@ export default {
       if (targ.includes("link")) {
         this.curComponent = "CircleCursor";
         this.$refs.cursor.style = this.centerStyle;
-      } else if (targ.includes("carousel")) {
+      } else if (targ.includes("vert")) {
         this.curComponent = "VertArrowCursor";
         this.$refs.cursor.style = this.centerStyle;
       } else {

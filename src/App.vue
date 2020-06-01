@@ -143,6 +143,7 @@ export default {
 #app-wrapper {
   height: 0;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -167,8 +168,8 @@ export default {
       position: relative;
       @include below($tablet) {
         > div:first-child {
-          margin-top: 5em;
-          height: calc(100vh - 5em);
+          margin-top: $top;
+          height: calc(100vh - #{$top});
         }
       }
     }

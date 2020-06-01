@@ -35,6 +35,19 @@ export default {
   watch: {
     winresize(e) {
       //when resizing, need to offset for horizontal parallax so it doesn't fall off the view
+      this.resizeObj = {
+        canvasWidth: this.getSize(this.imgInfo.width, this.imgInfo.height)
+          .width,
+        canvasHeight: this.getSize(this.imgInfo.width, this.imgInfo.height)
+          .height,
+        scale: 1,
+        imgWidth: this.getSize(this.imgInfo.width, this.imgInfo.height).width,
+        imgHeight: this.getSize(this.imgInfo.width, this.imgInfo.height).height,
+        canvasLeft: 0,
+        canvasTop: 0,
+        midPos: null
+      };
+
       if (this.isParallax) {
         this.offset += e.interval * 2;
         this.transform();
@@ -111,11 +124,12 @@ export default {
   methods: {
     getMidPos() {
       if (this.horiz) {
+        // for horiz
         var left = this.$refs.imgCol.getBoundingClientRect().left;
         this.width = this.$refs.imgCol.getBoundingClientRect().width;
         this.midPos = left - (window.innerWidth - this.width) / 2;
       } else {
-        //for  vert
+        // for  vert
         var top = this.$refs.imgCol.getBoundingClientRect().top;
         var height = this.$refs.imgCol.getBoundingClientRect().height;
         this.midPos = top - (window.innerHeight - height) / 2;

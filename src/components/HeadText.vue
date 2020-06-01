@@ -58,10 +58,10 @@ export default {
     vertical-align: top;
     margin-top: 50vh;
     transform: translateY(-50%);
-    text-align: left;
   }
+  text-align: left;
+
   @include below($tablet) {
-    text-align: left;
     @include padding();
   }
   h2 {

@@ -1,5 +1,9 @@
 <template>
-  <div class="signature" ref="signature"></div>
+  <div class="signature" ref="signature">
+    <div class="canvas-wrap" ref="wrap">
+      <canvas ref="canvas" class="canvas" />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -11,10 +15,19 @@ import { AnimationMixer } from "../../node_modules/three/src/animation/Animation
 import texMap from "../assets/reb-gradient.jpg";
 import bumpmap from "../assets/frosted-glass-texture.jpg";
 import envmap from "../assets/studio-envMap.jpg";
+import { mapState } from "vuex";
+
 export default {
   name: "Signature",
   props: {},
-  watch: {},
+  computed: {
+    ...mapState(["winresize"])
+  },
+  watch: {
+    winresize() {
+      this.resize();
+    }
+  },
   data() {
     var camera;
     var scene;
@@ -41,7 +54,10 @@ export default {
       mousePos: { x: null, y: null },
       animX: 0,
       animY: 0,
-      when: performance.now()
+      when: performance.now(),
+      sig: this.$gltf,
+      startnewscale: Math.min(0.85, window.innerWidth / 1000),
+      newscale: Math.min(1, window.innerWidth / 1000)
     };
   },
 
@@ -54,7 +70,16 @@ export default {
         // console.log("x: ", this.mouse.x, " y: ", this.mouse.y);
       });
     },
+    resize() {
+      this.startnewscale = Math.min(0.85, window.innerWidth / 1000);
+      // console.log(this.startnewscale);
+      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.updateProjectionMatrix();
 
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.sig.scene.scale.set(this.startnewscale, this.startnewscale, 0.5);
+      this.renderer.render(this.scene, this.camera);
+    },
     init() {
       //CAMERA
       this.camera = new THREE.PerspectiveCamera(
@@ -72,14 +97,16 @@ export default {
 
       //RENDERER
       this.renderer = new THREE.WebGLRenderer({
+        canvas: this.$refs.canvas,
         antialias: true,
         wireframe: true,
         alpha: true
       });
       this.renderer.shadowMap.enabled = true;
+
       this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-      this.$refs.signature.appendChild(this.renderer.domElement);
+      // this.$refs.signature.appendChild(this.renderer.domElement);
 
       this.gltf();
     },
@@ -132,14 +159,14 @@ export default {
       this.material.morphTargets = true;
     },
     gltf() {
-      var gltf = this.$gltf;
+      // this.sig = this.$gltf;
       // var loader = new GLTFLoader();
 
       // loader.load(
       //   signature,
       //   gltf => {
       //set material properties
-      gltf.scene.traverse(e => {
+      this.sig.scene.traverse(e => {
         if (e.isMesh) {
           e.material = this.material;
           e.material.map.repeat.set(2, 4);
@@ -155,25 +182,28 @@ export default {
       });
 
       //initialize animation
-      var mixer = new AnimationMixer(gltf.scene);
-      gltf.scene.castShadow = true;
-      gltf.scene.children[0].castShadow = true;
-      gltf.scene.children[0].receiveShadow = true;
+      var mixer = new AnimationMixer(this.sig.scene);
+      this.sig.scene.castShadow = true;
+      this.sig.scene.children[0].castShadow = true;
+      this.sig.scene.children[0].receiveShadow = true;
 
-      gltf.scene.receiveShadow = true;
-      gltf.animations.forEach(clip => {
+      this.sig.scene.receiveShadow = true;
+      this.sig.animations.forEach(clip => {
         var action = mixer.clipAction(clip);
         action.setLoop(THREE.LoopOnce);
         action.play();
       });
       // console.log(gltf.scene.children[0].children[0]);
-      this.scene.add(gltf.scene);
+
+      this.scene.add(this.sig.scene);
       //gltf positioning to center of screen
-      gltf.scene.position.z = 1;
-      gltf.scene.position.y = -0.25;
-      gltf.scene.scale.set(0.85, 0.85, 0.5);
-      this.objs.push({ gltf, mixer });
-      this.signature = gltf.scene.children[0].children;
+      this.sig.scene.position.z = 1;
+      this.sig.scene.position.y = -0.25;
+      // this.sig.scene.scale.set(0.85, 0.85, 0.5);
+      // this.resize();
+
+      this.objs.push({ ...this.sig, mixer });
+      this.signature = this.sig.scene.children[0].children;
       // this.allChildren.push(gltf.scene.children[0].children[0]);
 
       //when signature finishes animating
@@ -237,6 +267,7 @@ export default {
       this.loadTextures();
       this.init();
       this.animate();
+      this.resize();
     }
   }
 };
@@ -244,8 +275,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@import "../styles/stylesheet.scss";
+
 .signature {
   filter: grayscale(100%);
-  // opacity: 0.3;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0%;
+  .canvas {
+  }
 }
 </style>

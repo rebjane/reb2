@@ -19,7 +19,7 @@
       class="mainnav"
       @scrollTo="handleScrollTo"
     />
-    <div class="socials link">
+    <div class="socials link" v-if="winresize.size.desktop">
       <ul>
         <li v-for="(item, i) in socialmedia" :key="i">
           <span>
@@ -31,6 +31,7 @@
         </li>
       </ul>
     </div>
+    <!-- <div v-else class="progress-bar"></div> -->
   </div>
 </template>
 
@@ -45,7 +46,10 @@ export default {
     scroll() {
       if (this.header) {
         this.header = this.$nav[
-          Math.floor(this.scroll.pos / window.innerWidth)
+          Math.min(
+            Math.floor(this.scroll.pos / window.innerWidth),
+            this.$nav.length - 1
+          )
         ].title;
       }
     }
@@ -127,7 +131,8 @@ export default {
   h2 {
     font-family: $acuminc;
     color: white;
-    font-size: 20px;
+    font-size: 50px;
+    margin: 0;
   }
 }
 

@@ -3,6 +3,7 @@
     <HeadText
       :title="$cms.textField(data.primary.so_title)"
       :body="$cms.textField(data.primary.so_body)"
+      class="text"
     />
     <Signature v-if="this.playOnce" />
   </div>
@@ -18,7 +19,7 @@ export default {
       if (!this.playOnce && this.inview) {
         setTimeout(() => {
           this.playOnce = true;
-        }, 3000);
+        }, 2000);
       }
     }
   },
@@ -41,7 +42,14 @@ export default {
   },
   beforeDestroy() {},
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen", "route"])
+    ...mapState([
+      "signatureLoaded",
+      "loadPct",
+      "loaded",
+      "navOpen",
+      "route",
+      "winresize"
+    ])
   },
   methods: {},
   mounted() {}
@@ -54,6 +62,10 @@ export default {
 .workpage {
   padding-top: 100px;
   // height: 100%;
+}
+.text {
+  position: absolute;
+  left: 8em;
 }
 p {
   color: white;

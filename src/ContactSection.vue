@@ -95,30 +95,34 @@ export default {
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
 .contact {
-  padding: 0 5em;
+  // padding: 0 5em;
+
   height: 100%;
 }
 .info {
   position: relative;
-  height: 50%;
   width: 100%;
   @include above($tablet) {
     width: 50%;
     height: 100%;
+    float: left;
   }
-
-  float: left;
+  @include below($tablet) {
+    padding-bottom: 2em;
+  }
 }
 .form {
   height: 50%;
-  width: 100%;
-
+  // width: 100%;
+  @include below($tablet) {
+    @include padding();
+  }
   @include above($tablet) {
     width: 40%;
     height: 100%;
+    float: left;
   }
   position: relative;
-  float: left;
   .form-inner {
     position: absolute;
     width: 100%;

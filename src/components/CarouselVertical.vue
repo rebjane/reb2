@@ -1,10 +1,10 @@
 <template>
   <div class="carousel-vertical">
-    <div ref="carousel" class="carousel" v-if="items.length">
+    <div ref="carousel" class="carousel vert" v-if="items.length">
       <transition v-for="(item, i) in items" :key="i">
         <router-link class="rl" :to="`/${data[i].type_of_work}/${data[i].uid}`">
           <div
-            class="image-wrap link"
+            class="image-wrap vert"
             @click="doWorkPageIndex(data, i)"
             :style="winresize.size.tablet ? `background-image: url(${item.url})` : null"
           >
