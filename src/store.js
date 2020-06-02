@@ -57,6 +57,9 @@ export default new Vuex.Store({
     allowScroll(state, scrollAllowed) {
       Vue.set(state, "scrollAllowed", scrollAllowed);
     },
+    deafenScroll(state, deafened) {
+      Vue.set(state, "deafened", deafened);
+    },
     updateWinResize(state, winresize) {
       Vue.set(state, "winresize", winresize);
     },
@@ -90,6 +93,9 @@ export default new Vuex.Store({
     },
     allowScroll(context, scrollAllowed) {
       context.commit("allowScroll", scrollAllowed);
+    },
+    deafenScroll(context, deafened) {
+      context.commit("deafenScroll", deafened);
     },
     setWinResize(context, winresize) {
       context.commit("setWinResize", winresize);

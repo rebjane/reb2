@@ -1,6 +1,7 @@
 <template>
   <div class="head-text">
     <h2
+      ref="h2"
       v-if="title && winresize.size.desktop"
       :style="`color: ${color}; border-bottom: 1px solid ${color};`"
     >{{title}}</h2>
@@ -12,6 +13,7 @@
 import { mapState } from "vuex";
 export default {
   name: "HeadText",
+  watch: {},
   props: {
     title: {
       type: String,
@@ -53,7 +55,7 @@ export default {
     // // border-right: 1px solid $bg;
     // padding-right: 2em;
     // z-index: 4;
-    width: 30%;
+    width: 20%;
     display: inline-block;
     vertical-align: top;
     margin-top: 50vh;
@@ -69,6 +71,9 @@ export default {
     // border-bottom: 1px solid $bg;
     margin: 0;
     font-family: $acumin;
+    @include below($desktop) {
+      font-size: 30px;
+    }
   }
   .desc {
     margin-bottom: 3em;

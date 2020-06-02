@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { TimelineMax, Power4 } from "gsap";
-
+import { TimelineMax } from "gsap";
+// Power4
 export default {
   name: "Template",
   props: {
@@ -40,8 +40,9 @@ export default {
     cursorMove() {
       window.addEventListener("mousemove", e => {
         e.stopPropagation();
-        this.cursorType(e.target.className);
         // console.log(e.target.className);
+
+        this.cursorType(e.target.className);
         if (
           e.clientX <= 10 ||
           e.clientX >= window.innerWidth - 10 ||
@@ -53,12 +54,19 @@ export default {
           this.outOfBounds = false;
         }
 
-        this.timeline.to(this.$refs.cursor, 0.008, {
+        // this.timeline.to(this.$refs.cursor, 0.008, {
+        //   css: {
+        //     x: e.clientX,
+        //     y: e.clientY
+        //   },
+        //   ease: Power4.easeOut
+        // });
+        this.timeline.to(this.$refs.cursor, 0, {
           css: {
             x: e.clientX,
             y: e.clientY
-          },
-          ease: Power4.easeOut
+          }
+          // ease: Power4.easeOut
         });
 
         // this.$refs.cursor.style = `transform: translate3d(${e.clientX}px, ${e.clientY}px, 0px);`;
@@ -76,12 +84,23 @@ export default {
 .cursor {
   width: 80px;
   height: 80px;
-  // border: 1px solid white;
+  // // border: 1px solid white;
   mix-blend-mode: difference;
-
+  top: 0;
+  left: -80px;
   pointer-events: none;
-  border-radius: 500px;
   position: fixed;
   z-index: 10;
+  // width: 100%;
+  // left: 0;
+  // height: 100%;
+  // top: 0;
+  // opacity: 0;
+  // cursor: url("../assets/vert-cursor.png") none;
 }
+
+// .vert {
+// cursor: url("assets/vert-cursor.cur"), auto;
+
+// }
 </style>

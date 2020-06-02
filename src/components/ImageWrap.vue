@@ -54,9 +54,7 @@ export default {
         if (this.isParallax) {
           this.offset += e.interval * 2;
           this.transform();
-          if (this.isParallax) {
-            this.$refs.image.style = this.parallaxTransform;
-          }
+          this.$refs.image.style = this.parallaxTransform;
         }
       }
     },
@@ -145,13 +143,13 @@ export default {
       if (this.horiz) {
         this.parallaxTransform = `transform: translateX(${this.parallax(
           this.midPos,
-          this.scrollObj ? this.scrollObj.pos : 1
-        ) + this.offset}px)`;
+          this.scrollObj ? this.scrollObj.pos - this.offset : 1
+        )}px)`;
       } else {
         this.parallaxTransform = `transform: translateY(${this.parallax(
           this.midPos,
-          this.scrollObj ? this.scrollObj.pos : 1
-        ) + this.offset}px)`;
+          this.scrollObj ? this.scrollObj.pos - this.offset : 1
+        )}px)`;
       }
     },
     parallax(midPos, scrollPos) {

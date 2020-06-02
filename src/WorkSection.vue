@@ -145,9 +145,11 @@ export default {
   height: 100%;
 }
 .scrollouter {
-  border-top: 1px solid black;
   height: 100%;
   width: 100%;
+  @include below($tablet) {
+    border-top: 1px solid black;
+  }
   @include above($tablet) {
     width: 50%;
   }

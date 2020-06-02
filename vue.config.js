@@ -9,7 +9,7 @@ module.exports = {
 
     config.module
       .rule("url-loader")
-      .test(/\.(png|woff|woff2|eot|ttf|svg)$/)
+      .test(/\.(png|cur|woff|woff2|eot|ttf|svg)$/)
       .use("url-loader?limit=100000")
       .loader("url-loader?limit=100000")
       .end();

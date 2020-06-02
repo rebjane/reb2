@@ -10,6 +10,7 @@
         <h2>{{header}}</h2>
       </div>
     </div>
+    <Hamburger class="hamburger" @click.native="toggleNav" v-if="winresize.size.tablet" />
     <transition appear v-if="time.timeString && !winresize.size.tablet" name="time">
       <p class="time">{{ time.timeString }}</p>
     </transition>
@@ -69,7 +70,8 @@ export default {
     return {
       time: new Time(),
       socialmedia: this.$navsocials,
-      header: this.$nav[0].title
+      header: this.$nav[0].title,
+      on: false
     };
   },
   computed: {
@@ -80,7 +82,9 @@ export default {
       this.$emit("scrollTo", e);
     },
     toggleNav() {
-      this.$store.commit("setNavOpen", true);
+      // console.log("clicked");
+      this.on = !this.on;
+      this.$store.commit("setNavOpen", this.on);
     }
   },
   mounted() {}
@@ -90,6 +94,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
+.hamburger {
+  position: fixed;
+  top: 0;
+  width: 2em;
+  right: 0;
+  margin-top: 2em;
+  margin-right: 2em;
+  mix-blend-mode: difference;
+}
 .side-title {
   position: fixed;
   width: 300px;
@@ -172,6 +185,8 @@ export default {
 
 .time {
   position: fixed;
+  mix-blend-mode: difference;
+
   // top: 50%;
   // transform: translateY(-50%);
   // right: 0;
@@ -179,8 +194,8 @@ export default {
   bottom: 0%;
   z-index: 2;
   opacity: 1;
-  margin-left: 3em;
-  margin-bottom: 2em;
+  margin-left: 2em;
+  margin-bottom: 1em;
   // transform: translateX(-50%);
 
   // color: white;
@@ -273,6 +288,8 @@ p {
   }
 }
 .socials {
+  mix-blend-mode: difference;
+
   position: fixed;
   bottom: 0;
   margin-bottom: 1.5em;

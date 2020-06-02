@@ -81,6 +81,7 @@ export default {
 .home-link {
   // margin: 0 2em;
   border-right: 1px solid white;
+  mix-blend-mode: difference;
   @include above($tablet) {
     margin-left: 2em;
     margin-right: 2em;

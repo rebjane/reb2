@@ -18,6 +18,8 @@ class LoadComponents {
       Vue.component("HeadText", require("./components/HeadText.vue").default);
       Vue.component("Arrow", require("./components/Arrow.vue").default);
       Vue.component("TextSlice", require("./components/TextSlice.vue").default);
+      Vue.component("NavScreen", require("./components/NavScreen.vue").default);
+
       Vue.component(
         "ArrowCursor",
         require("./components/ArrowCursor.vue").default

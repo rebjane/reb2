@@ -17,6 +17,8 @@
     <Loading v-if="!loaded" class="loadingcurtain" />
 
     <div class="nav-wrapper">
+      <NavScreen v-if="navOpen" class="navscreen" />
+
       <transition name="nav" v-if="loaded && showMainNav" appear :key="loaded && showMainNav">
         <NavMenu :key="loaded && isHomePage" @scrollTo="scrollTo" />
       </transition>
@@ -31,7 +33,6 @@
     </div>
 
     <!-- && signatureLoaded -->
-    <NavScreen v-if="navOpen" />
     <CursorThing v-if="loaded && winresize.userAgent.desktop" />
   </div>
 </template>
@@ -40,16 +41,16 @@
 import { mapState } from "vuex";
 import Loading from "./Loading.vue";
 // import NavMenu from "./components/NavMenu.vue";
-import CursorThing from "./components/CursorThing.vue";
+// import CursorThing from "./components/CursorThing.vue";
 
 export default {
   name: "Index",
 
   beforeMounted() {},
   components: {
-    Loading,
+    Loading
     // NavMenu,
-    CursorThing
+    // CursorThing
     // Scrollbar
     // Index
   },
@@ -91,43 +92,6 @@ export default {
       this.scrollToScrollPos = e;
     },
     dowinresize() {
-      // if (this.prev === window.innerWidth) {
-      //   setTimeout(() => {
-      //     cancelAnimationFrame(this.dowinresize);
-      //   }, 500);
-
-      //   return;
-      // }
-      // requestAnimationFrame(this.dowinresize);
-      // var tablet = (() => {
-      //   function Android() {
-      //     return navigator.userAgent.match(/Android/i);
-      //   }
-      //   function BlackBerry() {
-      //     return navigator.userAgent.match(/BlackBerry/i);
-      //   }
-      //   function iOS() {
-      //     return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-      //   }
-
-      //   function Opera() {
-      //     return navigator.userAgent.match(/Opera Mini/i);
-      //   }
-      //   function Windows() {
-      //     return (
-      //       navigator.userAgent.match(/IEMobile/i) ||
-      //       navigator.userAgent.match(/WPDesktop/i)
-      //     );
-      //   }
-      //   // return Android() || BlackBerry() || iOS() || Opera() || Windows();
-      //   if (Android() || BlackBerry() || iOS() || Opera() || Windows()) {
-      //     return true;
-      //   } else {
-      //     return false;
-      //   }
-      // })();
-      // var tablet = window.innerWidth <= 800;
-      // var desktop = window.innerWidth > 800;
       var desktop = !this.$tablet;
       var interval = window.innerWidth - this.$store.state.winresize.width;
       this.$store.commit("updateWinResize", {
@@ -159,12 +123,6 @@ export default {
         url = url[url.length - 1];
         this.data = this.$work.filter(i => i.uid === url)[0];
       }
-      // return new Promise(res => {
-      //   var url = window.location.pathname.split("/");
-      //   url = url[url.length - 1];
-      //   this.data = this.$work.filter(i => i.uid === url)[0];
-      //   res(this.data);
-      // });
     }
   },
   computed: {
@@ -208,10 +166,15 @@ export default {
   position: fixed;
   z-index: 3;
 }
-.nav-wrapper {
-  // position: relative;
-  height: 0;
-  mix-blend-mode: difference;
+.navscreen {
+  position: fixed;
+  background: black;
+  // mix-blend-mode: difference;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }
 
 #index {
@@ -222,4 +185,7 @@ export default {
   // background: white;
   background: $lbg;
 }
+// .vert {
+//   cursor: url("assets/vert-cursor.cur"), auto;
+// }
 </style>

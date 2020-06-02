@@ -15,13 +15,17 @@
           :ref="`${$cms.textField(item.ref_name)}`"
         />
       </transition-group>
+      <div class="scroll-cta" v-if="data.primary">
+        <p :ref="$cms.textField(data.primary.scroll_cta_ref)"></p>
+        <Arrow :class="`arrow ${scrollAllowed ? 'in' : null}`" />
+      </div>
     </div>
-    <!-- <p class="scroll-cta" :ref="$cms.textField(this.data.primary.scroll_cta_ref)"></p> -->
   </div>
 </template>
 
 <script>
 import WaveText from "./wavetext.js";
+import { mapState } from "vuex";
 
 export default {
   name: "HomeOverlay",
@@ -30,6 +34,9 @@ export default {
       type: Object,
       default: null
     }
+  },
+  computed: {
+    ...mapState(["scrollAllowed"])
   },
   data() {
     var intro;
@@ -60,24 +67,23 @@ export default {
             : 0
         });
       });
-      //scroll cta
-      // if (this.data.primary) {
-      //   this.opts.push({
-      //     string: this.$cms.textField(this.data.primary.scroll_cta_string),
-      //     tag: "p",
-      //     refName: this.$cms.textField(this.data.primary.scroll_cta_ref),
-      //     el: this.$refs[this.$cms.textField(this.data.primary.scroll_cta_ref)],
-      //     delay: this.data.primary.scroll_cta_delay,
-      //     logo_before: false,
-      //     bold_start: 0,
-      //     bold_end: 0
-      //   });
-      // }
+      // scroll cta
+      if (this.data.primary) {
+        this.opts.push({
+          string: this.$cms.textField(this.data.primary.scroll_cta_string),
+          tag: "p",
+          refName: this.$cms.textField(this.data.primary.scroll_cta_ref),
+          el: this.$refs[this.$cms.textField(this.data.primary.scroll_cta_ref)],
+          delay: this.data.primary.scroll_cta_delay,
+          logo_before: false,
+          bold_start: 0,
+          bold_end: 0
+        });
+      }
       res(this.opts);
     }).then(() => this.$nextTick(() => new WaveText(this.opts)));
 
     setTimeout(() => {
-      // this.$emit("canScroll", true);
       this.$store.commit("allowScroll", true);
     }, this.opts[this.opts.length - 1].delay + 100);
   }
@@ -171,16 +177,32 @@ span {
 
   // text-align: left;
 }
+
 .scroll-cta {
-  position: absolute;
-  // bottom: 0;
-  // left: 50%;
-  // transform: translateX(-50%);
-  right: 0;
-  transform: translateY(-50%);
-  top: 50%;
-  margin-right: 6em;
+  @include padding();
+  text-align: left;
+  padding-top: 1em;
+  padding-bottom: 1em;
+
+  .arrow {
+    width: 3em;
+    display: inline-block;
+    vertical-align: middle;
+    transform: translateX(-100%);
+    opacity: 0;
+    @include ease(all);
+  }
+  .in {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  p {
+    display: inline-block;
+    margin: 0;
+    margin-right: 2em;
+  }
 }
+
 p {
   // font-family: $acumin;
   font-family: $suisse;

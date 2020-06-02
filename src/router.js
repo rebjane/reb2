@@ -17,7 +17,7 @@ const router = new VueRouter({
     },
 
     {
-      path: "/work*",
+      path: "/*",
       name: "work",
       component: () => import("./WorkPage.vue"),
     },

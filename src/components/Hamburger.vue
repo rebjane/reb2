@@ -29,7 +29,7 @@ export default {
 svg {
   fill: white;
 }
-.hamburger {
-  // cursor: pointer;
-}
+// .hamburger {
+//   // cursor: pointer;
+// }
 </style>

@@ -102,10 +102,14 @@ export default {
 .info {
   position: relative;
   width: 100%;
+
   @include above($tablet) {
     width: 50%;
     height: 100%;
     float: left;
+    /deep/ .head-text {
+      width: 40%;
+    }
   }
   @include below($tablet) {
     padding-bottom: 2em;

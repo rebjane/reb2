@@ -2,11 +2,13 @@
   <div class="scrollbar-div">
     <div class="scroll-line" ref="scrollline">
       <ul>
-        <li v-for="(item, i) in menu" :key="i" @click="$emit('scrollTo', i * ww)">
-          <span>
-            <router-link to>{{item.title}}</router-link>
-          </span>
-        </li>
+        <transition-group appear name="in" v-for="(item, i) in menu" :key="i">
+          <li :style="`transition-delay: ${i * 50}ms`" @click="$emit('scrollTo', i * ww)" :key="i">
+            <span>
+              <router-link to>{{item.title}}</router-link>
+            </span>
+          </li>
+        </transition-group>
       </ul>
       <div ref="scrollbar" class="scroll-bar"></div>
     </div>
@@ -27,7 +29,6 @@ export default {
   watch: {
     scroll: {
       handler(e) {
-        // console.log(e);
         this.$refs.scrollbar.style = `width: ${this.width(
           this.sbwidth,
           this.slwidth,
@@ -71,6 +72,18 @@ export default {
   z-index: 10;
   mix-blend-mode: difference;
 }
+
+.in-enter {
+  opacity: 0;
+  transform: translateY(100%);
+}
+.in-enter-active {
+  @include ease(all);
+}
+// span {
+//   opacity: 1;
+//   transform: translateY(0%);
+// }
 .scroll-line {
   // border-top: 1px solid black;
   position: absolute;
@@ -106,7 +119,8 @@ ul {
   li {
     display: inline-block;
     // cursor: pointer;
-
+    opacity: 1;
+    transform: translateY(0%);
     position: relative;
     font-size: 12px;
     text-align: left;

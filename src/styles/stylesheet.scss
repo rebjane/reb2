@@ -161,6 +161,10 @@ html {
 }
 * {
   cursor: none;
+  &:hover,
+  &:focus {
+    cursor: none;
+  }
 }
 
 body {
