@@ -47,7 +47,7 @@ export default {
 .media-img-or-vid {
   position: relative;
   // padding: 4em;
-  @include padding();
+  @include workpadding();
 }
 .video {
   width: 100%;

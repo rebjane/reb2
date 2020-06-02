@@ -138,7 +138,7 @@ h1 {
   font-weight: normal;
   @include below($tablet) {
     font-size: 40px;
-    margin-left: 1em;
+    @include workpadding();
   }
 }
 </style>

@@ -9,7 +9,8 @@
 
     <router-link to="/">
       <div class="home-link">
-        <p>HOME</p>
+        <Reb2Logo class="logo" />
+        <!-- <p>HOME</p> -->
       </div>
     </router-link>
 
@@ -74,6 +75,8 @@ export default {
 .arrow-wrap {
   //   height: 3em;
   width: 2em;
+  padding-right: 0.5em;
+
   margin: 2em 0;
 }
 .back,
@@ -83,7 +86,6 @@ export default {
   border-right: 1px solid white;
   mix-blend-mode: difference;
   @include above($tablet) {
-    margin-left: 2em;
     margin-right: 2em;
   }
   // @include below($tablet) {
@@ -93,6 +95,7 @@ export default {
   position: fixed;
   // cursor: pointer;
   //   height: 50%;
+  margin-left: 1em;
 
   p {
     writing-mode: vertical-lr;
@@ -105,6 +108,7 @@ export default {
 }
 .home-link {
   width: 2em;
+  padding-right: 0.5em;
 }
 .back {
   top: 0;

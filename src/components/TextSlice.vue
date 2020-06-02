@@ -37,7 +37,7 @@ export default {
 @import "../styles/stylesheet.scss";
 .textsection {
   // padding: 4em;
-  @include padding();
+  @include workpadding();
 }
 .text-rows {
   width: 100%;

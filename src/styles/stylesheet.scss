@@ -27,8 +27,8 @@ $desktop: 1600px;
 $ultra: 1920px;
 
 $pad: 20%;
-$medpad: 5em;
-$mobilepad: 3em;
+$medpad: 70px;
+$mobilepad: 40px;
 
 @mixin padding() {
   @include above($tablet) {
@@ -39,6 +39,19 @@ $mobilepad: 3em;
   }
   @include below($tablet) {
     margin-left: $mobilepad;
+    margin-right: $mobilepad;
+  }
+}
+
+@mixin workpadding() {
+  @include above($tablet) {
+    margin: 0 $medpad;
+  }
+  @include above($notebook) {
+    margin: 0 $pad;
+  }
+  @include below($tablet) {
+    margin-left: $medpad;
     margin-right: $mobilepad;
   }
 }
@@ -143,6 +156,8 @@ h1 {
 p {
   font-family: $suisse;
   color: $bg;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 h1,
 h2,
@@ -152,6 +167,8 @@ h5,
 h6 {
   font-weight: normal;
   color: $bg;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 html {
