@@ -65,9 +65,18 @@ export default {
 }
 .text {
   position: absolute;
-  left: 8em;
-}
-p {
-  color: white;
+  @include above($tablet) {
+    left: 8em;
+  }
+  @include below($tablet) {
+    font-size: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    /deep/ p {
+      hyphens: none;
+      font-family: $acumin !important;
+    }
+    // text-align: center;
+  }
 }
 </style>

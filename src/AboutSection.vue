@@ -1,37 +1,47 @@
 <template>
-  <div ref="about" class="about">
+  <div ref="about" class="about outer">
     <div class="bg" />
-    <div class="parallaximage-cont">
-      <div class="parallaximage">
-        <h2 v-if="data.primary.top_text" class="toptitle">{{$cms.textField(data.primary.top_text)}}</h2>
-        <ImageWrap
-          v-if="aboutImg"
-          :ripple="false"
-          :isParallax="true"
-          :horiz="true"
-          :imgInfo="aboutImg"
-          :img="aboutImg.src"
-          :scrollObj="scroll"
-          class="pimg"
+
+    <div class="about-outer" ref="outer">
+      <div class="wrapper" ref="wrap">
+        <div class="parallaximage-cont">
+          <div class="parallaximage">
+            <h2
+              v-if="data.primary.top_text"
+              class="toptitle"
+            >{{$cms.textField(data.primary.top_text)}}</h2>
+            <ImageWrap
+              v-if="aboutImg"
+              :ripple="false"
+              :isParallax="true"
+              :horiz="true"
+              :imgInfo="aboutImg"
+              :img="aboutImg.src"
+              :scrollObj="scroll"
+              class="pimg"
+            />
+            <h2
+              v-if="data.primary.bottom_text.length"
+              class="bottomtitle"
+            >{{$cms.textField(data.primary.bottom_text)}}</h2>
+          </div>
+        </div>
+
+        <HeadText
+          class="bio"
+          :color="'white'"
+          :title="$cms.textField(data.primary.about_title)"
+          :body="$cms.textField(data.primary.about_body)"
         />
-        <h2
-          v-if="data.primary.bottom_text.length"
-          class="bottomtitle"
-        >{{$cms.textField(data.primary.bottom_text)}}</h2>
       </div>
     </div>
-
-    <HeadText
-      class="bio"
-      :color="'white'"
-      :title="$cms.textField(data.primary.about_title)"
-      :body="$cms.textField(data.primary.about_body)"
-    />
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import Scrolly from "./scrolly.js";
+
 // import WaveText from "./wavetext.js";
 
 export default {
@@ -42,22 +52,92 @@ export default {
     data: {
       type: Object,
       default: null
+    },
+    inview: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      aboutImg: null
+      aboutImg: null,
+      newscroll: null,
+      start: 0,
+      startTime: 0
     };
   },
   beforeDestroy() {},
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen", "scroll"])
+    ...mapState([
+      "signatureLoaded",
+      "winresize",
+      "loadPct",
+      "loaded",
+      "navOpen",
+      "scroll"
+    ])
   },
-  methods: {},
+  methods: {
+    toggleScroll(mouseOn) {
+      //ensure the scroll has already been made
+      if (this.newscroll) {
+        //if in view an d mouse is  over the element
+        if (mouseOn && this.inview) {
+          this.newscroll.listen();
+          this.$emit("deafenGlobalScroll", true);
+
+          //if themouse moves away,indicates i want to scroll away
+        } else if (!mouseOn) {
+          this.newscroll.deafen();
+          this.$emit("deafenGlobalScroll", false);
+        }
+      }
+    },
+    touchstart(e) {
+      this.$refs.about.addEventListener("touchmove", this.touchmove);
+      this.$refs.about.addEventListener("touchend", this.touchend);
+      this.start = {
+        x: e.changedTouches[0].clientX,
+        y: e.changedTouches[0].clientY
+      };
+      this.startTime = performance.now();
+      this.toggleScroll(true);
+    },
+    touchmove(e) {
+      if (
+        Math.abs(e.changedTouches[0].clientX - this.start.x) >
+          window.innerWidth / 4 &&
+        performance.now() < this.startTime + 1000
+      )
+        this.toggleScroll(false);
+    },
+    touchend() {
+      this.$refs.about.removeEventListener("touchmove", this.touchmove);
+    },
+    initScroll() {
+      if (this.winresize.userAgent.tablet) {
+        //the possibility of vertical overflow on tablet / mobile. desktop - you can re-size. you can't stretch a tablet
+        new Promise(res => {
+          setTimeout(() => {
+            //initiate scroll, then deafen immediately
+            if (this.$refs.wrap.offsetHeight > window.innerHeight) {
+              this.newscroll = new Scrolly(this.$refs.outer, "v");
+              this.newscroll.deafen();
+            }
+            res();
+          }, 500);
+        }).then(() => {
+          this.$refs.about.addEventListener("touchstart", this.touchstart);
+        });
+      }
+    }
+  },
   mounted() {
     this.$imageLoader.getObj(this.data.primary.about_image.url).then(res => {
       this.aboutImg = res;
     });
+
+    this.initScroll();
   }
 };
 </script>
@@ -65,7 +145,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
-
+.about-outer {
+  // height: calc(100% - #{$top});
+  height: 100%;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  margin-top: $top;
+}
+.wrapper {
+  @include below($tablet) {
+    height: auto;
+    position: absolute;
+  }
+}
 .about {
   height: 100vh;
   position: relative;

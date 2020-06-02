@@ -170,7 +170,9 @@ export default {
       @include below($tablet) {
         > div:first-child {
           margin-top: $top;
-          height: calc(100vh - #{$top});
+          // height: calc(100vh - #{$top});
+          // height: 100%;
+          min-height: 100%;
         }
       }
     }

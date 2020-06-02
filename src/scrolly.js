@@ -28,10 +28,13 @@ export default class Scrolly {
     if (this.direction === "h") {
       this.max = this.el.offsetWidth - window.innerWidth;
     } else {
+      // this.max =
+      //   this.el.offsetHeight -
+      //   (this.elParent.offsetHeight -
+      //     Math.floor(window.innerHeight - this.elParent.offsetHeight));
       this.max =
-        this.el.offsetHeight -
-        (this.elParent.offsetHeight -
-          Math.floor(window.innerHeight - this.elParent.offsetHeight));
+        this.el.offsetHeight + this.elParent.offsetTop * 2 - window.innerHeight;
+
       // console.log(
       //   this.elParent.offsetHeight,
       //   this.el.offsetHeight,
@@ -69,13 +72,14 @@ export default class Scrolly {
       if (this.deaf) {
         return;
       }
+      this.force = 10;
+
       var pos;
       if (this.direction === "h") {
         pos = e.changedTouches[0].pageX;
       } else {
         pos = e.changedTouches[0].pageY;
       }
-      console.log(pos);
       if (pos > this.start) {
         this.dir = Math.abs(pos) / pos;
         this.scrollDestination -= Math.abs((pos - this.start) * 1.5);
@@ -100,6 +104,8 @@ export default class Scrolly {
       if (this.deaf) {
         return;
       }
+      this.force = 20;
+
       if (e.deltaX && this.direction === "h") {
         this.dir = Math.abs(e.deltaX) / e.deltaX;
         this.scrollDestination += e.deltaX;
@@ -117,7 +123,7 @@ export default class Scrolly {
   }
 
   scroll() {
-    this.pos += (this.scrollDestination - this.pos) / 20;
+    this.pos += (this.scrollDestination - this.pos) / this.force;
     this.pos = Number(this.pos.toFixed(2));
     //stop from running animation frame if scroll is deafened and you come to a stop
     if (this.isScrolling && this.preDeafPos === this.pos) {

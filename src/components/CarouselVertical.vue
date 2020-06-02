@@ -238,8 +238,7 @@ export default {
     width: 100%;
   }
   @include below($tablet) {
-    margin-left: 1em;
-    margin-right: 1em;
+    margin: 3em 1em;
   }
 }
 .rl {

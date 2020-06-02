@@ -45,14 +45,16 @@ import Reb2Logo from "./Reb2Logo";
 export default {
   watch: {
     scroll() {
-      if (this.header) {
-        this.header = this.$nav[
-          Math.min(
-            Math.floor(this.scroll.pos / window.innerWidth),
-            this.$nav.length - 1
-          )
-        ].title;
-      }
+      this.$nextTick(() => {
+        if (this.$nav && this.scrollAllowed) {
+          this.header = this.$nav[
+            Math.min(
+              Math.floor(this.scroll.pos / window.innerWidth),
+              this.$nav.length - 1
+            )
+          ].title;
+        }
+      });
     }
   },
   components: {
@@ -75,7 +77,13 @@ export default {
     };
   },
   computed: {
-    ...mapState(["navOpen", "signatureLoaded", "winresize", "scroll"])
+    ...mapState([
+      "navOpen",
+      "signatureLoaded",
+      "scrollAllowed",
+      "winresize",
+      "scroll"
+    ])
   },
   methods: {
     handleScrollTo(e) {
@@ -227,7 +235,7 @@ p {
 }
 .main-menu-wrapper {
   mix-blend-mode: difference;
-  border-bottom: 1px solid white;
+  // border-bottom: 1px solid white;
   position: fixed;
   // top: 50%;
   top: 0;

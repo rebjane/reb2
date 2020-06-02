@@ -147,9 +147,9 @@ export default {
 .scrollouter {
   height: 100%;
   width: 100%;
-  @include below($tablet) {
-    border-top: 1px solid black;
-  }
+  // @include below($tablet) {
+  //   border-top: 1px solid black;
+  // }
   @include above($tablet) {
     width: 50%;
   }
@@ -162,10 +162,10 @@ export default {
   // display: inline-block;
   position: relative;
   background: $lbg;
-  padding-bottom: 5em;
+  margin-bottom: 5em;
 
   @include above($tablet) {
-    padding-top: 5em;
+    margin-top: 5em;
   }
 
   @include ease(background);
