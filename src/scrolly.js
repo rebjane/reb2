@@ -48,7 +48,7 @@ export default class Scrolly {
 
   scrollTo(destination) {
     this.scrollDestination = destination;
-    if (!this.isScrolling) {
+    if (!this.isScrolling && !this.immediate) {
       this.scroll();
       this.isScrolling = true;
       this.deaf = false;
@@ -57,7 +57,7 @@ export default class Scrolly {
 
   touchEventListeners() {
     window.addEventListener("touchstart", (e) => {
-      if (this.deaf) {
+      if (this.deaf && this.isScrolling) {
         return;
       }
       if (this.direction === "h") {
@@ -69,7 +69,7 @@ export default class Scrolly {
       e.stopPropagation();
     });
     window.addEventListener("touchmove", (e) => {
-      if (this.deaf) {
+      if (this.deaf && this.isScrolling) {
         return;
       }
       this.force = 10;
@@ -101,7 +101,7 @@ export default class Scrolly {
 
   eventListeners() {
     window.addEventListener("mousewheel", (e) => {
-      if (this.deaf) {
+      if (this.deaf && this.isScrolling) {
         return;
       }
       this.force = 20;
@@ -159,14 +159,15 @@ export default class Scrolly {
         break;
       }
     }
-    // console.log(this.pos);
+    this.transform();
+  }
+  transform() {
     if (this.direction === "h") {
       this.el.style.transform = `translate3d(${-1 * this.pos}px, 0,0)`; //horizontal
     } else {
       this.el.style.transform = `translate3d(0, ${-1 * this.pos}px,0)`; //vertical
     }
   }
-
   deafen() {
     this.deaf = true;
   }

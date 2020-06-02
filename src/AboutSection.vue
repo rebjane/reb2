@@ -1,5 +1,5 @@
 <template>
-  <div ref="about" class="about outer">
+  <div ref="about" class="about">
     <div class="bg" />
 
     <div class="about-outer" ref="outer">
@@ -62,8 +62,9 @@ export default {
     return {
       aboutImg: null,
       newscroll: null,
-      start: 0,
-      startTime: 0
+      start: {},
+      dir: 1,
+      startTouch: 0
     };
   },
   beforeDestroy() {},
@@ -79,6 +80,7 @@ export default {
   },
   methods: {
     toggleScroll(mouseOn) {
+      // console.log(mouseOn);
       //ensure the scroll has already been made
       if (this.newscroll) {
         //if in view an d mouse is  over the element
@@ -88,39 +90,56 @@ export default {
 
           //if themouse moves away,indicates i want to scroll away
         } else if (!mouseOn) {
+          this.$refs.about.removeEventListener("touchmove", this.touchmove);
           this.newscroll.deafen();
           this.$emit("deafenGlobalScroll", false);
         }
       }
     },
     touchstart(e) {
-      this.$refs.about.addEventListener("touchmove", this.touchmove);
       this.$refs.about.addEventListener("touchend", this.touchend);
+      this.$refs.about.addEventListener("touchmove", this.touchmove);
+
       this.start = {
         x: e.changedTouches[0].clientX,
         y: e.changedTouches[0].clientY
       };
-      this.startTime = performance.now();
-      this.toggleScroll(true);
+      this.startTouch = performance.now();
     },
     touchmove(e) {
+      if (performance.now() < this.startTouch + 500) {
+        return;
+      }
+      this.toggleScroll(true);
+
       if (
         Math.abs(e.changedTouches[0].clientX - this.start.x) >
-          window.innerWidth / 4 &&
-        performance.now() < this.startTime + 1000
-      )
+        window.innerWidth / 4
+      ) {
+        e.stopPropagation();
+        if (this.scroll.pos) {
+          this.$emit(
+            "scrollTo",
+            this.scroll.pos + (this.start.x - e.changedTouches[0].clientX)
+          );
+        }
         this.toggleScroll(false);
+        return;
+      }
     },
     touchend() {
       this.$refs.about.removeEventListener("touchmove", this.touchmove);
+      this.toggleScroll(false);
     },
     initScroll() {
       if (this.winresize.userAgent.tablet) {
         //the possibility of vertical overflow on tablet / mobile. desktop - you can re-size. you can't stretch a tablet
         new Promise(res => {
           setTimeout(() => {
-            //initiate scroll, then deafen immediately
-            if (this.$refs.wrap.offsetHeight > window.innerHeight) {
+            if (
+              this.$refs.wrap.offsetHeight + this.$refs.about.offsetTop >
+              window.innerHeight
+            ) {
               this.newscroll = new Scrolly(this.$refs.outer, "v");
               this.newscroll.deafen();
             }
@@ -147,11 +166,13 @@ export default {
 @import "./styles/stylesheet.scss";
 .about-outer {
   // height: calc(100% - #{$top});
-  height: 100%;
-  position: fixed;
-  width: 100vw;
-  top: 0;
-  margin-top: $top;
+  @include below($tablet) {
+    height: 100%;
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    margin-top: $top;
+  }
 }
 .wrapper {
   @include below($tablet) {

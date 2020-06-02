@@ -1,45 +1,50 @@
 <template>
-  <div ref="page" class="contact">
-    <!-- <p>{{data.primary}}</p> -->
-    <div class="info">
-      <HeadText
-        :title="$cms.textField(data.primary.contact_title)"
-        :body="$cms.textField(data.primary.contact_body)"
-      />
-    </div>
-    <div class="form">
-      <form class="form-inner" ref="form" @submit.prevent="doSubmit">
-        <transition v-for="(item, i) in data.items" :key="i">
-          <div class="row">
-            <label :for="$cms.textField(item.input_label)">{{$cms.textField(item.input_label)}}</label>
-            <input
-              v-if="item.input_type !== 'textarea'"
-              :pattern="item.regex.length ? $cms.textField(item.regex) :null"
-              required
-              :type="item.input_type"
-              :name="$cms.textField(item.input_label)"
-            />
-
-            <textarea
-              v-else
-              :pattern="item.regex.length ? $cms.textField(item.regex) :null"
-              required
-              :rows="item.textarea_line_count"
-              :name="$cms.textField(item.input_label)"
-            />
-          </div>
-        </transition>
-        <div class="submit link">
-          <input type="submit" class="link" value="submit" />
-          <Arrow class="arrow" />
+  <div ref="contact" class="contact">
+    <div class="contact-outer" ref="outer">
+      <div class="wrapper" ref="wrap">
+        <!-- <p>{{data.primary}}</p> -->
+        <div class="info">
+          <HeadText
+            :title="$cms.textField(data.primary.contact_title)"
+            :body="$cms.textField(data.primary.contact_body)"
+          />
         </div>
-      </form>
+        <div class="form">
+          <form class="form-inner" ref="form" @submit.prevent="doSubmit">
+            <transition v-for="(item, i) in data.items" :key="i">
+              <div class="row">
+                <label :for="$cms.textField(item.input_label)">{{$cms.textField(item.input_label)}}</label>
+                <input
+                  v-if="item.input_type !== 'textarea'"
+                  :pattern="item.regex.length ? $cms.textField(item.regex) :null"
+                  required
+                  :type="item.input_type"
+                  :name="$cms.textField(item.input_label)"
+                />
+
+                <textarea
+                  v-else
+                  :pattern="item.regex.length ? $cms.textField(item.regex) :null"
+                  required
+                  :rows="item.textarea_line_count"
+                  :name="$cms.textField(item.input_label)"
+                />
+              </div>
+            </transition>
+            <div class="submit link">
+              <input type="submit" class="link" value="submit" />
+              <Arrow class="arrow" />
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import Scrolly from "./scrolly.js";
 
 export default {
   name: "Template",
@@ -48,16 +53,29 @@ export default {
     data: {
       type: Object,
       default: null
+    },
+    inview: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      scroll: null
+      newscroll: null,
+      start: 0,
+      startTouch: 0
     };
   },
   beforeDestroy() {},
   computed: {
-    ...mapState(["signatureLoaded", "loadPct", "loaded", "navOpen"])
+    ...mapState([
+      "signatureLoaded",
+      "loadPct",
+      "loaded",
+      "navOpen",
+      "winresize",
+      "scroll"
+    ])
   },
   methods: {
     doSubmit(e) {
@@ -85,19 +103,113 @@ export default {
             this.$refs.form.reset();
           })
       );
+    },
+    toggleScroll(mouseOn) {
+      //ensure the scroll has already been made
+      if (this.newscroll) {
+        //if in view an d mouse is  over the element
+        if (mouseOn && this.inview) {
+          this.newscroll.listen();
+          this.$emit("deafenGlobalScroll", true);
+
+          //if themouse moves away,indicates i want to scroll away
+        } else if (!mouseOn) {
+          this.$refs.contact.removeEventListener("touchmove", this.touchmove);
+          this.newscroll.deafen();
+          this.$emit("deafenGlobalScroll", false);
+        }
+      }
+    },
+    touchstart(e) {
+      this.$refs.contact.addEventListener("touchmove", this.touchmove);
+      this.$refs.contact.addEventListener("touchend", this.touchend);
+      this.start = {
+        x: e.changedTouches[0].clientX,
+        y: e.changedTouches[0].clientY
+      };
+      this.startTouch = performance.now();
+    },
+    touchmove(e) {
+      if (performance.now() < this.startTouch + 500) {
+        return;
+      }
+      this.toggleScroll(true);
+
+      if (
+        Math.abs(e.changedTouches[0].clientX - this.start.x) >
+        window.innerWidth / 4
+      ) {
+        e.stopPropagation();
+        if (this.scroll.pos) {
+          this.$emit(
+            "scrollTo",
+            this.scroll.pos + (this.start.x - e.changedTouches[0].clientX)
+          );
+        }
+        this.toggleScroll(false);
+        return;
+      }
+    },
+    touchend() {
+      this.$refs.contact.removeEventListener("touchmove", this.touchmove);
+      this.toggleScroll(false);
+    },
+    initScroll() {
+      if (this.winresize.userAgent.tablet) {
+        //the possibility of vertical overflow on tablet / mobile. desktop - you can re-size. you can't stretch a tablet
+        new Promise(res => {
+          setTimeout(() => {
+            //initiate scroll, then deafen immediately
+            // console.log(
+            //   this.$refs.wrap.offsetHeight,
+            //   this.$refs.contact.offsetTop,
+            //   window.innerHeight
+            // );
+            if (
+              this.$refs.wrap.offsetHeight + this.$refs.contact.offsetTop >
+              window.innerHeight
+            ) {
+              // console.log("do scroll");
+              this.newscroll = new Scrolly(this.$refs.outer, "v");
+              this.newscroll.deafen();
+            }
+            res();
+          }, 500);
+        }).then(() => {
+          this.$refs.contact.addEventListener("touchstart", this.touchstart);
+        });
+      }
     }
   },
-  mounted() {}
+  mounted() {
+    this.initScroll();
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
+.contact-outer {
+  // height: calc(100% - #{$top});
+  @include below($tablet) {
+    height: 100%;
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    margin-top: $top;
+  }
+}
+.wrapper {
+  @include below($tablet) {
+    // height: 100%;
+    position: absolute;
+  }
+}
 .contact {
   // padding: 0 5em;
 
-  height: 100%;
+  height: 100vh;
 }
 .info {
   position: relative;
@@ -116,9 +228,9 @@ export default {
   }
 }
 .form {
-  height: 50%;
   // width: 100%;
   @include below($tablet) {
+    // height: 100%;
     @include padding();
   }
   @include above($tablet) {
@@ -128,10 +240,12 @@ export default {
   }
   position: relative;
   .form-inner {
-    position: absolute;
     width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
+    @include above($tablet) {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
   span {
     width: 100%;
