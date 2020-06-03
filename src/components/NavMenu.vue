@@ -71,7 +71,8 @@ export default {
     return {
       time: new Time(),
       socialmedia: this.$navsocials,
-      header: this.$nav[0].title
+      header: this.$nav[0].title,
+      timeLapsed: performance.now()
     };
   },
   computed: {
@@ -89,7 +90,10 @@ export default {
     },
     toggleNav() {
       // console.log("clicked");
-      this.$store.commit("setNavOpen", !this.navOpen);
+      if (performance.now() > this.timeLapsed + 250) {
+        this.$store.commit("setNavOpen", !this.navOpen);
+        this.timeLapsed = performance.now();
+      }
     }
   },
   mounted() {}
