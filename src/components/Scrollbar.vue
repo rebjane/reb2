@@ -1,7 +1,7 @@
 <template>
   <div class="scrollbar-div">
     <div class="scroll-line" ref="scrollline">
-      <ul>
+      <ul v-if=" winresize.size.desktop">
         <transition-group appear name="in" v-for="(item, i) in menu" :key="i">
           <li :style="`transition-delay: ${i * 50}ms`" @click="$emit('scrollTo', i * ww)" :key="i">
             <span>
@@ -47,7 +47,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["scroll"])
+    ...mapState(["scroll", "winresize"])
   },
   methods: {
     width(sb, sl, el, pos) {
@@ -96,6 +96,9 @@ export default {
   // width: 50%;
   left: 50%;
   transform: translateX(-50%);
+  @include below($tablet) {
+    width: 100%;
+  }
 }
 .scroll-bar {
   position: absolute;

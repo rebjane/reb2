@@ -130,7 +130,7 @@ export default {
       this.startTouch = performance.now();
     },
     touchmove(e) {
-      if (performance.now() < this.startTouch + 500) {
+      if (performance.now() < this.startTouch + 300) {
         return;
       }
       this.toggleScroll(true);
@@ -235,7 +235,7 @@ export default {
   }
   @include above($tablet) {
     width: 40%;
-    height: 100%;
+    height: 100vh;
     float: left;
   }
   position: relative;

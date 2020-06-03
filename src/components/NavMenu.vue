@@ -15,11 +15,7 @@
       <p class="time">{{ time.timeString }}</p>
     </transition>
     <!-- main menu is in this component -->
-    <Scrollbar
-      v-if=" !navOpen && winresize.size.desktop"
-      class="mainnav"
-      @scrollTo="handleScrollTo"
-    />
+    <Scrollbar v-if=" !navOpen" class="mainnav" @scrollTo="handleScrollTo" />
     <div class="socials link" v-if="winresize.size.desktop">
       <ul>
         <li v-for="(item, i) in socialmedia" :key="i">
@@ -130,10 +126,15 @@ export default {
 }
 .mainnav {
   position: fixed;
-  top: 0;
+  @include above($tablet) {
+    top: 0;
+  }
   z-index: 10;
   mix-blend-mode: difference;
   width: 100%;
+  @include below($tablet) {
+    bottom: 3em;
+  }
 }
 .nav {
 }

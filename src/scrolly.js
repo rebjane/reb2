@@ -72,7 +72,7 @@ export default class Scrolly {
       if (this.deaf && this.isScrolling) {
         return;
       }
-      this.force = 10;
+      this.force = 1;
 
       var pos;
       if (this.direction === "h") {

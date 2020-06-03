@@ -169,6 +169,7 @@ h6 {
   color: $bg;
   overflow-wrap: break-word;
   hyphens: auto;
+  pointer-events: none;
 }
 
 html {
