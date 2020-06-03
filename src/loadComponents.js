@@ -29,6 +29,10 @@ class LoadComponents {
         require("./components/VertArrowCursor.vue").default
       );
       Vue.component(
+        "TypeCursor",
+        require("./components/TypeCursor.vue").default
+      );
+      Vue.component(
         "CircleCursor",
         require("./components/CircleCursor.vue").default
       );

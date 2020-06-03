@@ -32,6 +32,9 @@ export default {
       } else if (targ.includes("vert")) {
         this.curComponent = "VertArrowCursor";
         this.$refs.cursor.style = this.centerStyle;
+      } else if (targ.includes("type")) {
+        this.curComponent = "TypeCursor";
+        this.$refs.cursor.style = this.centerStyle;
       } else {
         this.curComponent = "ArrowCursor";
         this.$refs.cursor.style = this.topRightStyle;
@@ -40,7 +43,7 @@ export default {
     cursorMove() {
       window.addEventListener("mousemove", e => {
         e.stopPropagation();
-        // console.log(e.target.className);
+        console.log(e.target.className);
 
         this.cursorType(e.target.className);
         if (

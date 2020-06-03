@@ -20,6 +20,7 @@
                   required
                   :type="item.input_type"
                   :name="$cms.textField(item.input_label)"
+                  class="type"
                 />
 
                 <textarea
@@ -28,6 +29,7 @@
                   required
                   :rows="item.textarea_line_count"
                   :name="$cms.textField(item.input_label)"
+                  class="type"
                 />
               </div>
             </transition>
