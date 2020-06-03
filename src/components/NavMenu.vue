@@ -16,16 +16,19 @@
     </transition>
     <!-- main menu is in this component -->
     <Scrollbar v-if=" !navOpen" class="mainnav" @scrollTo="handleScrollTo" />
-    <div class="socials link" v-if="winresize.size.desktop">
+    <div class="socials" v-if="winresize.size.desktop">
       <ul>
-        <li v-for="(item, i) in socialmedia" :key="i">
-          <span>
-            <a
-              :target="item.link.url ? '_blank' : null"
-              :href="item.link.url ? item.link.url : null"
-            >{{$cms.textField(item.label)}}</a>
-          </span>
-        </li>
+        <transition v-for="(item, i) in socialmedia" :key="i">
+          <a
+            class="link"
+            :target="item.link.url ? '_blank' : null"
+            :href="item.link.url ? item.link.url : null"
+          >
+            <li>
+              <span>{{$cms.textField(item.label)}}</span>
+            </li>
+          </a>
+        </transition>
       </ul>
     </div>
     <!-- <div v-else class="progress-bar"></div> -->
@@ -303,7 +306,7 @@ p {
 
   position: fixed;
   bottom: 0;
-  margin-bottom: 1.5em;
+  // margin-bottom: 1.5em;
   left: 50%;
   transform: translateY(50%) translateX(-50%);
   color: white;
@@ -311,9 +314,12 @@ p {
     list-style: none;
     padding: 0;
     // cursor: pointer;
-
-    li {
+    margin: 0;
+    a {
       display: inline-block;
+      padding-top: 1.5em;
+      padding-bottom: 1.5em;
+      margin-bottom: 4em;
 
       position: relative;
       @include mini();
@@ -329,7 +335,7 @@ p {
 
       //   height: calc(100% + 3px);
       // }
-      a {
+      li {
         padding: 0 2em;
       }
       :not(:last-child) {

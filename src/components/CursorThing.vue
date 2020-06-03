@@ -1,5 +1,6 @@
 <template>
-  <div v-show="!outOfBounds" class="cursor" ref="cursor">
+  <div class="cursor" ref="cursor">
+    <!-- v-show="!outOfBounds" -->
     <component :fill="`white`" :is="curComponent" />
   </div>
 </template>
@@ -60,16 +61,16 @@ export default {
       // console.log(e.target.className);
       this.cursorType(e.target.className);
 
-      if (
-        e.clientX <= 10 ||
-        e.clientX >= window.innerWidth - 10 ||
-        e.clientY <= 10 ||
-        e.clientY >= window.innerHeight - 10
-      ) {
-        this.outOfBounds = true;
-      } else {
-        this.outOfBounds = false;
-      }
+      // if (
+      //   e.clientX <= 10 ||
+      //   e.clientX >= window.innerWidth - 10 ||
+      //   e.clientY <= 10 ||
+      //   e.clientY >= window.innerHeight - 10
+      // ) {
+      //   this.outOfBounds = true;
+      // } else {
+      //   this.outOfBounds = false;
+      // }
       this.timeline.to(this.$refs.cursor, 0, {
         css: {
           x: e.clientX,
