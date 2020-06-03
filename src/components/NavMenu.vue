@@ -133,7 +133,7 @@ export default {
   mix-blend-mode: difference;
   width: 100%;
   @include below($tablet) {
-    bottom: 3em;
+    bottom: 6em;
   }
 }
 .nav {

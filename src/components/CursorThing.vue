@@ -43,7 +43,7 @@ export default {
     cursorMove() {
       window.addEventListener("mousemove", e => {
         e.stopPropagation();
-        console.log(e.target.className);
+        // console.log(e.target.className);
 
         this.cursorType(e.target.className);
         if (

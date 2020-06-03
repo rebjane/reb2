@@ -32,17 +32,25 @@ export default {
         this.$refs.scrollbar.style = `width: ${this.width(
           this.sbwidth,
           this.slwidth,
-          e.elWidth - this.ww,
+          e.elWidth - window.innerWidth,
           e.pos
         )}px;`;
       }
+    },
+    winresize() {
+      this.slwidth = this.$refs.scrollline.getBoundingClientRect().width;
+      this.$refs.scrollbar.style = `width: ${this.width(
+        this.sbwidth,
+        this.slwidth,
+        this.scroll.elWidth - window.innerWidth,
+        this.scroll.pos
+      )}px;`;
     }
   },
   data() {
     return {
       slwidth: null,
       sbwidth: null,
-      ww: window.innerWidth,
       menu: this.$nav
     };
   },
@@ -65,10 +73,7 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
 .scrollbar-div {
-  // height: 100vh;
   height: 0;
-  // position: relative;
-  // pointer-events: none;
   z-index: 10;
   mix-blend-mode: difference;
 }
@@ -97,7 +102,8 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   @include below($tablet) {
-    width: 100%;
+    width: calc(100% - 80px);
+    border-bottom: 1px solid white;
   }
 }
 .scroll-bar {
@@ -105,6 +111,9 @@ export default {
   // bottom: 0;
   top: 50%;
   height: 1px;
+  @include below($tablet) {
+    height: 6px;
+  }
   // width: 60px;
   width: 0;
   background: white;
