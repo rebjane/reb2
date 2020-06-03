@@ -53,7 +53,7 @@ export default class Scrolly {
       this.scroll();
       this.isScrolling = true;
       this.deaf = false;
-      console.log(destination);
+      // console.log(destination);
     }
   }
 

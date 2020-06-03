@@ -3,7 +3,7 @@
     <div class="scroll-line" ref="scrollline">
       <ul v-if=" winresize.size.desktop">
         <transition-group appear name="in" v-for="(item, i) in menu" :key="i">
-          <li :style="`transition-delay: ${i * 50}ms`" @click="$emit('scrollTo', i * ww)" :key="i">
+          <li :style="`transition-delay: ${i * 50}ms`" @click="doScroll(i)" :key="i">
             <span>
               <router-link to>{{item.title}}</router-link>
             </span>
@@ -60,6 +60,9 @@ export default {
   methods: {
     width(sb, sl, el, pos) {
       return ((sl - sb) / el) * pos + sb;
+    },
+    doScroll(i) {
+      this.$emit("scrollTo", i * window.innerWidth + 1);
     }
   },
   mounted() {

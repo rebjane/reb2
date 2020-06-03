@@ -42,7 +42,7 @@ export default {
   watch: {
     scroll() {
       this.$nextTick(() => {
-        if (this.$nav && this.scrollAllowed) {
+        if (this.$nav && this.scrollAllowed && this.scroll.pos) {
           this.header = this.$nav[
             Math.min(
               Math.floor(this.scroll.pos / window.innerWidth),
