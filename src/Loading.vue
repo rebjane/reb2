@@ -21,7 +21,7 @@ export default {
         //   this.style
         // }" id="${e.toString()}"></h1>`;
         this.opts.push({
-          string: `${e.toString()}⠀`,
+          string: `${e.toString()}`,
           refName: e.toString(),
           // el: document.getElementById(e.toString()),
           el: this.$refs.load,
@@ -60,7 +60,7 @@ export default {
   mounted() {
     // this.$refs.inner.innerHTML += `<h1 style="${this.style}" id="0"></h1>`;
     this.opts.push({
-      string: "0⠀",
+      string: "0",
       refName: "0",
       tag: "h1",
       // el: document.getElementById("0"),
@@ -102,6 +102,7 @@ export default {
     opacity: 1;
     right: 25%;
     margin: 0;
+    margin-right: 1em;
   }
 }
 span {
