@@ -1,12 +1,14 @@
 <template>
   <div class="nav-screen">
     <ul>
-      <li
-        class="link"
-        v-for="(item, i) in $nav"
-        :key="i"
-        @click.prevent="handleClick(i)"
-      >{{item.title}}</li>
+      <transition appear name="navlist" v-for="(item, i) in $nav" :key="i">
+        <li
+          v-if="navOpen"
+          class="link"
+          :style="`transition-delay: ${(i * 70) + 100}ms`"
+          @click.prevent="handleClick(i)"
+        >{{item.title}}</li>
+      </transition>
     </ul>
   </div>
 </template>
@@ -58,6 +60,27 @@ ul {
     font-family: $acumin;
     margin: 1em 0;
     @include sub();
+    opacity: 1;
+    transform: translateY(0%);
   }
+}
+.navlist-enter,
+.navlist-leave {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.navlist-enter-to {
+  transform: translateY(0%);
+  opacity: 1;
+}
+
+.navlist-enter-active,
+.navlist-leave-active {
+  @include ease(all);
+}
+.navlist-leave-to {
+  transform: translateY(-100%);
+  opacity: 0;
 }
 </style>

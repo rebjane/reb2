@@ -17,7 +17,9 @@
     <Loading v-if="!loaded" class="loadingcurtain" />
 
     <div class="nav-wrapper">
-      <NavScreen v-if="navOpen" class="navscreen" @scrollTo="scrollTo" />
+      <transition appear v-if="navOpen" :key="navOpen" name="navscreen">
+        <NavScreen class="navscreen" :key="navOpen" @scrollTo="scrollTo" />
+      </transition>
 
       <transition name="nav" v-if="loaded && showMainNav" appear :key="loaded && showMainNav">
         <NavMenu :key="loaded && isHomePage" @scrollTo="scrollTo" />
@@ -174,9 +176,38 @@ export default {
   // mix-blend-mode: difference;
   height: 100%;
   width: 100%;
-  top: 0;
+  // top: 0;
   left: 0;
   z-index: 0;
+  overflow: hidden;
+  // vertical-align: bottom;
+  bottom: 0;
+}
+.navscreen-enter,
+.navscreen-leave-to {
+  height: 0;
+  /deep/ li {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+.navscreen-enter-active,
+.navscreen-leave-active {
+  @include ease(height);
+  /deep/ li {
+    @include ease(all);
+  }
+}
+.navscreen-leave-active {
+  /deep/ li {
+    transform: translateY(-100%) !important;
+    opacity: 0 !important;
+    // color: green;
+  }
+}
+.navscreen-enter-to {
+  height: 100%;
 }
 
 #index {
