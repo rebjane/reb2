@@ -6,7 +6,7 @@ class LoadComponents {
   async loadTheComponents() {
     return new Promise((res) => {
       Vue.prototype.$THREE = require("../node_modules/three/build/three.module.js");
-      Vue.component("Template", require("./components/Template.vue").default);
+      // Vue.component("Template", require("./components/Template.vue").default);
       Vue.component("Signature", require("./components/Signature.vue").default);
       Vue.component("Reb2Logo", require("./components/Reb2Logo.vue").default);
       Vue.component("NavMenu", require("./components/NavMenu.vue").default);

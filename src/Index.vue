@@ -40,17 +40,19 @@
 <script>
 import { mapState } from "vuex";
 import Loading from "./Loading.vue";
-// import NavMenu from "./components/NavMenu.vue";
-// import CursorThing from "./components/CursorThing.vue";
+import NavMenu from "./components/NavMenu.vue";
+import CursorThing from "./components/CursorThing.vue";
+import WorkPageNavMenu from "./components/WorkPageNavMenu.vue";
 
 export default {
   name: "Index",
 
   beforeMounted() {},
   components: {
-    Loading
-    // NavMenu,
-    // CursorThing
+    Loading,
+    NavMenu,
+    CursorThing,
+    WorkPageNavMenu
     // Scrollbar
     // Index
   },

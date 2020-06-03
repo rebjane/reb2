@@ -15,14 +15,14 @@ export default {
   props: {
     fill: {
       type: String,
-      default: "black"
-    }
+      default: "black",
+    },
   },
   data() {
     return {};
   },
   methods: {},
-  mounted() {}
+  mounted() {},
 };
 </script>
 

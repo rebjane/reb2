@@ -10,8 +10,15 @@ module.exports = {
     config.module
       .rule("url-loader")
       .test(/\.(png|cur|woff|woff2|eot|ttf|svg)$/)
-      .use("url-loader?limit=100000")
-      .loader("url-loader?limit=100000")
+      .use("url-loader?importLoaders=1&limit=100000")
+      .loader("url-loader?importLoaders=1&limit=100000")
+      .end();
+
+    config.module
+      .rule("file-loader")
+      .test(/\.(png|cur|woff|woff2|eot|ttf|svg)$/)
+      .use("file-loader?importLoaders=1&limit=100000")
+      .loader("file-loader?importLoaders=1&limit=100000")
       .end();
 
     config.module

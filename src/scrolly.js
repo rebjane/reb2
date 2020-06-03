@@ -110,7 +110,7 @@ export default class Scrolly {
 
       if (e.deltaX && this.direction === "h") {
         this.dir = Math.abs(e.deltaX) / e.deltaX;
-        this.scrollDestination += e.deltaX;
+        this.scrollDestination += -e.deltaX;
       }
       this.dir = Math.abs(e.deltaY) / e.deltaY;
       this.scrollDestination += e.deltaY;
