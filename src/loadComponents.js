@@ -25,6 +25,10 @@ class LoadComponents {
         require("./components/ArrowCursor.vue").default
       );
       Vue.component(
+        "PlayVidCursor",
+        require("./components/PlayVidCursor.vue").default
+      );
+      Vue.component(
         "VertArrowCursor",
         require("./components/VertArrowCursor.vue").default
       );

@@ -37,6 +37,9 @@ export default {
         } else if (targ.includes("type")) {
           this.curComponent = "TypeCursor";
           this.$refs.cursor.style = this.centerStyle;
+        } else if (targ.includes("video")) {
+          this.curComponent = "PlayVidCursor";
+          this.$refs.cursor.style = this.centerStyle;
         } else {
           this.curComponent = "ArrowCursor";
           this.$refs.cursor.style = this.topRightStyle;
