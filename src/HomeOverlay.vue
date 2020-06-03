@@ -129,17 +129,14 @@ h1 {
   // @include outline($bg);
   // font-family: $suisse;
   font-family: $acumin;
-  font-size: 40px;
-  @include above($tablet) {
-    font-size: 80px;
-  }
+  @include title();
 }
 .intro {
   margin-top: 0 !important;
   height: 100vh !important;
   // @include waveLink(white);
   position: relative;
-  @include waveLink(#161616);
+  // @include waveLink(#161616);
 }
 
 .bg-enter-active {

@@ -137,7 +137,8 @@ ul {
     opacity: 1;
     transform: translateY(0%);
     position: relative;
-    font-size: 12px;
+    @include mini();
+
     text-align: left;
     // width: 100px;
     a {

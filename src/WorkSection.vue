@@ -187,7 +187,8 @@ export default {
   padding-right: 2em;
   z-index: 4;
   h2 {
-    font-size: 50px;
+    @include title();
+
     border-bottom: 1px solid $bg;
     margin: 0;
     font-family: $acumin;

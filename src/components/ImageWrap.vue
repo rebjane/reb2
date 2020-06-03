@@ -205,15 +205,7 @@ export default {
   // height: 100%;
   // margin: 0 $pad;
 }
-h3 {
-  font-family: $acumin;
-  font-size: 60px;
-  margin: 0.25em 0;
-  font-style: italic;
-  position: relative;
-  @include waveLink($bg);
-  display: inline-block;
-}
+
 .col {
   width: max-content;
   display: inline-block;

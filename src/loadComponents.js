@@ -73,11 +73,6 @@ class LoadComponents {
       Vue.component("ImageWrap", require("./components/ImageWrap.vue").default);
 
       Vue.component(
-        "BackgroundSection",
-        require("./BackgroundSection.vue").default
-      );
-
-      Vue.component(
         "CarouselTitle",
         require("./components/CarouselTitle.vue").default
       );

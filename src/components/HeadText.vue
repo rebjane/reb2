@@ -55,7 +55,7 @@ export default {
     // // border-right: 1px solid $bg;
     // padding-right: 2em;
     // z-index: 4;
-    width: 20%;
+    width: 30%;
     display: inline-block;
     vertical-align: top;
     margin-top: 50vh;
@@ -67,13 +67,10 @@ export default {
     @include padding();
   }
   h2 {
-    font-size: 50px;
+    @include sub();
     // border-bottom: 1px solid $bg;
     margin: 0;
     font-family: $acumin;
-    @include below($desktop) {
-      font-size: 30px;
-    }
   }
   .desc {
     margin-bottom: 3em;

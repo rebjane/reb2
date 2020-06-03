@@ -98,7 +98,8 @@ export default {
   width: 100%;
 
   h1 {
-    font-size: 100px;
+    @include title();
+
     position: absolute;
     left: 50%;
     top: 50%;
@@ -166,7 +167,8 @@ export default {
   transform: translateX(-50%) translateY(-100%);
   color: white;
   font-family: $acumin;
-  font-size: 100px;
+  @include title();
+
   z-index: 6;
   top: 100%;
   display: inline-block;

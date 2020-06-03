@@ -103,7 +103,7 @@ export default {
     margin: auto;
     font-family: $acuminc;
     color: white;
-    font-size: 12px;
+    @include mini();
   }
 }
 .home-link {

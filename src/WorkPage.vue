@@ -124,7 +124,9 @@ p {
   width: 100%;
   display: inline-block;
   text-align: center;
-  padding-bottom: 5em;
+  @include above($tablet) {
+    padding-bottom: 5em;
+  }
 }
 .intro {
   display: inline-block;
@@ -134,10 +136,10 @@ p {
 }
 h1 {
   font-family: $suisse;
-  font-size: 60px;
   font-weight: normal;
+  @include title();
+
   @include below($tablet) {
-    font-size: 40px;
     @include workpadding();
   }
 }

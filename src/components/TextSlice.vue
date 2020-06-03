@@ -51,7 +51,8 @@ export default {
 }
 h2 {
   font-family: $acumin;
-  font-size: 30px;
+  @include sub();
+
   font-weight: normal;
   margin: 0;
   @include below($tablet) {
@@ -60,13 +61,10 @@ h2 {
 }
 p {
   font-family: $suisse;
-  font-size: 14px;
-  line-height: 2;
+  @include body();
+
   margin-top: 0;
 }
-.title {
-}
-
 .title,
 .body {
   display: inline-block;

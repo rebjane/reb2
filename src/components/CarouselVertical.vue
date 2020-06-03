@@ -319,7 +319,8 @@ h3 {
   z-index: 3;
   color: white;
   opacity: 1;
-  font-size: 10em;
+  @include title();
+
   margin: 0;
   font-family: $suisse;
   font-weight: bold;

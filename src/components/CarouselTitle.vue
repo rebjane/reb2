@@ -41,7 +41,8 @@ export default {
   // font-family: $suisse;
   font-family: $acumin;
 
-  font-size: 140px;
+  @include title();
+
   // background: black;
 
   // @include outline(black);
@@ -65,7 +66,8 @@ export default {
   left: 50%;
   opacity: 1;
   font-family: $suisse;
-  font-size: 40px;
+  @include title();
+
   background: black;
 }
 .carousel-title {

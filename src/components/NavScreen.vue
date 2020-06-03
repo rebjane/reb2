@@ -57,7 +57,7 @@ ul {
   li {
     font-family: $acumin;
     margin: 1em 0;
-    font-size: 30px;
+    @include sub();
   }
 }
 </style>

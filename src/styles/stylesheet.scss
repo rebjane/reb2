@@ -1,24 +1,22 @@
 // $acpath: "/fonts/AcuminProWide-Light";
 // $acpathcon: "/fonts/AcuminProSemiCond-Regular";
 // $supath: "/fonts/SuisseWorks-Light";
+
+// Fonts
 $acumin: "AcuminProWide-Regular";
 $acuminc: "AcuminProSemiCond-Regular";
 $suisse: "SuisseWorks-Regular";
 $acit: "Acumin Pro Wide Italic";
+
+// Colors
 $bg: #161616;
 $lightgrey: #a0a0a0;
 $lbg: #e5e5e5;
 $light: #f2e3e3;
 $pad: 124px;
 $top: 7em;
-@mixin outline($col) {
-  color: $col;
-  // -webkit-text-fill-color: white; /* Will override color (regardless of order) */
-  color: transparent;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: $col;
-}
 
+// Breakpoints
 $mobile: 600px;
 $tablet: 800px;
 $notebook: 1024px;
@@ -26,6 +24,7 @@ $laptop: 1440px;
 $desktop: 1600px;
 $ultra: 1920px;
 
+// Padding Mixins
 $pad: 20%;
 $medpad: 70px;
 $mobilepad: 40px;
@@ -56,6 +55,53 @@ $mobilepad: 40px;
   }
 }
 
+//Font Sizing
+@mixin body() {
+  @include above($tablet) {
+    font-size: 24px;
+  }
+  @include below($tablet) {
+    font-size: 18px;
+  }
+}
+
+@mixin mini() {
+  @include above($tablet) {
+    font-size: 12px;
+  }
+  @include below($tablet) {
+    font-size: 12px;
+  }
+}
+
+@mixin sub() {
+  @include above($tablet) {
+    font-size: 32px;
+  }
+  @include below($tablet) {
+    font-size: 24px;
+  }
+}
+
+@mixin revsub() {
+  @include below($tablet) {
+    font-size: 32px;
+  }
+  @include above($tablet) {
+    font-size: 24px;
+  }
+}
+
+@mixin title() {
+  @include above($tablet) {
+    font-size: 54px;
+  }
+  @include below($tablet) {
+    font-size: 32px;
+  }
+}
+
+// Breakpoints
 @mixin above($size) {
   @media screen and (min-width: $size + 1) {
     @content;
@@ -67,83 +113,14 @@ $mobilepad: 40px;
     @content;
   }
 }
-.suisse {
-  font-family: $suisse !important;
-}
+
+// Transition ease
+
 @mixin ease($what) {
   -webkit-transition: $what 750ms cubic-bezier(0.91, 0.02, 0.275, 1);
   -moz-transition: $what 750ms cubic-bezier(0.91, 0.02, 0.275, 1);
   -o-transition: $what 750ms cubic-bezier(0.91, 0.02, 0.275, 1);
   transition: $what 750ms cubic-bezier(0.91, 0.02, 0.275, 1); /* custom */
-}
-// @font-face {
-//   font-family: "Acumin Pro Wide";
-//   src: url($acpath+".eot");
-//   src: url($acpath+".woff") format("woff"),
-//     url($acpath+".woff2") format("woff2"),
-//     url($acpath+".eot?#iefix") format("embedded-opentype"),
-//     url($acpath+".ttf") format("truetype");
-//   src: local("Acumin Pro Wide"), local("Acumin");
-//   font-weight: normal;
-//   font-style: normal;
-//   text-rendering: optimizeLegibility;
-// }
-
-// @font-face {
-//   font-family: "Acumin Pro SemiCondensed";
-//   src: url($acpathcon+".eot");
-//   src: url($acpathcon+".woff") format("woff"),
-//     url($acpathcon+".woff2") format("woff2"),
-//     url($acpathcon+".eot?#iefix") format("embedded-opentype"),
-//     url($acpathcon+".ttf") format("truetype");
-//   src: local("Acumin Pro Wide"), local("Acumin");
-//   font-weight: normal;
-//   font-style: normal;
-//   text-rendering: optimizeLegibility;
-// }
-
-// @font-face {
-//   font-family: "Suisse Works";
-//   src: url($supath+".eot");
-//   src: url($supath+".eot?#iefix") format("embedded-opentype"),
-//     url($supath+".woff2") format("woff2"), url($supath+".woff") format("woff"),
-//     url($supath+".ttf") format("truetype");
-//   font-weight: normal;
-//   font-style: normal;
-//   text-rendering: optimizeLegibility;
-// }
-
-.wavetext {
-  // &:hover {
-  //   transition: color 0.5s ease;
-  //   color: #f2e3e3;
-  // }
-}
-
-@mixin waveLink($color) {
-  .wave-link {
-    @include ease(width);
-    position: absolute;
-    cursor: pointer;
-    height: 100%;
-    width: 0%;
-    left: 0;
-    &:before {
-      position: absolute;
-      height: 2px;
-      width: 100%;
-      bottom: 0;
-      left: 0;
-      background: $color;
-      content: "";
-      @include ease(width);
-    }
-    &:hover {
-      &:before {
-        width: 0%;
-      }
-    }
-  }
 }
 
 h1 {
@@ -153,11 +130,17 @@ h1 {
 
   font-weight: normal;
 }
+
+.suisse {
+  font-family: $suisse !important;
+}
+
 p {
   font-family: $suisse;
   color: $bg;
   overflow-wrap: break-word;
   hyphens: auto;
+  line-height: 2;
 }
 h1,
 h2,
@@ -170,6 +153,7 @@ h6 {
   overflow-wrap: break-word;
   hyphens: auto;
   pointer-events: none;
+  line-height: 1.5;
 }
 
 html {

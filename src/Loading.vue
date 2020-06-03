@@ -94,7 +94,7 @@ export default {
   position: relative;
   height: 100vh;
   width: 100vw;
-  font-size: 60px;
+  @include title();
   text-align: right;
   h1 {
     // top: 50%;

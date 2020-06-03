@@ -205,7 +205,6 @@ h2 {
   // color: white;
   font-family: $acumin;
   font-style: italic;
-  // font-size: 100px;
   // font-weight: bold;
   text-align: center;
   width: 100%;

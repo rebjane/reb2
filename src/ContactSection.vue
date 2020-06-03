@@ -262,7 +262,7 @@ textarea,
 input,
 select {
   font-family: $acumin;
-  font-size: 14px;
+  @include body();
   border-style: hidden;
   background: none;
   resize: none;
@@ -270,7 +270,7 @@ select {
   width: 100%;
   &[type="submit"] {
     font-family: $suisse;
-    font-size: 50px;
+    @include title();
     text-align: left;
     display: inline-block;
     width: 100%;

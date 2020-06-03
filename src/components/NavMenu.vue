@@ -133,11 +133,10 @@ export default {
   mix-blend-mode: difference;
   width: 100%;
   @include below($tablet) {
-    bottom: 6em;
+    bottom: 2em;
   }
 }
-.nav {
-}
+
 .menu {
   position: fixed;
   right: 0;
@@ -156,7 +155,8 @@ export default {
   h2 {
     font-family: $acuminc;
     color: white;
-    font-size: 20px;
+    @include body();
+
     margin: 0;
   }
 }
@@ -211,7 +211,7 @@ export default {
   color: white;
 
   // writing-mode: vertical-lr;
-  font-size: 14px;
+  @include mini();
 }
 .time-enter-active {
   @include ease(all);
@@ -232,7 +232,7 @@ p {
   color: white;
 
   overflow: hidden;
-  font-size: 18px;
+  @include body();
 }
 .main-menu-wrapper {
   mix-blend-mode: difference;
@@ -260,7 +260,8 @@ p {
     // color: white;
     color: white;
 
-    font-size: 12px;
+    @include mini();
+
     // margin-left: 3em;
     width: 6em;
     height: 6em;
@@ -284,7 +285,8 @@ p {
 
       // padding-bottom: 2em;
       padding-right: 2em;
-      font-size: 18px;
+      @include body();
+
       // cursor: pointer;
       // &:last-child {
       //   padding-bottom: 1em;
@@ -314,7 +316,8 @@ p {
       display: inline-block;
 
       position: relative;
-      font-size: 12px;
+      @include mini();
+
       // &:after {
       //   content: "";
       //   position: absolute;

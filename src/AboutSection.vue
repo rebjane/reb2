@@ -230,7 +230,7 @@ export default {
   .toptitle,
   .bottomtitle {
     font-family: $suisse;
-    font-size: 60px;
+    @include title();
     color: white;
     width: 100%;
     position: absolute;

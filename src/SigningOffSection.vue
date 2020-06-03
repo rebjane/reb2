@@ -69,7 +69,7 @@ export default {
     left: 8em;
   }
   @include below($tablet) {
-    font-size: 40px;
+    @include revsub();
     top: 50%;
     transform: translateY(-50%);
     /deep/ p {
