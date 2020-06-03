@@ -26,18 +26,21 @@ export default {
   },
   methods: {
     cursorType(targ) {
-      if (targ.includes("link")) {
-        this.curComponent = "CircleCursor";
-        this.$refs.cursor.style = this.centerStyle;
-      } else if (targ.includes("vert")) {
-        this.curComponent = "VertArrowCursor";
-        this.$refs.cursor.style = this.centerStyle;
-      } else if (targ.includes("type")) {
-        this.curComponent = "TypeCursor";
-        this.$refs.cursor.style = this.centerStyle;
-      } else {
-        this.curComponent = "ArrowCursor";
-        this.$refs.cursor.style = this.topRightStyle;
+      // console.log(typeof targ);
+      if (typeof targ === "string") {
+        if (targ.includes("link")) {
+          this.curComponent = "CircleCursor";
+          this.$refs.cursor.style = this.centerStyle;
+        } else if (targ.includes("vert")) {
+          this.curComponent = "VertArrowCursor";
+          this.$refs.cursor.style = this.centerStyle;
+        } else if (targ.includes("type")) {
+          this.curComponent = "TypeCursor";
+          this.$refs.cursor.style = this.centerStyle;
+        } else {
+          this.curComponent = "ArrowCursor";
+          this.$refs.cursor.style = this.topRightStyle;
+        }
       }
     },
     cursorMove() {

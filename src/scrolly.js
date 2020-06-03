@@ -14,6 +14,7 @@ export default class Scrolly {
     this.scrollDestination = 0;
     this.prev = 0;
     this.size();
+    this.force = 20;
 
     // console.log(this.el, this.el.offsetHeight);
     this.eventListeners = this.eventListeners.bind(this);
@@ -48,10 +49,11 @@ export default class Scrolly {
 
   scrollTo(destination) {
     this.scrollDestination = destination;
-    if (!this.isScrolling && !this.immediate) {
+    if (!this.isScrolling) {
       this.scroll();
       this.isScrolling = true;
       this.deaf = false;
+      console.log(destination);
     }
   }
 

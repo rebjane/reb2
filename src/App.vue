@@ -99,8 +99,6 @@ export default {
   methods: {
     scrollToPos(pos) {
       if (this.globalscroll) this.globalscroll.scrollTo(pos);
-
-      // console.log("scroll to ", pos);
     },
     handleInview(i) {
       return this.scroll.pos > i * (this.winw * 0.75) ? true : false;

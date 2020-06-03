@@ -17,7 +17,7 @@
     <Loading v-if="!loaded" class="loadingcurtain" />
 
     <div class="nav-wrapper">
-      <NavScreen v-if="navOpen" class="navscreen" />
+      <NavScreen v-if="navOpen" class="navscreen" @scrollTo="scrollTo" />
 
       <transition name="nav" v-if="loaded && showMainNav" appear :key="loaded && showMainNav">
         <NavMenu :key="loaded && isHomePage" @scrollTo="scrollTo" />

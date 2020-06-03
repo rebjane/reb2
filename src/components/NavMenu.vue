@@ -10,7 +10,7 @@
         <h2>{{header}}</h2>
       </div>
     </div>
-    <Hamburger class="hamburger" @click.native="toggleNav" v-if="winresize.size.tablet" />
+    <Hamburger class="hamburger link" @click.native="toggleNav" v-if="winresize.size.tablet" />
     <transition appear v-if="time.timeString && !winresize.size.tablet" name="time">
       <p class="time">{{ time.timeString }}</p>
     </transition>
@@ -68,8 +68,7 @@ export default {
     return {
       time: new Time(),
       socialmedia: this.$navsocials,
-      header: this.$nav[0].title,
-      on: false
+      header: this.$nav[0].title
     };
   },
   computed: {
@@ -87,8 +86,7 @@ export default {
     },
     toggleNav() {
       // console.log("clicked");
-      this.on = !this.on;
-      this.$store.commit("setNavOpen", this.on);
+      this.$store.commit("setNavOpen", !this.navOpen);
     }
   },
   mounted() {}
@@ -106,6 +104,8 @@ export default {
   margin-top: 2em;
   margin-right: 2em;
   mix-blend-mode: difference;
+  padding-bottom: 2em;
+  padding-left: 2em;
 }
 .side-title {
   position: fixed;
