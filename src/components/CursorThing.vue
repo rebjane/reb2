@@ -6,6 +6,8 @@
 
 <script>
 import { TimelineMax } from "gsap";
+import { mapState } from "vuex";
+
 // Power4
 export default {
   name: "Template",
@@ -14,6 +16,10 @@ export default {
       type: Object,
       default: null
     }
+  },
+  watch: {},
+  computed: {
+    ...mapState(["scroll"])
   },
   data() {
     return {
@@ -37,8 +43,11 @@ export default {
         } else if (targ.includes("type")) {
           this.curComponent = "TypeCursor";
           this.$refs.cursor.style = this.centerStyle;
-        } else if (targ.includes("video")) {
+        } else if (targ.includes("playVid")) {
           this.curComponent = "PlayVidCursor";
+          this.$refs.cursor.style = this.centerStyle;
+        } else if (targ.includes("pauseVid")) {
+          this.curComponent = "PauseCursor";
           this.$refs.cursor.style = this.centerStyle;
         } else {
           this.curComponent = "ArrowCursor";
@@ -46,44 +55,37 @@ export default {
         }
       }
     },
-    cursorMove() {
-      window.addEventListener("mousemove", e => {
-        e.stopPropagation();
-        // console.log(e.target.className);
+    handleCursor(e) {
+      e.stopPropagation();
+      // console.log(e.target.className);
+      this.cursorType(e.target.className);
 
-        this.cursorType(e.target.className);
-        if (
-          e.clientX <= 10 ||
-          e.clientX >= window.innerWidth - 10 ||
-          e.clientY <= 10 ||
-          e.clientY >= window.innerHeight - 10
-        ) {
-          this.outOfBounds = true;
-        } else {
-          this.outOfBounds = false;
+      if (
+        e.clientX <= 10 ||
+        e.clientX >= window.innerWidth - 10 ||
+        e.clientY <= 10 ||
+        e.clientY >= window.innerHeight - 10
+      ) {
+        this.outOfBounds = true;
+      } else {
+        this.outOfBounds = false;
+      }
+      this.timeline.to(this.$refs.cursor, 0, {
+        css: {
+          x: e.clientX,
+          y: e.clientY
         }
-
-        // this.timeline.to(this.$refs.cursor, 0.008, {
-        //   css: {
-        //     x: e.clientX,
-        //     y: e.clientY
-        //   },
-        //   ease: Power4.easeOut
-        // });
-        this.timeline.to(this.$refs.cursor, 0, {
-          css: {
-            x: e.clientX,
-            y: e.clientY
-          }
-          // ease: Power4.easeOut
-        });
-
-        // this.$refs.cursor.style = `transform: translate3d(${e.clientX}px, ${e.clientY}px, 0px);`;
       });
+    },
+    cursorMove() {
+      window.addEventListener("mousemove", this.handleCursor);
+      window.addEventListener("mouseup", this.handleCursor);
+      window.addEventListener("mousedown", this.handleCursor);
     }
   },
   mounted() {
     this.cursorMove();
+    // this.handleCursor();
   }
 };
 </script>

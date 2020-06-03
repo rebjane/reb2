@@ -1,8 +1,13 @@
 <template>
   <div class="media-img-or-vid">
     <!-- <p>{{data.primary}}</p> -->
-    <div class="video-wrapper" @click="playVideo" v-if="data.primary.media.name.includes('mp4')">
-      <video class="video" preload ref="video" :src="data.primary.media.url" />
+    <div
+      class="video-wrapper"
+      @click="playVideo"
+      @mousedown="changeClassName"
+      v-if="data.primary.media.name.includes('mp4')"
+    >
+      <video :class="`video ${className}`" preload ref="video" :src="data.primary.media.url" />
       <!-- <div class="play" /> -->
     </div>
     <div class="image-wrapper" v-else-if="data.primary.media.kind === 'image'">
@@ -24,7 +29,8 @@ export default {
   },
   data() {
     return {
-      play: false
+      play: false,
+      className: "playVid"
     };
   },
   methods: {
@@ -35,6 +41,18 @@ export default {
         this.$refs.video.pause();
       }
       this.play = !this.play;
+    },
+    changeClassName() {
+      switch (this.className) {
+        case "playVid": {
+          this.className = "pauseVid";
+          break;
+        }
+        case "pauseVid": {
+          this.className = "playVid";
+          break;
+        }
+      }
     }
   },
   mounted() {}

@@ -21,6 +21,10 @@ class LoadComponents {
       Vue.component("NavScreen", require("./components/NavScreen.vue").default);
 
       Vue.component(
+        "PauseCursor",
+        require("./components/PauseCursor.vue").default
+      );
+      Vue.component(
         "ArrowCursor",
         require("./components/ArrowCursor.vue").default
       );
