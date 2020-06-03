@@ -9,10 +9,10 @@
             :body="$cms.textField(data.primary.contact_body)"
           />
         </div>
-        <div class="form">
+        <div class="form focus">
           <form class="form-inner" ref="form" @submit.prevent="doSubmit">
             <transition v-for="(item, i) in data.items" :key="i">
-              <div class="row">
+              <div class="row focus">
                 <label :for="$cms.textField(item.input_label)">{{$cms.textField(item.input_label)}}</label>
                 <input
                   v-if="item.input_type !== 'textarea'"
@@ -33,7 +33,7 @@
                 />
               </div>
             </transition>
-            <div class="submit link">
+            <div class="submit link focus">
               <input type="submit" class="link" value="submit" />
               <Arrow class="arrow" />
             </div>
