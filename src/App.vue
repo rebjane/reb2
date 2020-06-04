@@ -7,8 +7,8 @@
       <div class="inner">
         <transition v-for="(item , i) in $home" :key="i">
           <div
-            :ref="`component-${i} ${item.slice_type === 'WorkSection' ? 'vert' : null}`"
-            :class="`component ${scroll.pos > i * (winw * 0.75) ? 'inview' : 'hidden'}`"
+            ref="component"
+            :class="`component ${scroll.pos> $nav[i].left && scroll.pos < $nav[i].right ? 'inview' : 'hidden'}`"
           >
             <component
               :inview="handleInview(i)"
@@ -75,9 +75,7 @@ export default {
     deep: true,
     immediate: true
   },
-  // beforeDestroy() {
-  //   this.$refs.app.style = "transform: translateY(-50%)";
-  // },
+
   components: {
     Scrollbar
   },
@@ -108,7 +106,17 @@ export default {
       if (this.globalscroll) this.globalscroll.scrollTo(pos);
     },
     handleInview(i) {
-      return this.scroll.pos > i * (this.winw * 0.75) ? true : false;
+      if (
+        this.scroll.pos > this.$nav[i].left - window.innerWidth / 6 &&
+        this.scroll.pos < this.$nav[i].right
+      ) {
+        // console.log(this.$nav[i].title);
+        this.$emit("mobileNavTitle", this.$nav[i].title);
+      }
+      return this.scroll.pos > this.$nav[i].left - window.innerWidth / 6 &&
+        this.scroll.pos < this.$nav[i].right
+        ? true
+        : false;
     },
     initScroll() {
       if (!this.globalscroll)
@@ -119,6 +127,16 @@ export default {
               "main"
             ))
         );
+    },
+    getComponentSizings() {
+      // for mobile, to ensure top title corresponds correctly when scrolling section to section
+      // console.log(this.$refs.component);
+      this.$refs.component.forEach((item, i) => {
+        // console.log(item.getBoundingClientRect().width);
+        this.$nav[i].left = item.getBoundingClientRect().left;
+        this.$nav[i].right = item.getBoundingClientRect().right;
+      });
+      // console.log(this.$nav);
     },
     deafenGlobalScroll(e) {
       if (this.globalscroll) {
@@ -131,19 +149,11 @@ export default {
     }
   },
   mounted() {
-    //process vertical  components (post-rendered in the template)
-    // Object.keys(this.$refs).forEach((item, i) => {
-    //   if (item.includes("vert")) {
-    //     // console.log(this.$refs[i]);
-    //     this.vertComponents.push({
-    //       scroll: new Scrolly(this.$refs[item][0], "v"),
-    //       left: this.$refs[item][0].getBoundingClientRect().left
-    //     });
-    //     //for  some reason the index started at 1, should be 0. so deafening the vert scrolls for now, so scroll lsitener can hear out and enable when necessary
-    //     this.vertComponents[i - 1].scroll.deafen();
-    //     console.log(this.vertComponents, i - 1);
-    //   }
-    // });
+    // mobile nav title starts with first item
+    this.$emit("mobileNavTitle", this.$nav[0].title);
+    this.$nextTick(() => {
+      this.getComponentSizings();
+    });
   }
 };
 </script>

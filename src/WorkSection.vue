@@ -94,6 +94,7 @@ export default {
 .worksection-wrapper {
   // background: white;
   height: 100%;
+  padding-right: $medpad;
 }
 .scroll {
   position: relative;

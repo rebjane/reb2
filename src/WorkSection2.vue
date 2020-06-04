@@ -134,7 +134,7 @@ export default {
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
 .worksection-wrapper {
-  position: relative;
+  @include pad();
   @include above($tablet) {
     height: 100%;
   }

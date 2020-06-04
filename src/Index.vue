@@ -9,6 +9,7 @@
           :data="data"
           :route="$route"
           :winresize="winresize"
+          @mobileNavTitle="handleMobileNavTitle"
         />
       </transition>
     </keep-alive>
@@ -22,7 +23,7 @@
       </transition>
 
       <transition name="nav" v-if="loaded && showMainNav" appear :key="loaded && showMainNav">
-        <NavMenu :key="loaded && isHomePage" @scrollTo="scrollTo" />
+        <NavMenu :key="loaded && isHomePage" @scrollTo="scrollTo" :mblNavTitle="mblNavTitle" />
       </transition>
       <transition
         name="nav"
@@ -86,11 +87,15 @@ export default {
         "transition: transform 750ms cubic-bezier(0.91, 0.02, 0.275, 1);",
       scrollIndex: 0,
       scrollToScrollPos: null,
-      showMainNav: true
+      showMainNav: true,
+      mblNavTitle: null
       // prev: 0
     };
   },
   methods: {
+    handleMobileNavTitle(e) {
+      this.mblNavTitle = e;
+    },
     scrollTo(e) {
       //clicking top nav items
       this.scrollToScrollPos = e;

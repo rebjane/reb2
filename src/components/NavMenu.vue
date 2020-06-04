@@ -7,7 +7,7 @@
         </router-link>
       </div>
       <div class="header" v-if="winresize.size.tablet">
-        <h2>{{header}}</h2>
+        <h2>{{mblNavTitle}}</h2>
       </div>
     </div>
     <Hamburger class="hamburger link" @click.native="toggleNav" v-if="winresize.size.tablet" />
@@ -42,20 +42,7 @@ import Reb2Logo from "./Reb2Logo";
 // import Hamburger from "./Hamburger";
 
 export default {
-  watch: {
-    scroll() {
-      this.$nextTick(() => {
-        if (this.$nav && this.scrollAllowed && this.scroll.pos) {
-          this.header = this.$nav[
-            Math.min(
-              Math.floor(this.scroll.pos / window.innerWidth),
-              this.$nav.length - 1
-            )
-          ].title;
-        }
-      });
-    }
-  },
+  watch: {},
   components: {
     Reb2Logo
     // Hamburger
@@ -65,7 +52,8 @@ export default {
     data: {
       type: Object,
       default: null
-    }
+    },
+    mblNavTitle: String
   },
   data() {
     return {

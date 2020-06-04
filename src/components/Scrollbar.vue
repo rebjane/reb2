@@ -93,6 +93,7 @@ export default {
 //   transform: translateY(0%);
 // }
 .scroll-line {
+  overflow: hidden;
   // border-top: 1px solid black;
   position: absolute;
   // bottom: 0;
