@@ -52,7 +52,8 @@ export default {
           this.$refs.cursor.style = this.centerStyle;
         } else {
           this.curComponent = "ArrowCursor";
-          this.$refs.cursor.style = this.topRightStyle;
+          // this.$refs.cursor.style = this.topRightStyle;
+          this.$refs.cursor.style = this.centerStyle;
         }
       }
     },

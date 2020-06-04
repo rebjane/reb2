@@ -74,7 +74,7 @@ export default {
 
 .arrow-wrap {
   //   height: 3em;
-  width: 2em;
+  width: 20px;
   padding-right: 0.5em;
 
   margin: 2em 0;
@@ -86,8 +86,11 @@ export default {
   border-right: 1px solid white;
   mix-blend-mode: difference;
   @include above($tablet) {
-    margin-right: 2em;
+    // margin-right: 2em;
+    padding-right: 1em;
   }
+  padding-right: 0.5em;
+
   // @include below($tablet) {
   //   margin-left: 1em;
   //   margin-right: 1em;
@@ -95,7 +98,7 @@ export default {
   position: fixed;
   // cursor: pointer;
   //   height: 50%;
-  margin-left: 1em;
+  padding-left: 1em;
 
   p {
     writing-mode: vertical-lr;
@@ -107,7 +110,10 @@ export default {
   }
 }
 .home-link {
-  width: 2em;
+  width: 30px;
+  @include above($tablet) {
+    padding-right: 1em;
+  }
   padding-right: 0.5em;
 }
 .back {
