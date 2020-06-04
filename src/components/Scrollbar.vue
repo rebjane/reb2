@@ -93,7 +93,9 @@ export default {
 //   transform: translateY(0%);
 // }
 .scroll-line {
-  overflow: hidden;
+  @include above($tablet) {
+    overflow: hidden;
+  }
   // border-top: 1px solid black;
   position: absolute;
   // bottom: 0;
@@ -106,6 +108,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   @include below($tablet) {
+    overflow: visible;
     width: calc(100% - 80px);
     border-bottom: 1px solid white;
   }
