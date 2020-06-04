@@ -212,6 +212,11 @@ export default {
 .parallaximage-cont {
   // padding-top: 2em;
 }
+.pimg {
+  @include above($tablet) {
+    transform: translateX(-25%);
+  }
+}
 .parallaximage {
   position: relative;
   @include above($tablet) {

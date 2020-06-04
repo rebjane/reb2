@@ -52,18 +52,26 @@ export default {
         };
         //parallax re-positioning based on win resize
         if (this.isParallax) {
+          this.startedWinResize = true;
+
+          this.isDesktop = e.size.desktop; //watch for when orientation changes from tablet-mobile to desktop
+
           // console.log(this.midPos);
+
           if (e.size.tablet) {
-            this.offset += e.interval * 5;
+            this.offset -= e.interval * 4.5;
           } else {
-            this.offset += e.interval * 1.5;
+            this.offset -= e.interval * 1.5;
           }
           this.transform();
           this.$refs.image.style = this.parallaxTransform;
         }
       }
     },
-
+    isDesktop() {
+      if (this.startedWinResize) this.offset = NaN;
+      // this is to stop it form parallaxing if you switch orientations. calculations are too complex to figure out the offset, so for now i make it freeze.
+    },
     scrollObj: {
       handler() {
         this.transform();
@@ -122,7 +130,9 @@ export default {
       newHeight: this.getSize(this.imgInfo.width, this.imgInfo.height).height,
       parallaxTransform: 0,
       offset: 0,
-      width: 0
+      width: 0,
+      isDesktop: null,
+      startedWinResize: false
     };
   },
   beforeDestroy() {},
@@ -149,12 +159,12 @@ export default {
       if (this.horiz) {
         this.parallaxTransform = `transform: translateX(${this.parallax(
           this.midPos,
-          this.scrollObj ? this.scrollObj.pos - this.offset : 1
+          this.scrollObj ? this.scrollObj.pos + this.offset : 1
         )}px)`;
       } else {
         this.parallaxTransform = `transform: translateY(${this.parallax(
           this.midPos,
-          this.scrollObj ? this.scrollObj.pos - this.offset : 1
+          this.scrollObj ? this.scrollObj.pos + this.offset : 1
         )}px)`;
       }
     },
@@ -186,6 +196,9 @@ export default {
     // this.$nextTick(() => {
     //   this.getMidPos();
     // });
+    if (this.isParallax) {
+      this.isDesktop = this.winresize.size.desktop;
+    }
     setTimeout(() => {
       this.getMidPos();
     }, 500); //temporary fix
