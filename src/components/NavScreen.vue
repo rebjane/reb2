@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     handleClick(i) {
-      this.$emit("scrollTo", i * this.ww + 1);
+      this.$emit("scrollTo", this.$nav[i].left);
       this.$store.commit("setNavOpen", false);
     }
   },
