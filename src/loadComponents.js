@@ -87,6 +87,11 @@ class LoadComponents {
         require("./components/CarouselVertical.vue").default
       );
 
+      Vue.component(
+        "CarouselHoriz",
+        require("./components/CarouselHoriz.vue").default
+      );
+
       // Vue.component("Loading", require("./components/Loading.vue").default),
       // setTimeout(() => {}, 2000);
       Vue.component(

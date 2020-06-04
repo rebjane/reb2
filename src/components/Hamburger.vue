@@ -61,7 +61,7 @@ export default {
       setTimeout(() => {
         this.timeline.pause();
         this.timeline1.pause();
-      }, 250);
+      }, 300);
     }
   },
   mounted() {}

@@ -1,11 +1,59 @@
 @font-face {
-    font-family: 'Acumin Pro Wide';
-    src: url('AcuminProWide-Light.eot');
-    src: url('AcuminProWide-Light.eot?#iefix') format('embedded-opentype'),
-        url('AcuminProWide-Light.woff2') format('woff2'),
-        url('AcuminProWide-Light.woff') format('woff'),
-        url('AcuminProWide-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
+  font-family: "AcuminProWide-Regular";
+  src: url("AcuminProWide-Regular.eot");
+  src: url("AcuminProWide-Regular.eot?#iefix") format("embedded-opentype"),
+    url("AcuminProWide-Regular.woff2") format("woff2"),
+    url("AcuminProWide-Regular.woff") format("woff"),
+    url("AcuminProWide-Regular.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
 }
 
+@font-face {
+  font-family: "AcuminProWide-Medium";
+  src: url("AcuminProWide-Medium.eot");
+  src: url("AcuminProWide-Medium.eot?#iefix") format("embedded-opentype"),
+    url("AcuminProWide-Medium.woff2") format("woff2"),
+    url("AcuminProWide-Medium.woff") format("woff"),
+    url("AcuminProWide-Medium.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "AcuminProSemiCond-Regular";
+  src: url("AcuminProSemiCond-Regular.eot");
+  src: url("AcuminProSemiCond-Regular.eot?#iefix") format("embedded-opentype"),
+    url("AcuminProSemiCond-Regular.woff2") format("woff2"),
+    url("AcuminProSemiCond-Regular.woff") format("woff"),
+    url("AcuminProSemiCond-Regular.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "SuisseWorks-Regular";
+  src: url("SuisseWorks-Regular.eot");
+  src: url("SuisseWorks-Regular.eot?#iefix") format("embedded-opentype"),
+    url("SuisseWorks-Regular.woff2") format("woff2"),
+    url("SuisseWorks-Regular.woff") format("woff"),
+    url("SuisseWorks-Regular.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "SuisseWorks-Bold";
+  src: url("SuisseWorks-Bold.eot");
+  src: url("SuisseWorks-Bold.eot?#iefix") format("embedded-opentype"),
+    url("SuisseWorks-Bold.woff2") format("woff2"),
+    url("SuisseWorks-Bold.woff") format("woff"),
+    url("SuisseWorks-Bold.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+}

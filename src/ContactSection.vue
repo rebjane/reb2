@@ -84,7 +84,7 @@ export default {
       new Promise(res => {
         var message = "";
         e.target.forEach(field => {
-          if (field.value !== "Submit") {
+          if (field.value !== "submit") {
             message += `${field.name} : ${field.value}<br/>`;
           }
         });

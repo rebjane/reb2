@@ -51,6 +51,13 @@ export default {
     // scroll() {
     //   console.log(this.scroll.pos);
     // },
+    navOpen() {
+      if (this.navOpen && this.globalscroll) {
+        this.globalscroll.deafen();
+      } else if (!this.navOpen && this.globalscroll) {
+        this.globalscroll.listen();
+      }
+    },
     // route: {
     //   handler() {
     //     if (!this.globalScroll) this.initScroll();

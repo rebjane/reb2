@@ -210,7 +210,7 @@ export default {
   // }
 }
 .parallaximage-cont {
-  padding-top: 2em;
+  // padding-top: 2em;
 }
 .parallaximage {
   position: relative;

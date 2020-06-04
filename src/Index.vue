@@ -141,7 +141,7 @@ export default {
   mounted() {
     this.dowinresize();
     window.addEventListener("resize", this.$dowinresize);
-    window.addEventListener("mouseup", this.$dowinresize);
+    // window.addEventListener("mouseup", this.$dowinresize);
   }
 };
 </script>

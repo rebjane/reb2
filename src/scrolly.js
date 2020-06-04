@@ -59,7 +59,8 @@ export default class Scrolly {
 
   touchEventListeners() {
     window.addEventListener("touchstart", (e) => {
-      if (this.deaf && this.isScrolling) {
+      if (this.deaf) {
+        //was originally (this.deaf && this.isScrolling) to make sure no 2 scrolls happen simultaneously ever, but the location of one was affecting the other to jump as soon as i "listened" to it (at least for desktop)
         return;
       }
       if (this.direction === "h") {
@@ -71,7 +72,7 @@ export default class Scrolly {
       e.stopPropagation();
     });
     window.addEventListener("touchmove", (e) => {
-      if (this.deaf && this.isScrolling) {
+      if (this.deaf) {
         return;
       }
       this.force = 10;
@@ -103,7 +104,7 @@ export default class Scrolly {
 
   eventListeners() {
     window.addEventListener("mousewheel", (e) => {
-      if (this.deaf && this.isScrolling) {
+      if (this.deaf) {
         return;
       }
       this.force = 20;

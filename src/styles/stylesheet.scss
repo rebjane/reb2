@@ -6,7 +6,7 @@
 $acumin: "AcuminProWide-Regular";
 $acuminc: "AcuminProSemiCond-Regular";
 $suisse: "SuisseWorks-Regular";
-$acit: "Acumin Pro Wide Italic";
+$suisseb: "SuisseWorks-Bold";
 
 // Colors
 $bg: #161616;
@@ -132,7 +132,8 @@ h1 {
 }
 
 .suisse {
-  font-family: $suisse !important;
+  font-family: $suisseb !important;
+  font-weight: 700 !important;
 }
 
 p {

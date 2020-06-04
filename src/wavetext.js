@@ -49,10 +49,10 @@ export default class WaveText {
         if (this.inRange(i, this.bold_start, this.bold_end)) {
           if (string[i] !== " ") {
             //if it's a letter, it's inline block.
-            el.innerHTML += `<span class="suisse" style="opacity: 0; transform: translateY(100%); display: inline-block;"><b>${string[i]}</b></span>`;
+            el.innerHTML += `<span class="suisse" style="opacity: 0; transform: translateY(100%); display: inline-block;">${string[i]}</span>`;
           } else {
             //if it's a space, no inline-block (because the width by default sets to 0, therefore leaving no spaces visible in the word)
-            el.innerHTML += `<span class="suisse" style="opacity: 0; transform: translateY(100%); "><b>${string[i]}</b></span>`;
+            el.innerHTML += `<span class="suisse" style="opacity: 0; transform: translateY(100%); ">${string[i]}</span>`;
           }
         } else {
           if (string[i] !== " ") {
