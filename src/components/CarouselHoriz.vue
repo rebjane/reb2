@@ -16,7 +16,7 @@
           src: item.url,
           width: item.width,
           height: item.height,
-          widthResize: 500}"
+          heightResize: 500}"
               :img="item.url"
               :ripple="false"
               :isParallax="false"
@@ -239,14 +239,28 @@ export default {
   height: 100%;
 }
 .rl {
+  padding: 0 2em;
   display: inline-block;
   //   width: 40%;
-  vertical-align: middle;
-  padding: 0 2em;
-  transform: translateY(-50%);
-  margin-top: 50vh;
+  @include above($tablet) {
+    vertical-align: middle;
+    transform: translateY(-50%);
+    margin-top: 50vh;
+  }
+  @include below($tablet) {
+    width: 80vw;
+  }
 }
 .item-outer {
   position: relative;
+}
+.image-wrap {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  @include below($tablet) {
+    height: 100%;
+    width: 80vw;
+  }
 }
 </style>

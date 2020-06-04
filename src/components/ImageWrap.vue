@@ -156,22 +156,20 @@ export default {
       return (midPos - scrollPos) * 0.7;
     },
     getSize(width, height) {
-      var newHeight, newWidth;
+      var newHeight, newWidth, colHeight, colWidth;
       if (this.imgInfo.heightResize) {
-        var colHeight = Math.min(
-          window.innerHeight / 2,
-          this.imgInfo.heightResize
-        ); //that hundred value's sorta random for now
+        colHeight = Math.min(window.innerHeight / 2, this.imgInfo.heightResize); //that hundred value's sorta random for now
         newWidth = (colHeight / height) * width;
         newHeight = colHeight;
       } else {
-        var colWidth = Math.min(
+        colWidth = Math.min(
           window.innerWidth / 2,
           this.imgInfo.widthResize || 400 //random value
         ); //that hundred value's sorta random for now
         newHeight = (colWidth / width) * height;
         newWidth = colWidth;
       }
+
       return {
         width: newWidth,
         height: newHeight
