@@ -7,7 +7,12 @@
       @mousedown="changeClassName"
       v-if="data.primary.media.name.includes('mp4')"
     >
-      <video :class="`video ${className}`" preload ref="video" :src="data.primary.media.url" />
+      <video
+        :class="`video ${className}`"
+        preload
+        ref="video"
+        :src="`${data.primary.media.url}#t=0.1`"
+      />
       <!-- <div class="play" /> -->
     </div>
     <div class="image-wrapper" v-else-if="data.primary.media.kind === 'image'">

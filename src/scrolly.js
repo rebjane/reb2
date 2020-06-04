@@ -33,8 +33,11 @@ export default class Scrolly {
       //   this.el.offsetHeight -
       //   (this.elParent.offsetHeight -
       //     Math.floor(window.innerHeight - this.elParent.offsetHeight));
-      this.max =
-        this.el.offsetHeight + this.elParent.offsetTop * 2 - window.innerHeight;
+
+      // this.max =
+      //   this.el.offsetHeight + this.elParent.offsetTop * 2 - window.innerHeight;
+
+      this.max = this.el.offsetHeight - window.innerHeight;
 
       // console.log(
       //   this.el.offsetHeight,
