@@ -1,38 +1,38 @@
 <template>
   <div ref="workwrap" class="worksection-wrapper outer">
-    <div class="scroll" ref="scroll">
-      <!-- <div ref="carousel" class="carousel"> -->
-      <CarouselHoriz :horiz="true" :data="carouselData" v-if="carouselData" />
-      <!-- </div> -->
-    </div>
+    <!-- <div class="scroll" ref="scroll"> -->
+    <!-- <div ref="carousel" class="carousel"> -->
+    <CarouselHoriz :horiz="true" :data="carouselData" v-if="carouselData" />
+    <!-- </div> -->
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import Scrolly from "./scrolly.js";
+// import Scrolly from "./scrolly.js";
 // import Scrollbar from "./components/Scrollbar.vue";
 
 export default {
   name: "Template",
   watch: {
-    scroll() {
-      // console.log(this.$refs.workwrap.getBoundingClientRect().left);
-      if (this.scroll.pos >= this.$refs.workwrap.getBoundingClientRect().left) {
-        this.workscroll.listen();
-        this.$emit("deafenGlobalScroll", true);
-        this.$emit(
-          "scrollTo",
-          this.$refs.workwrap.getBoundingClientRect().right
-        );
-      }
-    },
-    scrollAllowed() {
-      if (this.scrollAllowed) {
-        this.workscroll = new Scrolly(this.$refs.scroll, "h");
-        this.workscroll.deafen();
-      }
-    }
+    // scroll() {
+    //   // console.log(this.$refs.workwrap.getBoundingClientRect().left);
+    //   if (this.scroll.pos >= this.$refs.workwrap.getBoundingClientRect().left) {
+    //     this.workscroll.listen();
+    //     this.$emit("deafenGlobalScroll", true);
+    //     this.$emit(
+    //       "scrollTo",
+    //       this.$refs.workwrap.getBoundingClientRect().right
+    //     );
+    //   }
+    // },
+    // scrollAllowed() {
+    //   if (this.scrollAllowed) {
+    //     this.workscroll = new Scrolly(this.$refs.scroll, "h");
+    //     this.workscroll.deafen();
+    //   }
+    // }
   },
   components: {
     // Scrollbar
@@ -44,7 +44,8 @@ export default {
   data() {
     return {
       carouselData: null,
-      workscroll: null
+      workscroll: null,
+      globalscrollStopped: false
     };
   },
   computed: {
@@ -91,7 +92,7 @@ export default {
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
 .worksection-wrapper {
-  background: white;
+  // background: white;
   height: 100%;
 }
 .scroll {

@@ -15,7 +15,7 @@
           src: item.url,
           width: item.width,
           height: item.height,
-          widthResize: 450}"
+          widthResize: 800}"
               :img="item.url"
               :ripple="false"
               :isParallax="false"

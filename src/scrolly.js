@@ -26,7 +26,7 @@ export default class Scrolly {
   size() {
     this.elWidth = this.elParent.children[0].getBoundingClientRect().width;
     this.elHeight = this.elParent.children[0].getBoundingClientRect().height;
-    if (this.direction === "h") {
+    if (this.direction === "h" || this.direction === "main") {
       this.max = this.el.offsetWidth - window.innerWidth;
     } else {
       // this.max =
@@ -63,7 +63,7 @@ export default class Scrolly {
         //was originally (this.deaf && this.isScrolling) to make sure no 2 scrolls happen simultaneously ever, but the location of one was affecting the other to jump as soon as i "listened" to it (at least for desktop)
         return;
       }
-      if (this.direction === "h") {
+      if (this.direction === "h" || this.direction === "main") {
         this.start = e.changedTouches[0].pageX;
       } else {
         this.start = e.changedTouches[0].pageY;
@@ -78,7 +78,7 @@ export default class Scrolly {
       this.force = 10;
 
       var pos;
-      if (this.direction === "h") {
+      if (this.direction === "h" || this.direction === "main") {
         pos = e.changedTouches[0].pageX;
       } else {
         pos = e.changedTouches[0].pageY;
@@ -109,7 +109,7 @@ export default class Scrolly {
       }
       this.force = 20;
 
-      if (e.deltaX && this.direction === "h") {
+      if (e.deltaX && (this.direction === "h" || this.direction === "main")) {
         this.dir = Math.abs(e.deltaX) / e.deltaX;
         this.scrollDestination += -e.deltaX;
       }
@@ -139,8 +139,9 @@ export default class Scrolly {
 
     this.preDeafPos = this.pos;
     switch (this.direction) {
-      case "h": {
+      case "main": {
         store.commit("updateScroll", {
+          type: "main",
           pos: this.pos,
           dir: this.dir,
           elWidth: this.elWidth,
@@ -165,7 +166,7 @@ export default class Scrolly {
     this.transform();
   }
   transform() {
-    if (this.direction === "h") {
+    if (this.direction === "h" || this.direction === "main") {
       this.el.style.transform = `translate3d(${-1 * this.pos}px, 0,0)`; //horizontal
     } else {
       this.el.style.transform = `translate3d(0, ${-1 * this.pos}px,0)`; //vertical
@@ -177,6 +178,11 @@ export default class Scrolly {
 
   listen() {
     this.deaf = false;
+  }
+
+  stop() {
+    this.deaf = true;
+    cancelAnimationFrame(this.scroll);
   }
 
   destroy() {

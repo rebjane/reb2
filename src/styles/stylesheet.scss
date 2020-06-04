@@ -58,10 +58,10 @@ $mobilepad: 40px;
 //Font Sizing
 @mixin body() {
   @include above($tablet) {
-    font-size: 24px;
+    font-size: 18px;
   }
   @include below($tablet) {
-    font-size: 18px;
+    font-size: 12px;
   }
 }
 
@@ -178,24 +178,27 @@ a {
   text-decoration: none;
   color: white;
 }
-div,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-a,
-li,
-ul {
-  &:not(.focus) {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+@include below($tablet) {
+  div,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  a,
+  li,
+  ul {
+    &:not(.focus) {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
   }
 }

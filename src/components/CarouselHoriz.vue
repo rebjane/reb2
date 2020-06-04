@@ -5,7 +5,7 @@
       <div class="item-outer">
         <router-link class="rl" :to="`/${data[i].type_of_work}/${data[i].uid}`">
           <div
-            class="image-wrap horiz"
+            class="image-wrap horiz link"
             @click="doWorkPageIndex(data, i)"
             :style="winresize.size.tablet ? `background-image: url(${item.url})` : null"
           >
@@ -16,7 +16,7 @@
           src: item.url,
           width: item.width,
           height: item.height,
-          widthResize: 450}"
+          widthResize: 500}"
               :img="item.url"
               :ripple="false"
               :isParallax="false"
@@ -230,7 +230,7 @@ export default {
   //   overflow: hidden;
   display: flex;
   flex-direction: row;
-  position: absolute;
+  //   position: absolute;
   height: 100%;
 }
 .carousel {

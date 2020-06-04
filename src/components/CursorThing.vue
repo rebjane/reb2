@@ -58,7 +58,7 @@ export default {
     },
     handleCursor(e) {
       e.stopPropagation();
-      // console.log(e.target.className);
+      // console.log(e.target);
       this.cursorType(e.target.className);
 
       // if (

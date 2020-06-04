@@ -116,7 +116,7 @@ export default {
           () =>
             (this.globalscroll = new Scrolly(
               document.getElementById("app"),
-              "h"
+              "main"
             ))
         );
     },
@@ -195,7 +195,7 @@ h6 {
     height: 100%;
 
     .component {
-      width: 100%;
+      // width: 100%;
       min-width: 100vw;
       position: relative;
       @include below($tablet) {
