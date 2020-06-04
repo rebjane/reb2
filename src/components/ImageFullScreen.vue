@@ -80,6 +80,7 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
 .full-image-wrap {
+  padding: 3em 0;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
