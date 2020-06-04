@@ -62,7 +62,7 @@ export default {
       return ((sl - sb) / el) * pos + sb;
     },
     doScroll(i) {
-      this.$emit("scrollTo", i * window.innerWidth + 1);
+      this.$emit("scrollTo", this.$nav[i].left);
     }
   },
   mounted() {
