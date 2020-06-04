@@ -103,7 +103,13 @@ export default class Scrolly {
   }
 
   eventListeners() {
-    window.addEventListener("mousewheel", (e) => {
+    var mouseEvent = "mousewheel";
+    if (navigator.userAgent.includes("Firefox")) {
+      //if firefox, because its fucking dumb ass wants to be different
+      mouseEvent = "wheel";
+    }
+
+    window.addEventListener(mouseEvent, (e) => {
       if (this.deaf) {
         return;
       }

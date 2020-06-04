@@ -5,8 +5,9 @@
         class="full-image"
         ref="image"
         v-if="data.primary.image.url"
-        :style="`background-image: url(${data.primary.image.url}); ${parallaxStyle}`"
+        :style="`background-image: url(${data.primary.image.url}); `"
       ></div>
+      <!-- ${parallaxStyle} -->
     </div>
   </div>
 </template>
@@ -68,9 +69,9 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.calculate();
-    }, 1000);
+    // setTimeout(() => {
+    //   this.calculate();
+    // }, 1000);
   }
 };
 </script>
