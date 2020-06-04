@@ -52,12 +52,18 @@ export default {
         };
         //parallax re-positioning based on win resize
         if (this.isParallax) {
-          this.offset += e.interval * 2;
+          // console.log(this.midPos);
+          if (e.size.tablet) {
+            this.offset += e.interval * 5;
+          } else {
+            this.offset += e.interval * 1.5;
+          }
           this.transform();
           this.$refs.image.style = this.parallaxTransform;
         }
       }
     },
+
     scrollObj: {
       handler() {
         this.transform();
