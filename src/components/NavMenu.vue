@@ -18,11 +18,12 @@
     <Scrollbar v-if=" !navOpen" class="mainnav" @scrollTo="handleScrollTo" />
     <div class="socials" v-if="winresize.size.desktop">
       <ul>
-        <transition v-for="(item, i) in socialmedia" :key="i">
+        <transition v-for="(item, i) in socialmedia" :key="i" appear name="time">
           <a
             class="link"
             :target="item.link.url ? '_blank' : null"
             :href="item.link.url ? item.link.url : null"
+            :style="`transition-delay: ${i * 50}ms`"
           >
             <li>
               <span>{{$cms.textField(item.label)}}</span>

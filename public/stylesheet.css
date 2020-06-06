@@ -1,3 +1,6 @@
+* {
+  cursor: url("blank.cur"), none;
+}
 @font-face {
   font-family: "AcuminProWide-Regular";
   src: url("AcuminProWide-Regular.eot");
