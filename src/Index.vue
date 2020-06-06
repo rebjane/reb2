@@ -159,7 +159,8 @@ export default {
   bottom: 0;
   width: 100%;
   height: 100%;
-  background: $lbg;
+  // background: $lbg;
+  background: white;
   z-index: 2;
   height: 0;
   @include ease(height);
@@ -220,8 +221,8 @@ export default {
   height: 100vh;
   // width: 100%;
   // background: $bg;
-  // background: white;
-  background: $lbg;
+  background: white;
+  // background: $lbg;
 }
 // .vert {
 //   cursor: url("assets/vert-cursor.cur"), auto;

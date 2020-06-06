@@ -25,7 +25,9 @@
 </template>
 
 <script>
-import { TimelineMax, Linear } from "gsap";
+import { TimelineMax, gsap, Linear } from "gsap";
+import { CSSPlugin } from "gsap/CSSPlugin";
+gsap.registerPlugin(CSSPlugin);
 
 export default {
   watch: {

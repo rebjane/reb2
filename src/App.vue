@@ -193,7 +193,9 @@ h6 {
   text-align: center;
   color: #2c3e50;
   /* margin-top: 60px; */
-  background: $lbg;
+  // background: $lbg;
+  background: white;
+
   // overflow-y: hidden;
   height: 100%;
   width: 100%;

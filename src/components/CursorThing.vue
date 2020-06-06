@@ -6,7 +6,10 @@
 </template>
 
 <script>
-import { TimelineMax } from "gsap";
+import { TimelineMax, gsap } from "gsap";
+import { CSSPlugin } from "gsap/CSSPlugin";
+gsap.registerPlugin(CSSPlugin);
+
 import { mapState } from "vuex";
 
 // Power4

@@ -53,7 +53,7 @@ class Prismic {
             Vue.prototype.$navsocials = this.data.filter(
               (e) => e.type === "navsocials"
             )[0].data.links;
-            console.log(Vue.prototype.$navsocials);
+            // console.log(Vue.prototype.$navsocials);
             res(Vue.prototype.$navsocials);
           });
 

@@ -2,17 +2,8 @@
   <div class="image-gallery">
     <div class="gallery">
       <transition v-for="(item, i) in data.items" :key="i">
-        <div class="col">
-          <ImageWrap
-            class="image"
-            :imgInfo="{img: item.image.url,
-          src: item.image.url,
-          width: item.image.dimensions.width,
-          height: item.image.dimensions.height}"
-            :img="item.image.url"
-            :ripple="false"
-            ref="parallax"
-          />
+        <div class="image" :style="`background-image: url(${item.image.url})`">
+          <img :src="item.image.url" style="opacity: 0;" />
         </div>
       </transition>
     </div>
@@ -20,6 +11,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "ImageGallery",
   props: {
@@ -27,6 +20,9 @@ export default {
       type: Object,
       default: null
     }
+  },
+  computed: {
+    ...mapState(["winresize"])
   },
   data() {
     return {};
@@ -41,40 +37,43 @@ export default {
 @import "../styles/stylesheet.scss";
 .image-gallery {
   height: 100%;
+  max-height: 100%;
   position: relative;
-  width: 100%;
+  // width: 100%;
   text-align: center;
+  @include workpadding();
+  padding-top: 3em;
+  padding-bottom: 3em;
 }
 .gallery {
   // width: 100%;
   height: 100%;
-  display: inline-block;
   position: relative;
+  display: flex;
+  flex-wrap: wrap;
 }
-.col {
-  position: relative;
-  // width: 50%;
-  min-width: 100%;
-  text-align: center;
-  @include above($tablet) {
-    min-width: calc(50% - 2em);
-    margin: 1em;
-    &:nth-child(odd) {
-      text-align: right;
-    }
-    &:nth-child(even) {
-      text-align: left;
-    }
-  }
-  height: 100%;
+.image {
   display: inline-block;
 
-  .image {
-    // position: absolute;
-    // left: 50%;
-    // top: 50%;
-    // transform: translate3d(-50%, -50%, 0);
-    min-width: 100%;
+  // width: calc(33% - 2em);
+  @include below($tablet) {
+    width: 100%;
+    height: 100%;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  @include above($tablet) {
+    flex: 1;
+    // height: 70vh;
+  }
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 1em;
+  // height: 40vh;
+  img {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

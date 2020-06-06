@@ -71,6 +71,8 @@ export default {
   position: relative;
   // padding: 4em;
   @include workpadding();
+  padding-top: 3em;
+  padding-bottom: 3em;
 }
 .video {
   width: 100%;

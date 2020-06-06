@@ -8,8 +8,10 @@
 </template>
 
 <script>
-import { TimelineMax } from "gsap";
+import { TimelineMax, gsap } from "gsap";
+import { CSSPlugin } from "gsap/CSSPlugin";
 import { mapState } from "vuex";
+gsap.registerPlugin(CSSPlugin);
 
 export default {
   name: "Template",

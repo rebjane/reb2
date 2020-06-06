@@ -8,9 +8,9 @@ import { imageLoader } from "./imageLoader.js";
 import { smtp } from "./smtp.js";
 Vue.prototype.$imageLoader = imageLoader;
 Vue.prototype.$smtp = smtp;
-console.log(smtp);
-import { threeLoader } from "./threeLoader.js";
-import signature from "./assets/reb2.o-animated-BAKED.gltf";
+// console.log(smtp);
+// import { threeLoader } from "./threeLoader.js";
+// import signature from "./assets/reb2.o-animated-BAKED.gltf";
 import { prismic } from "./prismic.js";
 Vue.prototype.$loadPct = (prog) => (prog / 2) * 100;
 Vue.prototype.$loaded = 0;
@@ -95,29 +95,29 @@ async function loadingPct() {
   });
 }
 
-async function threeLoad() {
-  return new Promise((resolve) => {
-    if (Vue.prototype.$tablet) {
-      resolve();
-      return;
-    }
-    threeLoader.loadGLTF(signature).then((res) => resolve(res));
-  });
-}
+// async function threeLoad() {
+//   return new Promise((resolve) => {
+//     if (Vue.prototype.$tablet) {
+//       resolve();
+//       return;
+//     }
+//     threeLoader.loadGLTF(signature).then((res) => resolve(res));
+//   });
+// }
 
 async function preLoading() {
   Vue.prototype.$dowinresize().then(() => {
-    threeLoad().then(() => {
-      store.commit("setLoadedGLTFs", true);
-      Promise.all([
-        loadingPct(),
-        loader.loadTheComponents(),
-        prismic.fetchData(),
-      ]).then(() => {
-        setTimeout(() => {
-          store.commit("setLoaded", true);
-        }, 800); //to allow for loading to transition out
-      });
+    // threeLoad().then(() => { //for now, the loading is ridiculous
+    store.commit("setLoadedGLTFs", true);
+    Promise.all([
+      loadingPct(),
+      loader.loadTheComponents(),
+      prismic.fetchData(),
+    ]).then(() => {
+      setTimeout(() => {
+        store.commit("setLoaded", true);
+      }, 800); //to allow for loading to transition out
     });
+    // });
   });
 }
