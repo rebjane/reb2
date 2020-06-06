@@ -7,6 +7,12 @@
       @mousedown="changeClassName"
       v-if="data.primary.media.name.includes('mp4')"
     >
+      <transition name="vid">
+        <div class="vid-icon" v-if="!play">
+          <PlayVidCursor />
+        </div>
+      </transition>
+
       <video
         :class="`video ${className}`"
         preload
@@ -92,6 +98,39 @@ export default {
   img {
     opacity: 0;
   }
+}
+.vid-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  width: 35%;
+  height: 35%;
+  pointer-events: none;
+  opacity: 1;
+  // mix-blend-mode: difference;
+  /deep/ .playvid {
+    width: 100%;
+    height: 100%;
+    margin-left: 50%;
+    svg {
+      height: 100%;
+      transform: translateX(-50%);
+    }
+  }
+  // background: white;
+}
+.vid-enter-active,
+.vid-leave-active {
+  @include ease(opacity);
+}
+.vid-leave-to,
+.vid-enter {
+  opacity: 0;
+}
+
+.vid-enter-to {
+  opacity: 1;
 }
 // .play {
 //   position: absolute;
