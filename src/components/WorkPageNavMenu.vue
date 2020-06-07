@@ -75,15 +75,22 @@ export default {
 .arrow-wrap {
   //   height: 3em;
   width: 20px;
+
+  @include above($tablet) {
+    width: 30px;
+  }
   padding-right: 0.5em;
 
   margin: 2em 0;
 }
+// .back,
+// .next {
+//   border-right: 3px solid white;
+// }
 .back,
 .next,
 .home-link {
   // margin: 0 2em;
-  border-right: 1px solid white;
   mix-blend-mode: difference;
   @include above($tablet) {
     // margin-right: 2em;
@@ -106,11 +113,14 @@ export default {
     margin: auto;
     font-family: $acuminc;
     color: white;
-    @include mini();
+    @include body();
   }
 }
 .home-link {
-  width: 30px;
+  width: 40px;
+  @include below($tablet) {
+    width: 30px;
+  }
   @include above($tablet) {
     padding-right: 1em;
   }
