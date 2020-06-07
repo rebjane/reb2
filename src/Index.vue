@@ -66,6 +66,10 @@ export default {
 
     $route() {
       this.isHomePage = window.location.pathname === "/";
+      if (this.isHomePage) {
+        console.log(this.$store.state.lastScrollPos);
+        this.scrollToScrollPos = this.$store.state.lastScrollPos;
+      }
       this.$store.commit("updateRoute", {
         path: this.$route.path,
         isHome: this.$route.path === "/"

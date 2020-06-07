@@ -46,7 +46,8 @@ export default {
       handler(pos) {
         this.scrollToPos(pos);
       },
-      deep: true
+      deep: true,
+      immediate: true
     }, //debugging
     // scroll() {
     //   console.log(this.scroll.pos);
@@ -58,13 +59,12 @@ export default {
         this.globalscroll.listen();
       }
     },
-    // route: {
-    //   handler() {
-    //     if (!this.globalScroll) this.initScroll();
-    //   },
-    //   deep: true,
-    //   immediate: true
-    // },
+    globalscroll() {
+      this.scrollToPos(this.$store.state.lastScrollPos);
+    },
+    scroll() {
+      this.$store.commit("updateLastScrollPos", this.scroll.pos);
+    },
     scrollAllowed: {
       handler(e) {
         if (e) this.initScroll();

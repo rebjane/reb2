@@ -28,6 +28,7 @@ export default new Vuex.Store({
       height: window.innerHeight,
       interval: 0,
     },
+    lastScrollPos: 0,
   },
 
   mutations: {
@@ -68,6 +69,9 @@ export default new Vuex.Store({
     },
     updateRoute(state, route) {
       Vue.set(state, "route", route);
+    },
+    updateLastScrollPos(state, lastScrollPos) {
+      Vue.set(state, "lastScrollPos", lastScrollPos);
     },
   },
 
