@@ -1,16 +1,20 @@
 <template>
   <div class="scrollbar-div">
-    <div class="scroll-line" ref="scrollline">
+    <div class="scroll-line">
+      <!-- ref="scrollline" -->
       <ul v-if=" winresize.size.desktop">
         <transition-group appear name="in" v-for="(item, i) in menu" :key="i">
           <li :style="`transition-delay: ${i * 50}ms`" @click="doScroll(i)" :key="i">
             <span>
-              <router-link to>{{item.title}}</router-link>
+              <router-link to :ref="item.title.toUpperCase()">{{item.title}}</router-link>
+              <transition appear :name="scroll.dir > 0 ? 'left' : 'right'">
+                <div class="underline" v-if="mblNavTitle === item.title" />
+              </transition>
             </span>
           </li>
         </transition-group>
       </ul>
-      <div ref="scrollbar" class="scroll-bar"></div>
+      <!-- <div ref="scrollbar" class="scroll-bar"></div> -->
     </div>
   </div>
 </template>
@@ -24,29 +28,10 @@ export default {
     data: {
       type: Object,
       default: null
-    }
-  },
-  watch: {
-    scroll: {
-      handler(e) {
-        this.$refs.scrollbar.style = `width: ${this.width(
-          this.sbwidth,
-          this.slwidth,
-          e.elWidth - window.innerWidth,
-          e.pos
-        )}px;`;
-      }
     },
-    winresize() {
-      this.slwidth = this.$refs.scrollline.getBoundingClientRect().width;
-      this.$refs.scrollbar.style = `width: ${this.width(
-        this.sbwidth,
-        this.slwidth,
-        this.scroll.elWidth - window.innerWidth,
-        this.scroll.pos
-      )}px;`;
-    }
+    mblNavTitle: String
   },
+  watch: {},
   data() {
     return {
       slwidth: null,
@@ -66,8 +51,8 @@ export default {
     }
   },
   mounted() {
-    this.slwidth = this.$refs.scrollline.getBoundingClientRect().width;
-    this.sbwidth = this.$refs.scrollbar.getBoundingClientRect().width;
+    // this.slwidth = this.$refs.scrollline.getBoundingClientRect().width;
+    // this.sbwidth = this.$refs.scrollbar.getBoundingClientRect().width;
   }
 };
 </script>
@@ -129,6 +114,34 @@ export default {
   transform: translateY(-50%);
   left: 0;
 }
+.left-enter-active,
+.right-leave-to {
+  left: 0;
+}
+.left-leave-to,
+.right-enter-active {
+  right: 0;
+}
+.left-enter,
+.left-leave-to,
+.right-enter,
+.right-leave-to {
+  width: 0px !important;
+}
+
+.left-enter-active,
+.left-leave-active,
+.right-enter-active,
+.right-leave-active {
+  @include ease(width);
+}
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  border: 2px solid white;
+  width: 100%;
+}
 ul {
   list-style: none;
   margin: 0;
@@ -137,6 +150,8 @@ ul {
 
   li {
     display: inline-block;
+    overflow: hidden;
+
     // cursor: pointer;
     opacity: 1;
     transform: translateY(0%);
