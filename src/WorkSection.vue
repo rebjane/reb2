@@ -1,10 +1,9 @@
 <template>
   <div ref="workwrap" class="worksection-wrapper outer">
-    <!-- <div class="scroll" ref="scroll"> -->
-    <!-- <div ref="carousel" class="carousel"> -->
-    <CarouselHoriz :horiz="true" :data="carouselData" v-if="carouselData" />
-    <!-- </div> -->
-    <!-- </div> -->
+    <div class="header">
+      <h2 v-if="header">{{header}}</h2>
+    </div>
+    <CarouselHoriz class="horiz" :horiz="true" :data="carouselData" v-if="carouselData" />
   </div>
 </template>
 
@@ -15,25 +14,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "Template",
-  watch: {
-    // scroll() {
-    //   // console.log(this.$refs.workwrap.getBoundingClientRect().left);
-    //   if (this.scroll.pos >= this.$refs.workwrap.getBoundingClientRect().left) {
-    //     this.workscroll.listen();
-    //     this.$emit("deafenGlobalScroll", true);
-    //     this.$emit(
-    //       "scrollTo",
-    //       this.$refs.workwrap.getBoundingClientRect().right
-    //     );
-    //   }
-    // },
-    // scrollAllowed() {
-    //   if (this.scrollAllowed) {
-    //     this.workscroll = new Scrolly(this.$refs.scroll, "h");
-    //     this.workscroll.deafen();
-    //   }
-    // }
-  },
+  watch: {},
   components: {
     // Scrollbar
   },
@@ -45,7 +26,8 @@ export default {
     return {
       carouselData: null,
       workscroll: null,
-      globalscrollStopped: false
+      globalscrollStopped: false,
+      header: null
     };
   },
   computed: {
@@ -78,8 +60,8 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.data);
-
+    // console.log(this.$cms.textField(this.data.primary.heading).toUpperCase());
+    this.header = this.$cms.textField(this.data.primary.heading).toUpperCase();
     //filter by what kind of work (ie. work, illustration, design)
     this.carouselData = this.$work.filter(
       i => i.type_of_work === this.data.primary.type_of_work
@@ -95,10 +77,38 @@ export default {
   // background: white;
   height: 100%;
   padding-right: $medpad;
+  display: flex;
 }
 .scroll {
   position: relative;
   height: 100%;
   overflow: hidden;
+}
+.header {
+  position: relative;
+  // width: 300px;
+
+  h2 {
+    // position: absolute;
+    hyphens: none;
+    font-family: $acumin;
+    // @include
+    text-align: center;
+    // transform: translateY(-50%) rotate(-90deg);
+
+    top: 50vh;
+    margin: 0;
+    margin-top: 50vh;
+    transform: translateY(-50%);
+    margin-right: 2em;
+    margin-left: 4em;
+
+    @include title();
+  }
+  // position: absolute;
+  // float: left;
+}
+.horiz {
+  display: inline-block;
 }
 </style>
