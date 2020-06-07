@@ -87,13 +87,6 @@ export default class Scrolly {
       } else {
         pos = e.changedTouches[0].pageY;
       }
-      if (pos > this.start) {
-        this.dir = Math.abs(pos) / pos;
-        this.scrollDestination -= Math.abs((pos - this.start) * 1.5);
-      } else {
-        this.dir = Math.abs(pos) / pos - this.start;
-        this.scrollDestination += Math.abs((pos - this.start) * 1.5);
-      }
 
       this.start = pos;
 
@@ -123,7 +116,7 @@ export default class Scrolly {
         this.dir = Math.abs(e.deltaX) / e.deltaX;
         this.scrollDestination += -e.deltaX;
       }
-      this.dir = Math.abs(e.deltaY) / e.deltaY;
+      // this.dir = Math.abs(e.deltaY) / e.deltaY;
       this.scrollDestination += e.deltaY;
 
       this.scrollDestination = this.limit(this.scrollDestination, this.max);
@@ -138,6 +131,11 @@ export default class Scrolly {
   scroll() {
     this.pos += (this.scrollDestination - this.pos) / this.force;
     this.pos = Number(this.pos.toFixed(2));
+    if (this.pos > this.preDeafPos) {
+      this.dir = 1;
+    } else {
+      this.dir = -1;
+    }
     //stop from running animation frame if scroll is deafened and you come to a stop
     if (this.isScrolling && this.preDeafPos === this.pos) {
       this.isScrolling = false;
