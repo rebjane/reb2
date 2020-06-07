@@ -33,21 +33,41 @@ import { mapState } from "vuex";
 export default {
   name: "ImageWrap",
   watch: {
-    isDesktop() {
-      if (this.startedWinResize) this.offset = NaN;
-      // this is to stop it form parallaxing if you switch orientations. calculations are too complex to figure out the offset, so for now i make it freeze.
+    winresize() {
+      if (this.isParallax) {
+        // this.getMidPos();
+        this.isDesktop = this.winresize.size.desktop;
+        this.left += this.winresize.interval;
+        this.width = this.$refs.imgCol.getBoundingClientRect().width;
+        this.pos += this.winresize.interval;
+        this.midPos = this.left - (window.innerWidth - this.width) / 2;
+
+        this.transform();
+        this.$refs.image.style = this.parallaxTransform;
+      }
     },
-    inview() {
-      console.log(this.inview);
-    }
-    // scrollObj: {
+    isDesktop(e) {
+      if (!e) {
+        this.left += (window.innerWidth * this.winresize.dir) / 2;
+        return;
+      }
+      this.left -= (window.innerWidth * this.winresize.dir) / 2;
+    },
+    // inview: {
     //   handler() {
-    //     this.transform();
-    //     if (this.isParallax) {
-    //       this.$refs.image.style = this.parallaxTransform;
-    //     }
-    //   }
+
+    //   },
+    //   deep: true
     // }
+    scrollObj: {
+      handler() {
+        this.pos = this.scrollObj.pos;
+        this.transform();
+        if (this.isParallax) {
+          this.$refs.image.style = this.parallaxTransform;
+        }
+      }
+    }
   },
   components: {},
   props: {
@@ -78,6 +98,10 @@ export default {
     scrollObj: {
       type: Object,
       default: null
+    },
+    inview: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -91,16 +115,19 @@ export default {
         imgWidth: this.getSize(this.imgInfo.width, this.imgInfo.height).width,
         imgHeight: this.getSize(this.imgInfo.width, this.imgInfo.height).height,
         canvasLeft: 0,
-        canvasTop: 0,
-        midPos: null
+        canvasTop: 0
       },
+      midPos: null,
+
       waveText: false,
       newHeight: this.getSize(this.imgInfo.width, this.imgInfo.height).height,
       parallaxTransform: 0,
       offset: 0,
       width: 0,
+      left: 0,
       isDesktop: null,
-      startedWinResize: false
+      startedWinResize: false,
+      pos: 0
     };
   },
   beforeDestroy() {},
@@ -111,33 +138,35 @@ export default {
     getMidPos() {
       if (this.horiz) {
         // for horiz
-        var left = this.$refs.imgCol.getBoundingClientRect().left;
+        this.left = this.$refs.imgCol.getBoundingClientRect().left;
         this.width = this.$refs.imgCol.getBoundingClientRect().width;
-        this.midPos = left - (window.innerWidth - this.width) / 2;
+        this.midPos = this.left - (window.innerWidth - this.width) / 2;
       } else {
         // for  vert
         var top = this.$refs.imgCol.getBoundingClientRect().top;
         var height = this.$refs.imgCol.getBoundingClientRect().height;
         this.midPos = top - (window.innerHeight - height) / 2;
-
-        // console.log(top, height);
       }
     },
     transform() {
       if (this.horiz) {
         this.parallaxTransform = `transform: translateX(${this.parallax(
           this.midPos,
-          this.scrollObj ? this.scrollObj.pos + this.offset : 1
+          this.pos
         )}px)`;
       } else {
         this.parallaxTransform = `transform: translateY(${this.parallax(
           this.midPos,
-          this.scrollObj ? this.scrollObj.pos + this.offset : 1
+          this.pos
         )}px)`;
       }
+      // console.log(this.parallax(this.midPos, this.scrollObj.pos));
     },
     parallax(midPos, scrollPos) {
-      return (midPos - scrollPos) * 0.7;
+      return Math.max(
+        Math.min((midPos - scrollPos) * 0.3, this.width / 2),
+        -this.width / 2
+      );
     },
     getSize(width, height) {
       var newHeight, newWidth, colHeight, colWidth;
@@ -166,10 +195,11 @@ export default {
     // });
     if (this.isParallax) {
       this.isDesktop = this.winresize.size.desktop;
+
+      setTimeout(() => {
+        this.getMidPos();
+      }, 500); //temporary fix
     }
-    setTimeout(() => {
-      this.getMidPos();
-    }, 500); //temporary fix
   }
 };
 </script>
