@@ -101,6 +101,16 @@ $mobilepad: 40px;
   }
 }
 
+@mixin bigtitle() {
+  @include above($tablet) {
+    font-size: 80px;
+    line-height: 1.1;
+  }
+  @include below($tablet) {
+    font-size: 52px;
+  }
+}
+
 // Breakpoints
 @mixin above($size) {
   @media screen and (min-width: $size + 1) {

@@ -102,7 +102,7 @@ export default {
   top: 0;
   white-space: nowrap;
   // padding-bottom: 2em;
-  margin-top: 1em;
+  margin-top: 2em;
 
   // width: 50%;
   left: 50%;
@@ -141,12 +141,12 @@ ul {
     opacity: 1;
     transform: translateY(0%);
     position: relative;
-    @include mini();
+    @include body();
 
     text-align: left;
     // width: 100px;
     a {
-      padding: 0 2em;
+      padding: 0 1em;
     }
     span {
       font-family: $acuminc;

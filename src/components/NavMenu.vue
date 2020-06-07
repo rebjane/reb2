@@ -207,7 +207,7 @@ export default {
   color: white;
 
   // writing-mode: vertical-lr;
-  @include mini();
+  @include body();
 }
 .time-enter-active {
   @include ease(all);
@@ -315,7 +315,7 @@ p {
       margin-bottom: 4em;
 
       position: relative;
-      @include mini();
+      @include body();
 
       // &:after {
       //   content: "";
@@ -329,7 +329,7 @@ p {
       //   height: calc(100% + 3px);
       // }
       li {
-        padding: 0 2em;
+        padding: 0 1em;
       }
       :not(:last-child) {
         padding-right: 0;

@@ -129,7 +129,7 @@ h1 {
   // @include outline($bg);
   // font-family: $suisse;
   font-family: $acumin;
-  @include title();
+  @include bigtitle();
 }
 .intro {
   margin-top: 0 !important;
