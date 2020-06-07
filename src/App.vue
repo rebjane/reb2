@@ -60,7 +60,8 @@ export default {
       }
     },
     globalscroll() {
-      this.scrollToPos(this.$store.state.lastScrollPos);
+      if (this.$store.state.lastScrollPos !== 0)
+        this.scrollToPos(this.$store.state.lastScrollPos);
     },
     scroll() {
       this.$store.commit("updateLastScrollPos", this.scroll.pos);
@@ -119,14 +120,15 @@ export default {
         : false;
     },
     initScroll() {
-      if (!this.globalscroll)
-        this.$nextTick(
-          () =>
-            (this.globalscroll = new Scrolly(
-              document.getElementById("app"),
-              "main"
-            ))
-        );
+      // if (!this.globalscroll)
+      //   this.$nextTick(
+      //     () =>
+      //       (this.globalscroll = new Scrolly(
+      //         document.getElementById("app"),
+      //         "main"
+      //       ))
+      //   );
+      this.globalscroll.listen();
     },
     getComponentSizings() {
       // for mobile, to ensure top title corresponds correctly when scrolling section to section
@@ -149,6 +151,12 @@ export default {
     }
   },
   mounted() {
+    if (!this.globalscroll)
+      this.$nextTick(() => {
+        this.globalscroll = new Scrolly(document.getElementById("app"), "main");
+        this.globalscroll.deafen();
+      });
+
     // mobile nav title starts with first item
     this.$emit("mobileNavTitle", this.$nav[0].title);
     this.$nextTick(() => {

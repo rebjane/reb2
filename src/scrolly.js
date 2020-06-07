@@ -50,13 +50,14 @@ export default class Scrolly {
     }
   }
 
-  scrollTo(destination) {
+  scrollTo(destination, instantly) {
+    this.instantly = instantly || false;
     this.scrollDestination = destination;
-    if (!this.isScrolling) {
+    if (!this.isScrolling && !this.instantly) {
+      // console.log("d");
       this.scroll();
       this.isScrolling = true;
       this.deaf = false;
-      // console.log(destination);
     }
   }
 
@@ -183,6 +184,7 @@ export default class Scrolly {
   }
   deafen() {
     this.deaf = true;
+    // console.log("this.deaf", this.deaf);
   }
 
   listen() {
