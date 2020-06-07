@@ -38,6 +38,7 @@
               <Arrow class="arrow" />
             </div>
           </form>
+          <h3 class="message" ref="message">{{message}}</h3>
         </div>
       </div>
     </div>
@@ -64,7 +65,8 @@ export default {
     return {
       newscroll: null,
       start: 0,
-      startTouch: 0
+      startTouch: 0,
+      message: null
     };
   },
   beforeDestroy() {},
@@ -100,7 +102,26 @@ export default {
             Subject: "From Website",
             Body: msg
           })
-          .then(() => {
+          .then(msg => {
+            switch (msg) {
+              case "OK": {
+                this.message =
+                  "Successfully sent! I will get in touch with you as soon as I can!";
+                this.$refs.message.style = "color: green;";
+
+                break;
+              }
+              default: {
+                this.message =
+                  "There was a problem sending your message. Please try again.";
+                this.$refs.message.style = "color: red;";
+
+                break;
+              }
+            }
+            setTimeout(() => {
+              this.message = null;
+            }, 3000);
             this.$refs.form.reset();
           })
       );
@@ -173,6 +194,13 @@ export default {
   }
   span {
     width: 100%;
+  }
+  .message {
+    position: absolute;
+    top: 75%;
+    color: green;
+    font-family: $acumin;
+    text-align: left;
   }
 }
 p {
