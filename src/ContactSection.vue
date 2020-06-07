@@ -1,47 +1,47 @@
 <template>
   <div ref="contact" class="contact">
-    <div class="contact-outer" ref="outer">
-      <div class="wrapper" ref="wrap">
-        <!-- <p>{{data.primary}}</p> -->
-        <div class="info">
-          <HeadText
-            :title="$cms.textField(data.primary.contact_title)"
-            :body="$cms.textField(data.primary.contact_body)"
-          />
-        </div>
-        <div class="form focus">
-          <form class="form-inner" ref="form" @submit.prevent="doSubmit">
-            <transition v-for="(item, i) in data.items" :key="i">
-              <div class="row focus">
-                <label :for="$cms.textField(item.input_label)">{{$cms.textField(item.input_label)}}</label>
-                <input
-                  v-if="item.input_type !== 'textarea'"
-                  :pattern="item.regex.length ? $cms.textField(item.regex) :null"
-                  required
-                  :type="item.input_type"
-                  :name="$cms.textField(item.input_label)"
-                  class="type"
-                />
+    <!-- <div class="contact-outer" ref="outer"> -->
+    <div class="wrapper" ref="wrap">
+      <!-- <p>{{data.primary}}</p> -->
+      <div class="info">
+        <HeadText
+          :title="$cms.textField(data.primary.contact_title)"
+          :body="$cms.textField(data.primary.contact_body)"
+        />
+      </div>
+      <div class="form focus">
+        <form class="form-inner" ref="form" @submit.prevent="doSubmit">
+          <transition v-for="(item, i) in data.items" :key="i">
+            <div class="row focus">
+              <label :for="$cms.textField(item.input_label)">{{$cms.textField(item.input_label)}}</label>
+              <input
+                v-if="item.input_type !== 'textarea'"
+                :pattern="item.regex.length ? $cms.textField(item.regex) :null"
+                required
+                :type="item.input_type"
+                :name="$cms.textField(item.input_label)"
+                class="type"
+              />
 
-                <textarea
-                  v-else
-                  :pattern="item.regex.length ? $cms.textField(item.regex) :null"
-                  required
-                  :rows="item.textarea_line_count"
-                  :name="$cms.textField(item.input_label)"
-                  class="type"
-                />
-              </div>
-            </transition>
-            <div class="submit link focus">
-              <input type="submit" class="link" value="submit" />
-              <Arrow class="arrow" />
+              <textarea
+                v-else
+                :pattern="item.regex.length ? $cms.textField(item.regex) :null"
+                required
+                :rows="item.textarea_line_count"
+                :name="$cms.textField(item.input_label)"
+                class="type"
+              />
             </div>
-          </form>
-          <h3 class="message" ref="message">{{message}}</h3>
-        </div>
+          </transition>
+          <div class="submit link focus">
+            <input type="submit" class="link" value="submit" />
+            <Arrow class="arrow" />
+          </div>
+        </form>
+        <h3 class="message" ref="message">{{message}}</h3>
       </div>
     </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -134,26 +134,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
-.contact-outer {
-  // height: calc(100% - #{$top});
-  @include below($tablet) {
-    height: 100%;
-    position: fixed;
-    width: 100vw;
-    top: 0;
-    margin-top: $top;
-  }
-}
+
 .wrapper {
   @include below($tablet) {
     // height: 100%;
-    width: 100%;
-    position: absolute;
+    width: 100vw;
+    // position: absolute;
+    margin-top: $top;
   }
 }
 .contact {
   // padding: 0 5em;
-
+  @include below($tablet) {
+    overflow: auto;
+  }
   height: 100vh;
 }
 .info {
