@@ -7,7 +7,7 @@ export default class Scrolly {
     this.direction = direction; //either v for vertical, or h for horizontal
     this.elParent = el;
     this.el = this.elParent.children[0];
-    this.preDeafPos = null;
+    this.preDeafPos = 0;
     this.pos = 0;
     this.dir = 0;
     this.isScrolling = false;
@@ -87,7 +87,13 @@ export default class Scrolly {
       } else {
         pos = e.changedTouches[0].pageY;
       }
-
+      if (pos > this.start) {
+        // this.dir = Math.abs(pos) / pos;
+        this.scrollDestination -= Math.abs((pos - this.start) * 1.5);
+      } else {
+        // this.dir = Math.abs(pos) / pos - this.start;
+        this.scrollDestination += Math.abs((pos - this.start) * 1.5);
+      }
       this.start = pos;
 
       this.scrollDestination = this.limit(this.scrollDestination, this.max);

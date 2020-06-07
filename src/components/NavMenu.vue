@@ -6,15 +6,17 @@
           <Reb2Logo class="logo" :fill="'white'" />
         </router-link>
       </div>
+      <div class="header" v-if="winresize.size.tablet">
+        <h2>{{mblNavTitle}}</h2>
+      </div>
     </div>
+
     <Hamburger class="hamburger link" @click.native="toggleNav" v-if="winresize.size.tablet" />
     <transition appear v-if="time.timeString && !winresize.size.tablet" name="time">
       <p class="time">{{ time.timeString }}</p>
     </transition>
     <!-- main menu is in this component -->
-    <div class="header" v-if="winresize.size.tablet">
-      <h2>{{mblNavTitle}}</h2>
-    </div>
+
     <Scrollbar
       v-if=" !navOpen"
       class="mainnav"
