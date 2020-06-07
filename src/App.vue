@@ -220,7 +220,9 @@ h6 {
       position: relative;
       @include below($tablet) {
         > div:first-child {
-          margin-top: $top;
+          // margin-top: $top;
+          // margin-top: $top;
+
           // height: calc(100vh - #{$top});
           // height: 100%;
           min-height: 100%;

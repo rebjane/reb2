@@ -75,6 +75,7 @@ export default {
 @import "./styles/stylesheet.scss";
 .worksection-wrapper {
   // background: white;
+
   height: 100%;
   padding-right: $medpad;
   display: flex;
@@ -110,5 +111,8 @@ export default {
 }
 .horiz {
   display: inline-block;
+  @include below($tablet) {
+    margin-top: $top;
+  }
 }
 </style>

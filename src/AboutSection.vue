@@ -1,8 +1,8 @@
 <template>
-  <div ref="about" class="about">
+  <div class="aboutsection">
     <div class="bg" />
 
-    <div class="about-outer" ref="outer">
+    <div ref="about" class="about">
       <div class="wrapper" ref="wrap">
         <div class="parallaximage-cont">
           <div class="parallaximage">
@@ -89,6 +89,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "./styles/stylesheet.scss";
+
 .about-outer {
   // height: calc(100% - #{$top});
   @include below($tablet) {
@@ -102,11 +103,22 @@ export default {
 .wrapper {
   @include below($tablet) {
     height: auto;
-    position: absolute;
+    // position: absolute;
   }
 }
+.aboutsection {
+  position: relative;
+  width: 100vw;
+}
 .about {
-  height: 100vh;
+  @include above($tablet) {
+    height: 100vh;
+  }
+  @include below($tablet) {
+    // height: calc(100vh - #{$top});
+    height: 100vh;
+    overflow: auto;
+  }
   position: relative;
   // height: 100%;
 }
@@ -151,6 +163,9 @@ export default {
     top: 50%;
     transform: translate3d(-75%, -50%, 0);
     display: inline-block;
+  }
+  @include below($tablet) {
+    margin-top: $top;
   }
   // @include below($tablet) {
   //   transform: translateY(-15vh);

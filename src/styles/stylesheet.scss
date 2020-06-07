@@ -109,6 +109,9 @@ $mobilepad: 40px;
   @include below($tablet) {
     font-size: 52px;
   }
+  @include below($mobile) {
+    font-size: 32px;
+  }
 }
 
 // Breakpoints

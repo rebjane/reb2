@@ -132,10 +132,11 @@ h1 {
   @include bigtitle();
 }
 .intro {
-  margin-top: 0 !important;
-  height: 100vh !important;
+  margin-top: 0;
+  height: 100vh;
   // @include waveLink(white);
   position: relative;
+
   // @include waveLink(#161616);
 }
 
