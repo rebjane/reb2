@@ -46,7 +46,6 @@
 
 <script>
 import { mapState } from "vuex";
-import Scrolly from "./scrolly.js";
 
 export default {
   name: "Template",
@@ -105,87 +104,9 @@ export default {
             this.$refs.form.reset();
           })
       );
-    },
-    toggleScroll(mouseOn) {
-      //ensure the scroll has already been made
-      if (this.newscroll) {
-        //if in view an d mouse is  over the element
-        if (mouseOn && this.inview) {
-          this.newscroll.listen();
-          this.$emit("deafenGlobalScroll", true);
-
-          //if themouse moves away,indicates i want to scroll away
-        } else if (!mouseOn) {
-          this.$refs.contact.removeEventListener("touchmove", this.touchmove);
-          this.newscroll.deafen();
-          this.$emit("deafenGlobalScroll", false);
-        }
-      }
-    },
-    touchstart(e) {
-      this.$refs.contact.addEventListener("touchmove", this.touchmove);
-      this.$refs.contact.addEventListener("touchend", this.touchend);
-      this.start = {
-        x: e.changedTouches[0].clientX,
-        y: e.changedTouches[0].clientY
-      };
-      this.startTouch = performance.now();
-    },
-    touchmove(e) {
-      if (performance.now() < this.startTouch + 300) {
-        return;
-      }
-      this.toggleScroll(true);
-
-      if (
-        Math.abs(e.changedTouches[0].clientX - this.start.x) >
-        window.innerWidth / 4
-      ) {
-        e.stopPropagation();
-        if (this.scroll.pos) {
-          this.$emit(
-            "scrollTo",
-            this.scroll.pos + (this.start.x - e.changedTouches[0].clientX)
-          );
-        }
-        this.toggleScroll(false);
-        return;
-      }
-    },
-    touchend() {
-      this.$refs.contact.removeEventListener("touchmove", this.touchmove);
-      this.toggleScroll(false);
-    },
-    initScroll() {
-      if (this.winresize.userAgent.tablet) {
-        //the possibility of vertical overflow on tablet / mobile. desktop - you can re-size. you can't stretch a tablet
-        new Promise(res => {
-          setTimeout(() => {
-            //initiate scroll, then deafen immediately
-            // console.log(
-            //   this.$refs.wrap.offsetHeight,
-            //   this.$refs.contact.offsetTop,
-            //   window.innerHeight
-            // );
-            if (
-              this.$refs.wrap.offsetHeight + this.$refs.contact.offsetTop >
-              window.innerHeight
-            ) {
-              // console.log("do scroll");
-              this.newscroll = new Scrolly(this.$refs.outer, "v");
-              this.newscroll.deafen();
-            }
-            res();
-          }, 500);
-        }).then(() => {
-          this.$refs.contact.addEventListener("touchstart", this.touchstart);
-        });
-      }
     }
   },
-  mounted() {
-    this.initScroll();
-  }
+  mounted() {}
 };
 </script>
 

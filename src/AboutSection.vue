@@ -12,6 +12,7 @@
             >{{$cms.textField(data.primary.top_text)}}</h2>
             <ImageWrap
               v-if="aboutImg"
+              :inview="inview"
               :ripple="false"
               :isParallax="true"
               :horiz="true"
@@ -40,12 +41,10 @@
 
 <script>
 import { mapState } from "vuex";
-import Scrolly from "./scrolly.js";
-
 // import WaveText from "./wavetext.js";
 
 export default {
-  name: "Template",
+  name: "AboutSection",
   watch: {},
   components: {},
   props: {
@@ -78,85 +77,11 @@ export default {
       "scroll"
     ])
   },
-  methods: {
-    toggleScroll(mouseOn) {
-      // console.log(mouseOn);
-      //ensure the scroll has already been made
-      if (this.newscroll) {
-        //if in view an d mouse is  over the element
-        if (mouseOn && this.inview) {
-          this.newscroll.listen();
-          this.$emit("deafenGlobalScroll", true);
-
-          //if themouse moves away,indicates i want to scroll away
-        } else if (!mouseOn) {
-          this.$refs.about.removeEventListener("touchmove", this.touchmove);
-          this.newscroll.deafen();
-          this.$emit("deafenGlobalScroll", false);
-        }
-      }
-    },
-    touchstart(e) {
-      this.$refs.about.addEventListener("touchend", this.touchend);
-      this.$refs.about.addEventListener("touchmove", this.touchmove);
-
-      this.start = {
-        x: e.changedTouches[0].clientX,
-        y: e.changedTouches[0].clientY
-      };
-      this.startTouch = performance.now();
-    },
-    touchmove(e) {
-      if (performance.now() < this.startTouch + 300) {
-        return;
-      }
-      this.toggleScroll(true);
-
-      if (
-        Math.abs(e.changedTouches[0].clientX - this.start.x) >
-        window.innerWidth / 4
-      ) {
-        e.stopPropagation();
-        if (this.scroll.pos) {
-          this.$emit(
-            "scrollTo",
-            this.scroll.pos + (this.start.x - e.changedTouches[0].clientX)
-          );
-        }
-        this.toggleScroll(false);
-        return;
-      }
-    },
-    touchend() {
-      this.$refs.about.removeEventListener("touchmove", this.touchmove);
-      this.toggleScroll(false);
-    },
-    initScroll() {
-      if (this.winresize.userAgent.tablet) {
-        //the possibility of vertical overflow on tablet / mobile. desktop - you can re-size. you can't stretch a tablet
-        new Promise(res => {
-          setTimeout(() => {
-            if (
-              this.$refs.wrap.offsetHeight + this.$refs.about.offsetTop >
-              window.innerHeight
-            ) {
-              this.newscroll = new Scrolly(this.$refs.outer, "v");
-              this.newscroll.deafen();
-            }
-            res();
-          }, 500);
-        }).then(() => {
-          this.$refs.about.addEventListener("touchstart", this.touchstart);
-        });
-      }
-    }
-  },
+  methods: {},
   mounted() {
     this.$imageLoader.getObj(this.data.primary.about_image.url).then(res => {
       this.aboutImg = res;
     });
-
-    this.initScroll();
   }
 };
 </script>

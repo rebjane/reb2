@@ -33,53 +33,21 @@ import { mapState } from "vuex";
 export default {
   name: "ImageWrap",
   watch: {
-    winresize: {
-      handler(e) {
-        // this.getMidPos();
-        //when resizing, need to offset for horizontal parallax so it doesn't fall off the view
-        this.resizeObj = {
-          canvasWidth: this.getSize(this.imgInfo.width, this.imgInfo.height)
-            .width,
-          canvasHeight: this.getSize(this.imgInfo.width, this.imgInfo.height)
-            .height,
-          scale: 1,
-          imgWidth: this.getSize(this.imgInfo.width, this.imgInfo.height).width,
-          imgHeight: this.getSize(this.imgInfo.width, this.imgInfo.height)
-            .height,
-          canvasLeft: 0,
-          canvasTop: 0,
-          midPos: null
-        };
-        //parallax re-positioning based on win resize
-        if (this.isParallax) {
-          this.startedWinResize = true;
-
-          this.isDesktop = e.size.desktop; //watch for when orientation changes from tablet-mobile to desktop
-
-          // console.log(this.midPos);
-
-          if (e.size.tablet) {
-            this.offset -= e.interval * 4.5;
-          } else {
-            this.offset -= e.interval * 1.5;
-          }
-          this.transform();
-          this.$refs.image.style = this.parallaxTransform;
-        }
-      }
-    },
     isDesktop() {
       if (this.startedWinResize) this.offset = NaN;
       // this is to stop it form parallaxing if you switch orientations. calculations are too complex to figure out the offset, so for now i make it freeze.
     },
-    scrollObj: {
-      handler() {
-        this.transform();
-        if (this.isParallax) {
-          this.$refs.image.style = this.parallaxTransform;
-        }
-      }
+    inview() {
+      console.log(this.inview);
     }
+    // scrollObj: {
+    //   handler() {
+    //     this.transform();
+    //     if (this.isParallax) {
+    //       this.$refs.image.style = this.parallaxTransform;
+    //     }
+    //   }
+    // }
   },
   components: {},
   props: {
