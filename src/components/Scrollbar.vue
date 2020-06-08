@@ -7,10 +7,10 @@
           <li :style="`transition-delay: ${i * 50}ms`" @click="doScroll(i)" :key="i">
             <span>
               <router-link to :ref="item.title.toUpperCase()">{{item.title}}</router-link>
-              <transition appear :name="scroll.dir > 0 ? 'left' : 'right'">
-                <div class="underline" v-if="mblNavTitle === item.title" />
-              </transition>
             </span>
+            <transition v-if="timedOut" appear :name="scroll.dir > 0 ? 'left' : 'right'">
+              <div class="underline" v-if="mblNavTitle === item.title" />
+            </transition>
           </li>
         </transition-group>
       </ul>
@@ -36,7 +36,8 @@ export default {
     return {
       slwidth: null,
       sbwidth: null,
-      menu: this.$nav
+      menu: this.$nav,
+      timedOut: false
     };
   },
   computed: {
@@ -53,6 +54,9 @@ export default {
   mounted() {
     // this.slwidth = this.$refs.scrollline.getBoundingClientRect().width;
     // this.sbwidth = this.$refs.scrollbar.getBoundingClientRect().width;
+    setTimeout(() => {
+      this.timedOut = true;
+    }, this.menu.length * 50);
   }
 };
 </script>
@@ -67,8 +71,8 @@ export default {
 }
 
 .in-enter {
-  opacity: 0;
-  transform: translateY(100%);
+  opacity: 0 !important;
+  transform: translateY(100%) !important;
 }
 .in-enter-active {
   @include ease(all);
