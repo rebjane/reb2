@@ -60,13 +60,16 @@ export default {
       }
     },
     globalscroll() {
-      if (this.$store.state.lastScrollPos !== 0)
+      if (this.$store.state.lastScrollPos !== 0) {
         setTimeout(() => {
           this.scrollToPos(this.$store.state.lastScrollPos);
         }, 750);
+      }
     },
     scroll() {
-      this.$store.commit("updateLastScrollPos", this.scroll.pos);
+      // console.log(this.scroll.);
+      if (this.scroll.type === "main")
+        this.$store.commit("updateLastScrollPos", this.scroll.pos);
     },
     scrollAllowed: {
       handler(e) {
@@ -83,7 +86,11 @@ export default {
     Scrollbar
   },
   beforeDestroy() {
-    this.globalScroll = null;
+    // this.globalScroll = null;
+    delete this.globalScroll;
+    this.globalscroll.stop();
+
+    this.$store.commit("allowScroll", false);
   },
   data() {
     return {
@@ -122,14 +129,6 @@ export default {
         : false;
     },
     initScroll() {
-      // if (!this.globalscroll)
-      //   this.$nextTick(
-      //     () =>
-      //       (this.globalscroll = new Scrolly(
-      //         document.getElementById("app"),
-      //         "main"
-      //       ))
-      //   );
       this.globalscroll.listen();
     },
     getComponentSizings() {
@@ -156,7 +155,8 @@ export default {
     if (!this.globalscroll)
       this.$nextTick(() => {
         this.globalscroll = new Scrolly(document.getElementById("app"), "main");
-        this.globalscroll.deafen();
+        // this.globalscroll.deafen();
+        this.globalscroll.stop();
       });
 
     // mobile nav title starts with first item

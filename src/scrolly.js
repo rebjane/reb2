@@ -154,6 +154,7 @@ export default class Scrolly {
     this.preDeafPos = this.pos;
     switch (this.direction) {
       case "main": {
+        // console.log("main pos", this.pos);
         store.commit("updateScroll", {
           type: "main",
           pos: this.pos,
