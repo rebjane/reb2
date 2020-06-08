@@ -2,7 +2,7 @@ import axios from "axios";
 export default class Time {
   constructor() {
     // this.ipAPI = "https://api.ipify.org?format=json";
-    this.api = `http://worldtimeapi.org/api/ip`;
+    this.api = `https://worldtimeapi.org/api/ip`;
     this.callAPI();
     this.time = 0;
     this.start = 0;

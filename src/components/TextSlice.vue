@@ -6,8 +6,8 @@
           <div class="title">
             <h2>{{$cms.textField(item.text_title)}}</h2>
           </div>
-          <div class="body">
-            <p>{{$cms.textField(item.text_body)}}</p>
+          <div class="body" v-html="$cms.htmlField(item.text_body)">
+            <!-- <p ></p> -->
           </div>
         </div>
       </transition>
@@ -38,6 +38,16 @@ export default {
 .textsection {
   // padding: 4em;
   @include workpadding();
+}
+.body {
+  /deep/ a {
+    color: black;
+    // text-decoration: underline;
+    border-bottom: 1px solid black;
+    // padding-bottom: 5px;
+    font-family: $acumin;
+    // color: red;
+  }
 }
 .text-rows {
   width: 100%;

@@ -35,10 +35,10 @@ export default {
     };
   },
   methods: {
-    cursorType(targ) {
+    cursorType(targ, targNodeName) {
       // console.log(typeof targ);
       if (typeof targ === "string") {
-        if (targ.includes("link")) {
+        if (targ.includes("link") || targNodeName === "A") {
           this.curComponent = "CircleCursor";
           this.$refs.cursor.style = this.centerStyle;
         } else if (targ.includes("vert")) {
@@ -62,8 +62,8 @@ export default {
     },
     handleCursor(e) {
       e.stopPropagation();
-      // console.log(e.target);
-      this.cursorType(e.target.className);
+      // console.log(e.target.nodeName);
+      this.cursorType(e.target.className, e.target.nodeName);
 
       // if (
       //   e.clientX <= 10 ||
