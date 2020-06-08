@@ -308,8 +308,9 @@ p {
   bottom: 0;
   // margin-bottom: 1.5em;
   left: 50%;
-  transform: translateY(50%) translateX(-50%);
+  transform: translateY(0%) translateX(-50%);
   color: white;
+  white-space: nowrap;
   ul {
     list-style: none;
     padding: 0;
@@ -317,12 +318,12 @@ p {
     margin: 0;
     a {
       display: inline-block;
-      padding-top: 1.5em;
-      padding-bottom: 1.5em;
-      margin-bottom: 4em;
+      // padding-top: 1.5em;
+      // padding-bottom: 1.5em;
+      margin-bottom: 10px;
 
       position: relative;
-      @include body();
+      @include mini();
 
       // &:after {
       //   content: "";
@@ -336,7 +337,7 @@ p {
       //   height: calc(100% + 3px);
       // }
       li {
-        padding: 0 1em;
+        padding: 1em;
       }
       :not(:last-child) {
         padding-right: 0;
