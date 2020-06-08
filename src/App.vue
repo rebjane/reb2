@@ -61,7 +61,9 @@ export default {
     },
     globalscroll() {
       if (this.$store.state.lastScrollPos !== 0)
-        this.scrollToPos(this.$store.state.lastScrollPos);
+        setTimeout(() => {
+          this.scrollToPos(this.$store.state.lastScrollPos);
+        }, 750);
     },
     scroll() {
       this.$store.commit("updateLastScrollPos", this.scroll.pos);

@@ -64,6 +64,12 @@ export default {
         this.pos = this.scrollObj.pos;
         this.transform();
         if (this.isParallax) {
+          // console.log(
+          //   this.parallax(this.midPos, this.pos),
+          //   this.pos,
+          //   this.midPos
+          // );
+
           this.$refs.image.style = this.parallaxTransform;
         }
       }
