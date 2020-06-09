@@ -12,8 +12,8 @@
     <!-- <div class="text-rows"> -->
     <!-- <transition v-for="(item, i) in data.items" :key="i"> -->
     <div class="text-row">
-      <div class="title"></div>
-      <div class="body">
+      <table class="image" :style="`background-image: url(${data.primary.image_default.url})`"></table>
+      <table class="body">
         <h2 class="price" v-if="selected">${{selected.price}}</h2>
         <div class="quantity">
           <h3 class="label">Quantity</h3>
@@ -45,7 +45,7 @@
             >{{$cms.textField(item.variation_label)}}</p>
           </div>
         </div>
-      </div>
+      </table>
     </div>
     <!-- </transition> -->
     <!-- </div> -->
@@ -162,12 +162,20 @@ export default {
 .text-rows {
   width: 100%;
   margin: auto;
+  padding-right: 20px;
 }
 .text-row {
+  min-height: 75vh;
   margin: 2em 0;
   padding-top: 1em;
   position: relative;
   border-top: 1px solid $bg;
+  @include above($tablet) {
+    display: table;
+  }
+  //   border-spacing: 20px;
+  //   border-collapse: separate;
+  width: 100%;
 }
 h2 {
   font-family: $acumin;
@@ -185,18 +193,40 @@ p {
 
   margin-top: 0;
 }
-.title,
+.image,
 .body {
-  display: inline-block;
+  @include above($tablet) {
+    display: table-cell;
+  }
+  //   display: inline-block;
+
   vertical-align: top;
   height: 100%;
   width: 100%;
+}
+.body {
   @include above($tablet) {
     width: 50%;
+    padding-left: 10%;
   }
 }
+.image {
+  @include above($tablet) {
+    width: 40%;
+  }
+  @include below($tablet) {
+    height: 40vh;
+  }
+  //   .image-inner {
+  padding-right: 10%;
+  background-size: contain;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: top left;
+  //   }
+}
 .price {
-  padding-bottom: 1em;
+  padding: 1em 0;
 }
 .quantity,
 .variation {
