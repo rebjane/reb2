@@ -45,6 +45,10 @@
             >{{$cms.textField(item.variation_label)}}</p>
           </div>
         </div>
+        <div class="addtocart" @click="addToCart">
+          <h3>add to cart</h3>
+          <Arrow class="arrow" />
+        </div>
       </table>
     </div>
     <!-- </transition> -->
@@ -101,12 +105,21 @@ export default {
     handleDD() {
       this.ddOpen = !this.ddOpen;
     },
+    addToCart() {
+      this.$store.commit("updateCart", {
+        item: this.$cms.textField(this.selected.variation_label),
+        qty: this.quantity,
+        total: this.selected.price * this.quantity
+      });
+      console.log(this.$store.state.cart);
+    },
     handlequantity(amt) {
       this.quantity += amt;
       this.quantity = Math.max(this.quantity, 1);
     },
     handleselected(i) {
       this.ddOpen = false;
+      this.quantity = 1;
       this.selected = this.data.items[i];
     }
   },
@@ -121,6 +134,24 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
+.addtocart {
+  position: relative;
+
+  h3 {
+    @include title();
+    font-family: $suisse;
+    width: 100%;
+  }
+  .arrow {
+    width: 6em;
+    // float: right;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: -1;
+  }
+}
 .paypal {
   //   padding: 5em;
   //   position: absolute;
@@ -272,6 +303,7 @@ p {
     background: $lbg;
     position: absolute;
     // bottom: 0;
+    z-index: 2;
     width: 100%;
     p {
       margin: 0 10px;
