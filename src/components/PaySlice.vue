@@ -28,9 +28,9 @@
           </div>
         </div>
         <div class="variation">
-          <div class="qty-row" @click="handleDD">
+          <div class="qty-row link" @click="handleDD">
             <h3 class="label" v-if="selected">{{$cms.textField(selected.variation_label)}}</h3>
-            <div class="qtydd-wrap">
+            <div class="qtydd-wrap link">
               <div :class="`qty dd link ${ddOpen ? 'open' : 'close'}`">
                 <span>›</span>
               </div>
@@ -45,7 +45,7 @@
             >{{$cms.textField(item.variation_label)}}</p>
           </div>
         </div>
-        <div class="addtocart" @click="addToCart">
+        <div class="addtocart link" @click="addToCart">
           <h3>add to cart</h3>
           <Arrow class="arrow" />
         </div>
@@ -109,7 +109,8 @@ export default {
       this.$store.commit("updateCart", {
         item: this.$cms.textField(this.selected.variation_label),
         qty: this.quantity,
-        total: this.selected.price * this.quantity
+        total: this.selected.price * this.quantity,
+        price: this.selected.price
       });
       console.log(this.$store.state.cart);
     },

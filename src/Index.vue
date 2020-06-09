@@ -16,7 +16,6 @@
     <div class="transition-curtain" ref="transition" />
     <!-- <Loading v-if="!loaded" /> -->
     <Loading v-if="!loaded" class="loadingcurtain" />
-
     <div class="nav-wrapper">
       <transition appear v-if="navOpen" :key="navOpen" name="navscreen">
         <NavScreen class="navscreen" :key="navOpen" @scrollTo="scrollTo" />
@@ -37,6 +36,7 @@
 
     <!-- && signatureLoaded -->
     <CursorThing v-if="loaded && winresize.userAgent.desktop" />
+    <CartScreen class="cartscreen" />
   </div>
 </template>
 
@@ -46,6 +46,7 @@ import Loading from "./Loading.vue";
 import NavMenu from "./components/NavMenu.vue";
 import CursorThing from "./components/CursorThing.vue";
 import WorkPageNavMenu from "./components/WorkPageNavMenu.vue";
+import CartScreen from "./components/CartScreen.vue";
 
 export default {
   name: "Index",
@@ -55,7 +56,8 @@ export default {
     Loading,
     NavMenu,
     CursorThing,
-    WorkPageNavMenu
+    WorkPageNavMenu,
+    CartScreen
     // Scrollbar
     // Index
   },
@@ -226,6 +228,9 @@ export default {
   // background: $bg;
   background: white;
   // background: $lbg;
+}
+.cartscreen {
+  z-index: 1;
 }
 // .vert {
 //   cursor: url("assets/vert-cursor.cur"), auto;

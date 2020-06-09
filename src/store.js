@@ -79,7 +79,10 @@ export default new Vuex.Store({
       if (this.state.cart.map((x) => x.item).indexOf(item.item) < 0) {
         this.state.cart.push(item);
       } else {
+        //if product is already in cart, no duplicates
         this.state.cart.find((x) => x.item === item.item).qty += item.qty;
+        this.state.cart.find((x) => x.item === item.item).total +=
+          item.qty * item.price;
       }
       // console.log(this.state.cart.find((x) => x.item === item.item));
       Vue.set(state, "cart", this.state.cart);
