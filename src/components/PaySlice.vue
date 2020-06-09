@@ -16,12 +16,12 @@
             <h2>texy</h2>
           </div>
           <div class="body">
-            <h2 class="price">$10</h2>
+            <h2 class="price">${{selected.price}}</h2>
             <div class="quantity">
-              <h3>Quantity</h3>
+              <h3 class="label">Quantity</h3>
               <div class="qty-counter">
                 <div class="qty link" @click="handlequantity(-1)">
-                  <span>-</span>
+                  <span>–</span>
                 </div>
                 <p>{{quantity}}</p>
                 <div class="qty link" @click="handlequantity(1)">
@@ -30,7 +30,22 @@
               </div>
             </div>
             <div class="variation">
-              <p>17" x 11"</p>
+              <div class="qty-row" @click="handleDD">
+                <h3 class="label">{{selected.variation_label}}</h3>
+                <div class="qtydd-wrap">
+                  <div :class="`qty dd link ${ddOpen ? 'open' : 'close'}`">
+                    <span>›</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dropdown link" v-if="ddOpen">
+                <p
+                  @click="handleselected(i)"
+                  v-for="(item, i) in opts"
+                  :key="i"
+                >{{item.variation_label}}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -69,17 +84,37 @@ export default {
         color: "black",
         tagline: false
       },
-      quantity: 1
+      ddOpen: false,
+      quantity: 1,
+      opts: [
+        {
+          variation_label: "17 x 11",
+          price: 6
+        },
+        {
+          variation_label: "1fdssdfs",
+          price: 4
+        }
+      ],
+      selected: null
     };
   },
   methods: {
+    handleDD() {
+      this.ddOpen = !this.ddOpen;
+    },
     handlequantity(amt) {
       this.quantity += amt;
       this.quantity = Math.max(this.quantity, 1);
+    },
+    handleselected(i) {
+      this.ddOpen = false;
+      this.selected = this.opts[i];
     }
   },
   mounted() {
     // console.log(PayPal);
+    this.selected = this.opts[0];
   }
 };
 </script>
@@ -105,15 +140,15 @@ export default {
   position: relative;
   background: $lbg;
 }
-.label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  text-align: center;
-  font-family: $acumin;
-  pointer-events: none;
-}
+// .label {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translateY(-50%) translateX(-50%);
+//   text-align: center;
+//   font-family: $acumin;
+//   pointer-events: none;
+// }
 
 .body {
   /deep/ a {
@@ -169,6 +204,54 @@ p {
   border-top: 1px solid black;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+.variation {
+  position: relative;
+  .qtydd-wrap {
+    display: inline-block;
+    width: 50%;
+    text-align: right;
+  }
+  h3 {
+    display: inline-block;
+    width: 50%;
+  }
+  .qty {
+    border-radius: 5000px;
+    border: 1px solid black;
+    width: 2em;
+    height: 2em;
+    display: inline-block;
+    position: relative;
+    vertical-align: bottom;
+  }
+  .open {
+    transform: rotate(180deg);
+  }
+  .dd {
+    span {
+      font-size: 40px;
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-25%) translateY(-45%) rotate(90deg);
+      display: inline-block;
+    }
+  }
+  .dropdown {
+    background: $lbg;
+    position: absolute;
+    // bottom: 0;
+    width: 100%;
+    p {
+      margin: 0 10px;
+      padding: 10px 0;
+      &:not(:last-child) {
+        border-bottom: 1px solid $bg;
+      }
+    }
+  }
 }
 .quantity {
   p {
