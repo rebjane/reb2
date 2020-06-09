@@ -12,7 +12,7 @@
 
       <transition v-for="(item , i) in data.body" :key="i">
         <div class="component">
-          <component :is="item.slice_type" :data="item" />
+          <component :is="item.slice_type" :data="item" :title="$cms.textField(data.title)" />
         </div>
       </transition>
     </div>

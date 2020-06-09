@@ -35,8 +35,9 @@
     </div>
 
     <!-- && signatureLoaded -->
+    <CartScreen v-if="showCart" class="cartscreen" />
+    <div class="cart link" @click="toggleCartOverlay">CART</div>
     <CursorThing v-if="loaded && winresize.userAgent.desktop" />
-    <CartScreen class="cartscreen" />
   </div>
 </template>
 
@@ -98,6 +99,9 @@ export default {
     };
   },
   methods: {
+    toggleCartOverlay() {
+      this.$store.commit("updateShowCart", !this.showCart);
+    },
     handleMobileNavTitle(e) {
       this.mblNavTitle = e;
     },
@@ -145,7 +149,8 @@ export default {
       "loadPct",
       "loaded",
       "navOpen",
-      "winresize"
+      "winresize",
+      "showCart"
     ])
   },
   mounted() {
@@ -170,6 +175,7 @@ export default {
   height: 0;
   @include ease(height);
 }
+
 .view {
   transform: translateY(0%);
   min-height: 100%;
@@ -230,7 +236,16 @@ export default {
   // background: $lbg;
 }
 .cartscreen {
-  z-index: 1;
+  z-index: 10;
+}
+.cart {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 6em;
+  height: 6em;
+  z-index: 11;
+  background: black;
 }
 // .vert {
 //   cursor: url("assets/vert-cursor.cur"), auto;

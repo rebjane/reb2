@@ -23,6 +23,8 @@
       @scrollTo="handleScrollTo"
       :mblNavTitle="mblNavTitle"
     />
+    <div class="c">CART</div>
+
     <div class="socials" v-if="winresize.size.desktop">
       <ul>
         <transition v-for="(item, i) in socialmedia" :key="i" appear name="time">
@@ -117,6 +119,11 @@ export default {
   left: -120px;
   height: 0px;
   transform: translateY(-100%);
+}
+.cart {
+  position: fixed;
+  right: 0;
+  top: 0;
 }
 .logo {
   pointer-events: none;

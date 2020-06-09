@@ -69,35 +69,14 @@ export default {
     data: {
       type: Object,
       default: null
-    }
+    },
+    title: String
   },
   data() {
     return {
-      creds: {
-        sandbox:
-          "ARudPkpGlblcgwrFWsdfFlq0eZeHb0_YHRDWwr9jQq-4AKk9XJsEhnYWJwb_390ir5r_ClQosUz82aeS",
-        production:
-          "ARutiDw--wu1dU1i2332eIOi6fBQddU1fXFIvqQwb2-ApGtoh7ef-Oe8aVq78N--iZHKivXawEpuOPt0"
-      },
-      buttonstyle: {
-        label: "",
-        size: "large", // small | medium | large | responsive
-        shape: "rect", // pill | rect
-        color: "black",
-        tagline: false
-      },
       ddOpen: false,
       quantity: 1,
-      opts: [
-        {
-          variation_label: "17 x 11",
-          price: 6
-        },
-        {
-          variation_label: "1fdssdfs",
-          price: 4
-        }
-      ],
+
       selected: null
     };
   },
@@ -110,7 +89,8 @@ export default {
         item: this.$cms.textField(this.selected.variation_label),
         qty: this.quantity,
         total: this.selected.price * this.quantity,
-        price: this.selected.price
+        price: this.selected.price,
+        title: this.title || ""
       });
       console.log(this.$store.state.cart);
     },

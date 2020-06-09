@@ -31,6 +31,7 @@ export default new Vuex.Store({
     lastScrollPos: 0,
     cart: [],
     cartTotal: 0,
+    showCart: false,
   },
 
   mutations: {
@@ -86,6 +87,9 @@ export default new Vuex.Store({
       }
       // console.log(this.state.cart.find((x) => x.item === item.item));
       Vue.set(state, "cart", this.state.cart);
+    },
+    updateShowCart(state, showCart) {
+      Vue.set(state, "showCart", showCart);
     },
   },
 

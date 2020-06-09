@@ -2,34 +2,22 @@
   <div class="cartscreen">
     <div class="cartscreen-inner">
       <div class="items-outer">
-        <table class="items">
-          <tr>
+        <table class="items" v-if="cart && cart.length">
+          <tr v-for="(item, i) in cart" :key="i">
             <td class="products">
               <div class="x">x</div>
-              <h3>Product 1</h3>
-              <p>Variation 3</p>
+              <h3>{{item.title}}</h3>
+              <p>{{item.item}}</p>
             </td>
             <td>
-              <input class="quantity" type="text" value="2" />
+              <input class="quantity" type="text" :value="item.qty" />
             </td>
             <td>
-              <p class="price">$10</p>
-            </td>
-          </tr>
-          <tr>
-            <td class="products">
-              <div class="x">x</div>
-              <h3>Product 1</h3>
-              <p>Variation 3</p>
-            </td>
-            <td>
-              <input class="quantity" type="text" value="2" />
-            </td>
-            <td>
-              <p class="price">$10</p>
+              <p class="price">${{item.price}}</p>
             </td>
           </tr>
         </table>
+        <div v-else>Cart is empty.</div>
       </div>
       <div class="total">
         <h3>Total</h3>
@@ -48,6 +36,8 @@
 
 <script>
 import PayPal from "vue-paypal-checkout";
+import { mapState } from "vuex";
+
 export default {
   name: "CartScreen",
   components: {
@@ -58,6 +48,9 @@ export default {
       type: Object,
       default: null
     }
+  },
+  computed: {
+    ...mapState(["cart"])
   },
   data() {
     return {
