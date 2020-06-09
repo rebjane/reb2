@@ -178,7 +178,7 @@ p {
   font-family: $suisse;
   color: $bg;
   overflow-wrap: break-word;
-  hyphens: auto;
+  // hyphens: auto;
 }
 h1,
 h2,
@@ -189,7 +189,7 @@ h6 {
   font-weight: normal;
   color: $bg;
   overflow-wrap: break-word;
-  hyphens: auto;
+  // hyphens: auto;
   pointer-events: none;
 }
 #app-wrapper {
