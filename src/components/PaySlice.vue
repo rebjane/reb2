@@ -9,48 +9,46 @@
         :client="creds"
       />
     <span class="label">Pay Securely with Paypal or Debit / Credit Card</span>-->
-    <div class="text-rows">
-      <transition v-for="(item, i) in data.items" :key="i">
-        <div class="text-row">
-          <div class="title">
-            <h2>texy</h2>
-          </div>
-          <div class="body">
-            <h2 class="price">${{selected.price}}</h2>
-            <div class="quantity">
-              <h3 class="label">Quantity</h3>
-              <div class="qty-counter">
-                <div class="qty link" @click="handlequantity(-1)">
-                  <span>–</span>
-                </div>
-                <p>{{quantity}}</p>
-                <div class="qty link" @click="handlequantity(1)">
-                  <span>+</span>
-                </div>
-              </div>
+    <!-- <div class="text-rows"> -->
+    <!-- <transition v-for="(item, i) in data.items" :key="i"> -->
+    <div class="text-row">
+      <div class="title"></div>
+      <div class="body">
+        <h2 class="price" v-if="selected">${{selected.price}}</h2>
+        <div class="quantity">
+          <h3 class="label">Quantity</h3>
+          <div class="qty-counter">
+            <div class="qty link" @click="handlequantity(-1)">
+              <span>–</span>
             </div>
-            <div class="variation">
-              <div class="qty-row" @click="handleDD">
-                <h3 class="label">{{selected.variation_label}}</h3>
-                <div class="qtydd-wrap">
-                  <div :class="`qty dd link ${ddOpen ? 'open' : 'close'}`">
-                    <span>›</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="dropdown link" v-if="ddOpen">
-                <p
-                  @click="handleselected(i)"
-                  v-for="(item, i) in opts"
-                  :key="i"
-                >{{item.variation_label}}</p>
-              </div>
+            <p>{{quantity}}</p>
+            <div class="qty link" @click="handlequantity(1)">
+              <span>+</span>
             </div>
           </div>
         </div>
-      </transition>
+        <div class="variation">
+          <div class="qty-row" @click="handleDD">
+            <h3 class="label" v-if="selected">{{$cms.textField(selected.variation_label)}}</h3>
+            <div class="qtydd-wrap">
+              <div :class="`qty dd link ${ddOpen ? 'open' : 'close'}`">
+                <span>›</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown link" v-if="ddOpen">
+            <p
+              @click="handleselected(i)"
+              v-for="(item, i) in data.items"
+              :key="i"
+            >{{$cms.textField(item.variation_label)}}</p>
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- </transition> -->
+    <!-- </div> -->
     <!-- </div> -->
   </div>
 </template>
@@ -109,12 +107,13 @@ export default {
     },
     handleselected(i) {
       this.ddOpen = false;
-      this.selected = this.opts[i];
+      this.selected = this.data.items[i];
     }
   },
   mounted() {
     // console.log(PayPal);
-    this.selected = this.opts[0];
+    this.selected = this.data.items[0];
+    console.log(this.data);
   }
 };
 </script>
@@ -197,7 +196,7 @@ p {
   }
 }
 .price {
-  padding: 1em 0;
+  padding-bottom: 1em;
 }
 .quantity,
 .variation {
