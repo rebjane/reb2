@@ -14,6 +14,12 @@
     </p>
     <p class="no">{{invoiceNo}}</p>
     <p>in the subject header. Thank you!</p>
+    <div class="close">
+      <p class="x link" @click.prevent="close">
+        x
+        <br />CLOSE
+      </p>
+    </div>
   </div>
 </template>
 
@@ -27,24 +33,22 @@ export default {
         this.invoiceNo = this.data.id;
         this.time = this.data.create_time;
         this.name = `${this.data.payer.payer_info.first_name} ${this.data.payer.payer_info.last_name} `;
-        // this.items = this.data.transations.map(x => {
-        //     return ``
-        // })
-        this.$smtp.send({
-          SecureToken: "d0125a86-9991-42dd-8bc1-3e6a30fff61b",
-          To: "rebjanec@gmail.com",
-          From: "rebjanec@gmail.com",
-          Subject: "PAYPAL PURCHASE From Website",
-          Body: `Invoice Number: ${this.invoiceNo} <br/>
-            Cart ID: ${this.data.cart}
-            Name: ${this.name} <br/>
-            Time: ${this.time} <br/> <br/>
-            Ship to: ${this.data.payer.payer_info.shipping_address.line1} <br/>
-            ${this.data.payer.payer_info.shipping_address.city} <br/>
-             ${this.data.payer.payer_info.shipping_address.state}, 
-              ${this.data.payer.payer_info.shipping_address.country_code} <br/>
-               ${this.data.payer.payer_info.shipping_address.postal_code} <br/> <br/>`
-        });
+
+        // this.$smtp.send({
+        //   SecureToken: "d0125a86-9991-42dd-8bc1-3e6a30fff61b",
+        //   To: "rebjanec@gmail.com",
+        //   From: "rebjanec@gmail.com",
+        //   Subject: "PAYPAL PURCHASE From Website",
+        //   Body: `Invoice Number: ${this.invoiceNo} <br/>
+        //     Cart ID: ${this.data.cart}
+        //     Name: ${this.name} <br/>
+        //     Time: ${this.time} <br/> <br/>
+        //     Ship to: ${this.data.payer.payer_info.shipping_address.line1} <br/>
+        //     ${this.data.payer.payer_info.shipping_address.city} <br/>
+        //      ${this.data.payer.payer_info.shipping_address.state},
+        //       ${this.data.payer.payer_info.shipping_address.country_code} <br/>
+        //        ${this.data.payer.payer_info.shipping_address.postal_code} <br/> <br/>`
+        // });
 
         console.log(this.data);
       },
@@ -67,7 +71,11 @@ export default {
       items: null
     };
   },
-  methods: {},
+  methods: {
+    close() {
+      this.$store.commit("popupInfo", null);
+    }
+  },
   mounted() {}
 };
 </script>
@@ -95,6 +103,14 @@ export default {
   }
   .no {
     padding: 1em 0;
+  }
+  .close {
+    .x {
+      padding-top: 2em;
+    }
+    p {
+      display: inline-block;
+    }
   }
 }
 </style>

@@ -15,7 +15,6 @@
     </keep-alive>
     <div class="transition-curtain" ref="transition" />
     <!-- <Loading v-if="!loaded" /> -->
-    <Loading v-if="!loaded" class="loadingcurtain" />
     <div class="nav-wrapper">
       <transition appear v-if="navOpen" :key="navOpen" name="navscreen">
         <NavScreen class="navscreen" :key="navOpen" @scrollTo="scrollTo" />
@@ -38,13 +37,16 @@
     <transition appear name="cartscreen">
       <CartScreen v-if="showCart" class="cartscreen" />
     </transition>
-    <div ref="cart" class="cart link" @click="toggleCartOverlay">
+    <div ref="cart" v-if="!navOpen" class="cart link" @click="toggleCartOverlay">
       <CartFull class="fullcart link" v-if="showFullCart" />
 
       <Cart class="emptycart link" v-else />
     </div>
-    <CursorThing v-if="loaded && winresize.userAgent.desktop" />
-    <Popup class="popup" :data="popup" v-if="popup" />
+    <transition appear name="popup">
+      <Popup class="popup" :data="popup" v-if="popup" />
+    </transition>
+    <CursorThing class="cursor" v-if="loaded && winresize.userAgent.desktop" />
+    <Loading v-if="!loaded" class="loadingcurtain" />
   </div>
 </template>
 
@@ -211,7 +213,7 @@ export default {
   height: 100%;
   // background: $lbg;
   background: white;
-  z-index: 2;
+  z-index: 9;
   height: 0;
   @include ease(height);
 }
@@ -225,7 +227,7 @@ export default {
 }
 .loadingcurtain {
   position: fixed;
-  z-index: 3;
+  z-index: 20;
 }
 .navscreen {
   position: fixed;
@@ -285,13 +287,13 @@ export default {
 }
 .cartscreen {
   overflow: hidden;
-  z-index: 10;
+  z-index: 3;
   max-height: 100%;
 }
 .cart {
   position: fixed;
   right: 0;
-  padding: 1em;
+  padding: 0.25em 1em 1em 1em;
   mix-blend-mode: difference;
   @include above($tablet) {
     top: 0;
@@ -304,7 +306,7 @@ export default {
     width: 4em;
     height: 4em;
   }
-  z-index: 11;
+  z-index: 5;
   // background: black;
   transition: transform 100ms ease;
 }
@@ -313,12 +315,37 @@ export default {
 // }
 .popup {
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
   height: 100%;
   width: 100%;
+  max-height: 100% !important;
+  overflow: hidden;
+  z-index: 10;
 }
+.popup-enter-active {
+  bottom: 0 !important;
+}
+.popup-leave-active {
+  top: 0 !important;
+}
+.popup-enter,
+.popup-leave-to {
+  max-height: 0 !important;
+}
+.popup-enter-active,
+.popup-leave-active {
+  @include ease(max-height);
+}
+.popup-enter-to,
+.popup-leave {
+  max-height: 100% !important;
+}
+
 .emptycart {
   margin-top: 18px;
+}
+.cursor {
+  z-index: 12;
 }
 </style>

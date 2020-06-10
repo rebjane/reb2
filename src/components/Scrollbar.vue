@@ -66,7 +66,8 @@ export default {
 @import "../styles/stylesheet.scss";
 .scrollbar-div {
   height: 0;
-  z-index: 10;
+  // z-index: 10;
+  z-index: 3;
   mix-blend-mode: difference;
 }
 

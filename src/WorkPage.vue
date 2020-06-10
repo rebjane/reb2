@@ -27,13 +27,31 @@ import Scrolly from "./scrolly.js";
 import Scrollbar from "./components/Scrollbar.vue";
 
 export default {
-  name: "Template",
+  name: "WorkPage",
   components: {
     Scrollbar
   },
   watch: {
     winresize() {
       if (this.scroll) this.scroll.size();
+    },
+    showCart: {
+      handler() {
+        // console.log(this.showCart);
+        if (this.showCart && this.scroll) this.scroll.deafen();
+        else if (!this.showCart && this.scroll) this.scroll.listen();
+      },
+      deep: true,
+      immediate: true
+    },
+    popup: {
+      handler() {
+        // console.log(this.showCart);
+        if (this.popup && this.scroll) this.scroll.deafen();
+        else if (!this.popup && this.scroll) this.scroll.listen();
+      },
+      deep: true,
+      immediate: true
     },
     data: {
       handler() {
@@ -63,7 +81,9 @@ export default {
       "loadPct",
       "loaded",
       "navOpen",
-      "winresize"
+      "winresize",
+      "showCart",
+      "popup"
     ])
   },
   methods: {

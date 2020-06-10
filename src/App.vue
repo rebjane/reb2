@@ -36,6 +36,24 @@ export default {
   },
 
   watch: {
+    showCart: {
+      handler() {
+        // console.log(this.showCart);
+        if (this.showCart && this.globalscroll) this.globalscroll.deafen();
+        else if (!this.showCart && this.globalscroll)
+          this.globalscroll.listen();
+      },
+      deep: true,
+      immediate: true
+    },
+    popup: {
+      handler() {
+        if (this.popup && this.globalscroll) this.globalscroll.deafen();
+        else if (!this.popup && this.globalscroll) this.globalscroll.listen();
+      },
+      deep: true,
+      immediate: true
+    },
     winresize: {
       handler() {
         this.winw = window.innerWidth;
@@ -108,7 +126,9 @@ export default {
       "navOpen",
       "scrollAllowed",
       "scroll",
-      "loaded"
+      "loaded",
+      "showCart",
+      "popup"
     ])
   },
   methods: {
