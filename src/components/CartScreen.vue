@@ -5,27 +5,30 @@
         <table class="items" v-if="cart && cart.length">
           <tr v-for="(item, i) in cart" :key="i">
             <td class="products">
-              <div class="x">x</div>
+              <div class="x link" @click="removeCart(item)">x</div>
               <h3>{{item.title}}</h3>
               <p>{{item.item}}</p>
             </td>
             <td>
-              <input class="quantity" type="text" :value="item.qty" />
+              <input ref="qty" pattern="[0-9]{1,5}" class="quantity" type="text" :value="item.qty" />
+              <p class="link" @click="handleQtyChange(item, i)">Update</p>
             </td>
             <td>
               <p class="price">${{item.price}}</p>
             </td>
           </tr>
         </table>
-        <div v-else>Cart is empty.</div>
+        <div v-else>
+          <p>Cart is empty.</p>
+        </div>
       </div>
       <div class="total">
         <h3>Total</h3>
-        <h3>$40</h3>
+        <h3>${{cartTotal}}</h3>
         <PayPal
           class="paypal link"
           :button-style="buttonstyle"
-          :amount="'5'"
+          :amount="cartTotal.toString()"
           :currency="'CAD'"
           :client="creds"
         />
@@ -50,7 +53,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["cart"])
+    ...mapState(["cart", "cartTotal"])
   },
   data() {
     return {
@@ -69,7 +72,30 @@ export default {
       }
     };
   },
-  methods: {},
+  methods: {
+    handleQtyChange(item, i) {
+      if (this.$refs.qty[i].value && parseInt(this.$refs.qty[i].value)) {
+        console.log("target item is ", item);
+        var updatedItem = item;
+        updatedItem.qty = parseInt(this.$refs.qty[i].value);
+        updatedItem.total = updatedItem.qty * item.price;
+
+        this.$store.commit("updateCartQuantity", updatedItem);
+
+        // console.log(
+        //   item,
+        //   this.cart,
+        //   this.$refs.qty,
+        //   typeof this.$refs.qty[0].value,
+        //   this.$refs.qty[0].value,
+        //   parseInt(this.$refs.qty[0].value)
+        // );
+      }
+    },
+    removeCart(item) {
+      this.$store.commit("removeCart", item);
+    }
+  },
   mounted() {}
 };
 </script>
@@ -97,7 +123,8 @@ $cpad: 6em;
   position: relative;
   .x {
     position: absolute;
-    left: -3em;
+    padding: 2em;
+    left: -5em;
     top: 50%;
     transform: translateY(calc(-50% - 1em));
     font-family: $acumin;

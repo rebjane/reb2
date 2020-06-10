@@ -87,9 +87,34 @@ export default new Vuex.Store({
       }
       // console.log(this.state.cart.find((x) => x.item === item.item));
       Vue.set(state, "cart", this.state.cart);
+      this.state.cartTotal = this.state.cart
+        .map((x) => x.total)
+        .reduce((a, b) => a + b);
+      // this.mutations.updateCartTotal(this.state.cartTotal);
+      Vue.set(state, "cartTotal", this.state.cartTotal);
+
+      // console.log("this.state.showCart", this.state.showCart);
+    },
+    removeCart(state, item) {
+      this.state.cartTotal -= item.total;
+      Vue.set(state, "cartTotal", this.state.cartTotal);
+
+      this.state.cart = this.state.cart.filter((x) => x.item !== item.item);
+      Vue.set(state, "cart", this.state.cart);
+      // console.log(this.state.cart);
     },
     updateShowCart(state, showCart) {
       Vue.set(state, "showCart", showCart);
+    },
+
+    updateCartQuantity(state, updatedItem) {
+      this.state.cart.map((x) =>
+        x.item === updatedItem.item ? updatedItem : x.item
+      );
+      this.state.cartTotal = this.state.cart
+        .map((x) => x.total)
+        .reduce((a, b) => a + b);
+      Vue.set(state, "cartTotal", this.state.cartTotal);
     },
   },
 
