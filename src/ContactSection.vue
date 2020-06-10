@@ -224,11 +224,17 @@ select {
 .submit {
   width: 100%;
   position: relative;
+  border-radius: 500px;
+  border: 1px solid $bg;
+  margin-top: 1em;
+  .link {
+    padding-left: 0.5em;
+  }
   .arrow {
-    width: 6em;
+    // width: 6em;
     // float: right;
     position: absolute;
-    right: 0;
+    right: 1em;
     top: 50%;
     transform: translateY(-50%);
     z-index: -1;

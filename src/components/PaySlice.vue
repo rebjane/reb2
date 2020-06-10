@@ -117,20 +117,27 @@ export default {
 @import "../styles/stylesheet.scss";
 .addtocart {
   position: relative;
+  // background: $lbg;
+  border: 1px solid $bg;
+  border-radius: 500px;
+  // padding: 0 1em;
+  padding-left: 1em;
+  // margin: 0 1em;
 
   h3 {
     @include title();
     font-family: $suisse;
     width: 100%;
+    margin: 0;
   }
   .arrow {
-    width: 6em;
+    // width: 6em;
     // float: right;
     position: absolute;
-    right: 0;
+    right: 1em;
     top: 50%;
     transform: translateY(-50%);
-    z-index: -1;
+    z-index: 1;
   }
 }
 .paypal {

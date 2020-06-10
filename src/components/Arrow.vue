@@ -28,4 +28,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
+.arrow {
+  @include below($tablet) {
+    width: 2em;
+  }
+  @include above($tablet) {
+    width: 4em;
+  }
+}
 </style>

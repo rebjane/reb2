@@ -3,7 +3,12 @@
     <div class="cartscreen-inner">
       <div class="items-outer">
         <table class="items" v-if="cart && cart.length">
-          <tr v-for="(item, i) in cart" :key="i">
+          <div class="delete">
+            <p>Remove</p>
+          </div>
+          <tr ref="row" class="row" v-for="(item, i) in cart" :key="i">
+            <div class="rowbg" />
+
             <td class="products">
               <div class="x link" @click="removeCart(item)">x</div>
               <h3>{{item.title}}</h3>
@@ -85,7 +90,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["cart", "cartTotal"])
+    ...mapState(["cart", "cartTotal", "winresize"])
   },
   data() {
     return {
@@ -108,12 +113,18 @@ export default {
       },
       numRegex: new RegExp("^[0-9]+$"),
       acceptedKeys: [8, 37, 38, 39, 40], //backspace, the arrow keys
-      items: null
+      items: null,
+      startSwipePos: 0,
+      swipeRowPos: 0,
+      lastSwipePos: 0,
+      swipee: null,
+      startSwipee: null,
+      stopSwipee: null
     };
   },
   methods: {
     paymentCompleted(e) {
-      console.log("payment done", e);
+      // console.log("payment done", e);
       this.$store.commit("updateShowCart", false);
       this.$store.commit("emptyCart");
       this.$store.commit("popupInfo", e);
@@ -147,9 +158,75 @@ export default {
       ) {
         e.preventDefault();
       }
+    },
+    startSwipe(e) {
+      // console.log(e);
+      this.startSwipePos = e.touches[0].screenX;
+      this.lastSwipePos = this.startSwipePos;
+      // console.log("start");
+    },
+    removeEventListeners(item) {
+      this.$refs.row[item.i].removeEventListener(
+        "touchstart",
+        this.startSwipe,
+        true
+      );
+      this.$refs.row[item.i].removeEventListener(
+        "touchmove",
+        this.swipee,
+        true
+      );
+      this.$refs.row[item.i].removeEventListener(
+        "touchend",
+        this.stopSwipee,
+        true
+      );
+    },
+    swipe(item) {
+      return e => {
+        // console.log(item.i);
+        // console.log(e);
+        this.swipeRowPos += -(this.lastSwipePos - e.touches[0].screenX);
+        this.swipeRowPos = Math.min(this.swipeRowPos, 0);
+        this.lastSwipePos = e.touches[0].screenX;
+        item.row.style = `transform: translateX(${this.swipeRowPos}px)`;
+
+        if (this.startSwipePos - e.touches[0].screenX > window.innerWidth / 3) {
+          // console.log("delete");
+
+          this.removeEventListeners(item);
+          this.$store.commit("removeCart", item.cart);
+        }
+      };
+    },
+    stopSwipe(row) {
+      // console.log("end");
+      return () => {
+        this.swipeRowPos = 0;
+        row.style = `transform: translateX(${this.swipeRowPos}px)`;
+      };
     }
   },
   mounted() {
+    if (this.winresize.userAgent.tablet) {
+      for (let i = 0; i < this.cart.length; i++) {
+        this.$refs.row[i].addEventListener("touchstart", this.startSwipe, true);
+        this.$refs.row[i].addEventListener(
+          "touchmove",
+          (this.swipee = this.swipe({
+            cart: this.cart[i],
+            row: this.$refs.row[i],
+            i: i
+          })),
+          true
+        );
+        this.$refs.row[i].addEventListener(
+          "touchend",
+          (this.stopSwipee = this.stopSwipe(this.$refs.row[i])),
+          true
+        );
+      }
+    }
     if (this.cart) {
       for (let i = 0; i < this.cart.length; i++) {
         this.$refs.qty[i].addEventListener("keydown", this.noLetterKeys);
@@ -167,15 +244,27 @@ $cpad: 6em;
 
 .cartscreen-inner {
   // @include workpadding();
-  display: table;
-  width: calc(100% - calc(#{$cpad} * 2));
-  margin: 0 $cpad;
+  @include below($tablet) {
+    padding: 2em 0;
+    width: calc(100% - 4em);
+    margin: 0 2em;
+    margin-top: 50vh;
+    transform: translateY(-50%);
+  }
+  @include above($tablet) {
+    display: table;
+
+    width: calc(100% - calc(#{$cpad} * 2));
+    margin: 0 $cpad;
+  }
 }
 .cartscreen {
   position: fixed;
   height: 100%;
   width: 100%;
-
+  @include below($tablet) {
+    overflow: auto;
+  }
   top: 0;
   right: 0;
   background-color: white;
@@ -203,19 +292,60 @@ $cpad: 6em;
   }
 }
 .total {
-  display: table-cell;
+  @include above($tablet) {
+    display: table-cell;
+    height: 100vh;
+    padding-left: 2em;
+    border-left: 1px solid $lbg;
+  }
+  @include below($tablet) {
+    border-top: 1px solid $lbg;
+  }
   vertical-align: middle;
-  height: 100vh;
-  padding-left: 2em;
-  border-left: 1px solid $lbg;
 }
 .items-outer {
   vertical-align: middle;
-  height: 100vh;
-  width: 75%;
-  display: table-cell;
+  @include above($tablet) {
+    display: table-cell;
+    width: 75%;
+    height: 100vh;
+  }
+  @include below($tablet) {
+    width: 100%;
+    padding-bottom: 2em;
+  }
 
   .items {
+    .row {
+      position: relative;
+      overflow: hidden;
+    }
+    .rowbg {
+      background: white;
+      position: absolute;
+      top: -5px;
+      left: -1px;
+      width: calc(100% + 2px);
+      height: calc(100% + 10px);
+      z-index: -1;
+    }
+    .delete {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: red;
+      text-align: right;
+      z-index: -1;
+      p {
+        color: white;
+        font-family: $acuminc;
+        margin-right: 1em;
+        // @include mini();
+      }
+    }
+    position: relative;
     width: 100%;
     tr:not(:last-child) {
       td {
