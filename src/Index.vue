@@ -38,6 +38,7 @@
     <CartScreen v-if="showCart" class="cartscreen" />
     <div class="cart link" @click="toggleCartOverlay">CART</div>
     <CursorThing v-if="loaded && winresize.userAgent.desktop" />
+    <Popup class="popup" :data="popup" v-if="popup" />
   </div>
 </template>
 
@@ -48,6 +49,7 @@ import NavMenu from "./components/NavMenu.vue";
 import CursorThing from "./components/CursorThing.vue";
 import WorkPageNavMenu from "./components/WorkPageNavMenu.vue";
 import CartScreen from "./components/CartScreen.vue";
+import Popup from "./components/Popup.vue";
 
 export default {
   name: "Index",
@@ -58,7 +60,8 @@ export default {
     NavMenu,
     CursorThing,
     WorkPageNavMenu,
-    CartScreen
+    CartScreen,
+    Popup
     // Scrollbar
     // Index
   },
@@ -150,7 +153,8 @@ export default {
       "loaded",
       "navOpen",
       "winresize",
-      "showCart"
+      "showCart",
+      "popup"
     ])
   },
   mounted() {
@@ -250,4 +254,11 @@ export default {
 // .vert {
 //   cursor: url("assets/vert-cursor.cur"), auto;
 // }
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
 </style>

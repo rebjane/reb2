@@ -32,6 +32,7 @@ export default new Vuex.Store({
     cart: [],
     cartTotal: 0,
     showCart: false,
+    popup: null,
   },
 
   mutations: {
@@ -91,13 +92,19 @@ export default new Vuex.Store({
         .map((x) => x.total)
         .reduce((a, b) => a + b);
       // this.mutations.updateCartTotal(this.state.cartTotal);
-      Vue.set(state, "cartTotal", this.state.cartTotal);
+      Vue.set(state, "cartTotal", this.state.cartTotal.toFixed(2));
 
       // console.log("this.state.showCart", this.state.showCart);
     },
+    emptyCart() {
+      this.state.cart = [];
+    },
+    popupInfo(state, popup) {
+      Vue.set(state, "popup", popup);
+    },
     removeCart(state, item) {
       this.state.cartTotal -= item.total;
-      Vue.set(state, "cartTotal", this.state.cartTotal);
+      Vue.set(state, "cartTotal", this.state.cartTotal.toFixed(2));
 
       this.state.cart = this.state.cart.filter((x) => x.item !== item.item);
       Vue.set(state, "cart", this.state.cart);
@@ -114,7 +121,7 @@ export default new Vuex.Store({
       this.state.cartTotal = this.state.cart
         .map((x) => x.total)
         .reduce((a, b) => a + b);
-      Vue.set(state, "cartTotal", this.state.cartTotal);
+      Vue.set(state, "cartTotal", this.state.cartTotal.toFixed(2));
     },
   },
 

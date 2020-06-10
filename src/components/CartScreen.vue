@@ -40,7 +40,11 @@
           :amount="cartTotal.toString()"
           :currency="'CAD'"
           :client="creds"
+          :items="items"
+          :env="'sandbox'"
+          @payment-completed="paymentCompleted"
         />
+        <!-- REMOVE SANDBOX BEFORE YOU DEPLOY -->
       </div>
     </div>
   </div>
@@ -52,6 +56,25 @@ import { mapState } from "vuex";
 
 export default {
   name: "CartScreen",
+  watch: {
+    cart: {
+      handler() {
+        // console.log(e);
+        this.items = this.cart.map(item => {
+          return {
+            name: `Item: ${item.title} <br/> Desc: ${item.item}`,
+            // description: item.item,
+            quantity: item.qty.toString(),
+            price: item.price.toString(),
+            currency: "CAD"
+          };
+        });
+        // console.log(this.items);
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   components: {
     PayPal
   },
@@ -67,10 +90,14 @@ export default {
   data() {
     return {
       creds: {
+        // sandbox:
+        //   "ARudPkpGlblcgwrFWsdfFlq0eZeHb0_YHRDWwr9jQq-4AKk9XJsEhnYWJwb_390ir5r_ClQosUz82aeS",
+        // production:
+        //   "ARutiDw--wu1dU1i2332eIOi6fBQddU1fXFIvqQwb2-ApGtoh7ef-Oe8aVq78N--iZHKivXawEpuOPt0" //that's for the legit rebjanec@gmail.com account
         sandbox:
           "ARudPkpGlblcgwrFWsdfFlq0eZeHb0_YHRDWwr9jQq-4AKk9XJsEhnYWJwb_390ir5r_ClQosUz82aeS",
         production:
-          "ARutiDw--wu1dU1i2332eIOi6fBQddU1fXFIvqQwb2-ApGtoh7ef-Oe8aVq78N--iZHKivXawEpuOPt0"
+          "Afu7lU2kZHTbWosbO1q463icvztC4_VqfMx_Q_daaKQmhSmtDDOQrcxC4bod8JN3L0-MJmjV6TMazB_I"
       },
       buttonstyle: {
         label: "",
@@ -80,10 +107,17 @@ export default {
         tagline: false
       },
       numRegex: new RegExp("^[0-9]+$"),
-      acceptedKeys: [8, 37, 38, 39, 40] //backspace, the arrow keys
+      acceptedKeys: [8, 37, 38, 39, 40], //backspace, the arrow keys
+      items: null
     };
   },
   methods: {
+    paymentCompleted(e) {
+      console.log("payment done", e);
+      this.$store.commit("updateShowCart", false);
+      this.$store.commit("emptyCart");
+      this.$store.commit("popupInfo", e);
+    },
     handleQtyChange(item, i) {
       if (this.$refs.qty[i].value && parseInt(this.$refs.qty[i].value)) {
         var updatedItem = item;
