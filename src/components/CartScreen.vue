@@ -10,8 +10,17 @@
               <p>{{item.item}}</p>
             </td>
             <td>
-              <input ref="qty" pattern="[0-9]{1,5}" class="quantity" type="text" :value="item.qty" />
-              <p class="link" @click="handleQtyChange(item, i)">Update</p>
+              <input
+                required
+                ref="qty"
+                pattern="[0-9]{1,5}"
+                class="quantity"
+                type="text"
+                :value="item.qty"
+                @input="handleQtyChange(item, i)"
+              />
+              <p class="link">Update</p>
+              <!-- @click="handleQtyChange(item, i)" -->
             </td>
             <td>
               <p class="price">${{item.price}}</p>
@@ -69,13 +78,14 @@ export default {
         shape: "rect", // pill | rect
         color: "black",
         tagline: false
-      }
+      },
+      numRegex: new RegExp("^[0-9]+$"),
+      acceptedKeys: [8, 37, 38, 39, 40] //backspace, the arrow keys
     };
   },
   methods: {
     handleQtyChange(item, i) {
       if (this.$refs.qty[i].value && parseInt(this.$refs.qty[i].value)) {
-        console.log("target item is ", item);
         var updatedItem = item;
         updatedItem.qty = parseInt(this.$refs.qty[i].value);
         updatedItem.total = updatedItem.qty * item.price;
@@ -94,9 +104,25 @@ export default {
     },
     removeCart(item) {
       this.$store.commit("removeCart", item);
+    },
+    noLetterKeys(e) {
+      // console.log(e.which);
+      if (
+        !this.numRegex.test(e.key) &&
+        this.acceptedKeys.indexOf(e.which) < 0
+      ) {
+        e.preventDefault();
+      }
     }
   },
-  mounted() {}
+  mounted() {
+    if (this.cart) {
+      for (let i = 0; i < this.cart.length; i++) {
+        this.$refs.qty[i].addEventListener("keydown", this.noLetterKeys);
+      }
+    }
+  },
+  beforeDestroy() {}
 };
 </script>
 
