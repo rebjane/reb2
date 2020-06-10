@@ -39,7 +39,9 @@
       <CartScreen v-if="showCart" class="cartscreen" />
     </transition>
     <div ref="cart" class="cart link" @click="toggleCartOverlay">
-      <Cart class="link" />
+      <CartFull class="fullcart link" v-if="showFullCart" />
+
+      <Cart class="emptycart link" v-else />
     </div>
     <CursorThing v-if="loaded && winresize.userAgent.desktop" />
     <Popup class="popup" :data="popup" v-if="popup" />
@@ -53,6 +55,8 @@ import NavMenu from "./components/NavMenu.vue";
 import CursorThing from "./components/CursorThing.vue";
 import WorkPageNavMenu from "./components/WorkPageNavMenu.vue";
 import CartScreen from "./components/CartScreen.vue";
+import Cart from "./components/Cart.vue";
+import CartFull from "./components/CartFull.vue";
 import Popup from "./components/Popup.vue";
 
 export default {
@@ -65,7 +69,9 @@ export default {
     CursorThing,
     WorkPageNavMenu,
     CartScreen,
-    Popup
+    Popup,
+    Cart,
+    CartFull
     // Scrollbar
     // Index
   },
@@ -82,6 +88,15 @@ export default {
         setTimeout(() => {
           this.$refs.cart.style = `transform: translateY(0%)`;
         }, 200);
+        if (this.cart.length) {
+          setTimeout(() => {
+            this.showFullCart = true;
+          }, 150);
+        } else {
+          setTimeout(() => {
+            this.showFullCart = false;
+          }, 150);
+        }
       },
       deep: true
     },
@@ -116,7 +131,8 @@ export default {
       scrollIndex: 0,
       scrollToScrollPos: null,
       showMainNav: true,
-      mblNavTitle: null
+      mblNavTitle: null,
+      showFullCart: false
       // prev: 0
     };
   },
@@ -301,5 +317,8 @@ export default {
   left: 0;
   height: 100%;
   width: 100%;
+}
+.emptycart {
+  margin-top: 18px;
 }
 </style>

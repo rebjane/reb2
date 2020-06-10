@@ -21,6 +21,7 @@ class LoadComponents {
       Vue.component("NavScreen", require("./components/NavScreen.vue").default);
       Vue.component("PaySlice", require("./components/PaySlice.vue").default);
       Vue.component("Cart", require("./components/Cart.vue").default);
+      Vue.component("CartFull", require("./components/CartFull.vue").default);
       // Vue.component("Popup", require("./components/Popup.vue").default);
       Vue.component(
         "CartScreen",
