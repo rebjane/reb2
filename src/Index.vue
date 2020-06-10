@@ -35,8 +35,12 @@
     </div>
 
     <!-- && signatureLoaded -->
-    <CartScreen v-if="showCart" class="cartscreen" />
-    <div class="cart link" @click="toggleCartOverlay">CART</div>
+    <transition appear name="cartscreen">
+      <CartScreen v-if="showCart" class="cartscreen" />
+    </transition>
+    <div ref="cart" class="cart link" @click="toggleCartOverlay">
+      <Cart class="link" />
+    </div>
     <CursorThing v-if="loaded && winresize.userAgent.desktop" />
     <Popup class="popup" :data="popup" v-if="popup" />
   </div>
@@ -66,6 +70,21 @@ export default {
     // Index
   },
   watch: {
+    cart: {
+      handler() {
+        this.$refs.cart.style = `transform: translateY(0%)`;
+
+        console.log(this.$refs.cart);
+        // this.$refs.cart.style = `transform: translateY(50%)`;
+        setTimeout(() => {
+          this.$refs.cart.style = `transform: translateY(50%)`;
+        }, 100);
+        setTimeout(() => {
+          this.$refs.cart.style = `transform: translateY(0%)`;
+        }, 200);
+      },
+      deep: true
+    },
     loaded() {
       this.url();
     },
@@ -154,6 +173,7 @@ export default {
       "navOpen",
       "winresize",
       "showCart",
+      "cart",
       "popup"
     ])
   },
@@ -239,17 +259,38 @@ export default {
   background: white;
   // background: $lbg;
 }
+.cartscreen-enter,
+.cartscreen-leave-to {
+  max-height: 0 !important;
+}
+.cartscreen-enter-active,
+.cartscreen-leave-active {
+  @include ease(max-height);
+}
 .cartscreen {
+  overflow: hidden;
   z-index: 10;
+  max-height: 100%;
 }
 .cart {
   position: fixed;
-  top: 0;
   right: 0;
-  width: 6em;
-  height: 6em;
+  padding: 1em;
+  mix-blend-mode: difference;
+  @include above($tablet) {
+    top: 0;
+    width: 5em;
+    height: 5em;
+  }
+
+  @include below($tablet) {
+    bottom: 0;
+    width: 4em;
+    height: 4em;
+  }
   z-index: 11;
-  background: black;
+  // background: black;
+  transition: transform 100ms ease;
 }
 // .vert {
 //   cursor: url("assets/vert-cursor.cur"), auto;

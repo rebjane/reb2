@@ -19,7 +19,7 @@
                 :value="item.qty"
                 @input="handleQtyChange(item, i)"
               />
-              <p class="link">Update</p>
+              <!-- <p class="link">Update</p> -->
               <!-- @click="handleQtyChange(item, i)" -->
             </td>
             <td>
@@ -163,19 +163,21 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
+$cpad: 6em;
+
 .cartscreen-inner {
   // @include workpadding();
   display: table;
-  width: 100%;
+  width: calc(100% - calc(#{$cpad} * 2));
+  margin: 0 $cpad;
 }
-$cpad: 6em;
 .cartscreen {
   position: fixed;
   height: 100%;
-  width: calc(100% - calc(#{$cpad} * 2));
-  padding: 0 $cpad;
+  width: 100%;
+
   top: 0;
-  left: 0;
+  right: 0;
   background-color: white;
   // margin-left: 20%;
 }
