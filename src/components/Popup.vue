@@ -2,12 +2,12 @@
   <div class="popup" v-if="data">
     <h3>Your transaction has been approved!</h3>
     <p>
-      An official invoice has been sent to
+      An official invoice has been sent at
       <strong>{{payerEmail}}</strong>.
       <br />If you did not receive an invoice, please email
       <br />
       <span>
-        <a href="mailto:hi@itsrebec.ca">hi@itsrebec.ca</a>
+        <a href="mailto:rebjanec@gmail.com">rebjanec@gmail.com</a>
       </span>
       with the your invoice number,
       <br />
@@ -31,26 +31,10 @@ export default {
       handler() {
         this.payerEmail = this.data.payer.payer_info.email;
         this.invoiceNo = this.data.id;
-        this.time = this.data.create_time;
-        this.name = `${this.data.payer.payer_info.first_name} ${this.data.payer.payer_info.last_name} `;
+        // this.time = this.data.create_time;
+        // this.name = `${this.data.payer.payer_info.first_name} ${this.data.payer.payer_info.last_name} `;
 
-        // this.$smtp.send({
-        //   SecureToken: "d0125a86-9991-42dd-8bc1-3e6a30fff61b",
-        //   To: "rebjanec@gmail.com",
-        //   From: "rebjanec@gmail.com",
-        //   Subject: "PAYPAL PURCHASE From Website",
-        //   Body: `Invoice Number: ${this.invoiceNo} <br/>
-        //     Cart ID: ${this.data.cart}
-        //     Name: ${this.name} <br/>
-        //     Time: ${this.time} <br/> <br/>
-        //     Ship to: ${this.data.payer.payer_info.shipping_address.line1} <br/>
-        //     ${this.data.payer.payer_info.shipping_address.city} <br/>
-        //      ${this.data.payer.payer_info.shipping_address.state},
-        //       ${this.data.payer.payer_info.shipping_address.country_code} <br/>
-        //        ${this.data.payer.payer_info.shipping_address.postal_code} <br/> <br/>`
-        // });
-
-        console.log(this.data);
+        // console.log(this.data);
       },
       deep: true,
       immediate: true
@@ -65,10 +49,10 @@ export default {
   data() {
     return {
       payerEmail: null,
-      invoiceNo: null,
-      time: null,
-      name: null,
-      items: null
+      invoiceNo: null
+      // time: null,
+      // name: null,
+      // items: null
     };
   },
   methods: {

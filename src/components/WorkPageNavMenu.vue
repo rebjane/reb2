@@ -78,6 +78,7 @@ export default {
 
   @include above($tablet) {
     width: 30px;
+    margin: 2em 0 2em -1em;
   }
   padding-right: 0.5em;
 

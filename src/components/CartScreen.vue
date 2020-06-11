@@ -128,6 +128,241 @@ export default {
       this.$store.commit("updateShowCart", false);
       this.$store.commit("emptyCart");
       this.$store.commit("popupInfo", e);
+      console.log(e);
+      this.$smtp.send({
+        SecureToken: "d0125a86-9991-42dd-8bc1-3e6a30fff61b",
+        To: "rebjanec@gmail.com",
+        From: "rebjanec@gmail.com",
+        Subject: "PAYPAL PURCHASE From Website",
+        Body:
+          // `Invoice Number: ${e.id} <br/>
+          //   Cart ID: ${e.cart}
+          //   Name: ${e.payer.payer_info.first_name} ${e.payer.payer_info.last_name} <br/>
+          //   Time: ${e.create_time} <br/> <br/>
+          //   Ship to: ${e.payer.payer_info.shipping_address.line1} <br/>
+          //   ${e.payer.payer_info.shipping_address.city},
+          //    ${e.payer.payer_info.shipping_address.state},
+          //     ${e.payer.payer_info.shipping_address.country_code} <br/>
+          //      ${e.payer.payer_info.shipping_address.postal_code} <br/> <br/>`
+          `<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <meta name="viewport" content=", width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="only">
+    <title>Rebecca Jane, Illustration and Design</title>
+    <style>
+        /* :root {
+            color-scheme: light dark;
+        } */
+
+        #email {
+            background: white;
+            width: calc(100% - 6em);
+            /* height: 100vh; */
+            margin: 2em 3em;
+        }
+
+        p {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            color: #6e6e6e;
+        }
+
+        a {
+            text-decoration-color: rgb(75, 75, 75);
+
+        }
+
+        .smol {
+            font-size: 10px;
+            color: rgb(75, 75, 75);
+        }
+
+
+        h2 {
+            padding-bottom: 10px;
+            font-family: serif;
+
+        }
+
+
+
+
+        h3 {
+            font-family: serif;
+            font-size: 20px;
+            font-weight: 300;
+        }
+
+        h4 {
+            font-family: serif;
+
+        }
+
+        img {
+            width: 100%;
+        }
+
+        h5 {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #6e6e6e;
+            font-size: 18px;
+            margin: 0;
+            font-weight: 300;
+
+        }
+
+
+        body {
+            margin: 0;
+        }
+
+        .products td {
+            width: 50%;
+        }
+
+        .title {
+            padding-bottom: 5px;
+        }
+
+        .products {
+            text-align: left;
+        }
+
+        table {
+            border-spacing: 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .website {
+            padding: 20px 0;
+        }
+
+        .section {
+            border-top: 3px solid rgb(75, 75, 75);
+
+            padding: 10px 0;
+        }
+
+        .subsection {
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgb(75, 75, 75);
+        }
+
+        .logocontainer {
+            /* width: 100vw; */
+            width: 100%;
+            display: inline-block;
+            text-align: middle;
+            padding-bottom: 20px;
+        }
+
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: auto;
+            background-image: url("https://itsrebec.ca/reb-logo.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="email">
+        <div class="logocontainer">
+            <div class="logo">
+
+            </div>
+        </div>
+        <div class="section">
+            <h3>Your order is on its way!</h3>
+            <p>Thank you so much for your support. As an artist and designer, your support helps me create more cool
+                things
+                for you guys! </p>
+            <h4>Rebecca</h4>
+        </div>
+        <div class="section">
+            <div class="title">
+                <h2>Invoice</h2>
+            </div>
+            <div class="subsection">
+                <h3>Invoice No.</h3>
+                <p>593JF8AO39AK</p>
+            </div>
+            <div class="subsection">
+                <h3>Invoice No.</h3>
+                <p>593JF8AO39AK</p>
+            </div>
+            <table class="products">
+                <tr>
+                    <th>
+                        <h3>Product</h3>
+                    </th>
+                    <th>
+                        <h3>Quantity</h3>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <h5>product</h5>
+                        <p>product</p>
+                    </td>
+                    <td>
+                        <p>2</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h5>product</h5>
+                        <p>product</p>
+                    </td>
+                    <td>
+
+                        <p>5</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="section">
+            <p class="smol">This email is generated automatically. You are permitted to respond to this email,
+                only in
+                specific
+                regards to this invoice. </p>
+            <a href="https://www.itsrebec.ca" target="_blank">
+                <p class="smol website">www.itsrebec.ca </p>
+            </a>
+            <table class="socials">
+                <tr>
+                    <td>
+                        <a href="https://www.instagram.com/the.rebj/" target="_blank">
+                            <p class="smol">Instagram </p>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="https://creativemarket.com/rebeccajane" target="_blank">
+                            <p class="smol">Creative Market</p>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="https://ello.co/rebecca_jane" target="_blank">
+                            <p class="smol">Ello</p>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    </div>
+</body>
+
+</html>`
+      });
     },
     handleQtyChange(item, i) {
       if (this.$refs.qty[i].value && parseInt(this.$refs.qty[i].value)) {
