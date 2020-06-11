@@ -82,7 +82,7 @@ export default {
       handler() {
         this.$refs.cart.style = `transform: translateY(0%)`;
 
-        console.log(this.$refs.cart);
+        // console.log(this.$refs.cart);
         // this.$refs.cart.style = `transform: translateY(50%)`;
         setTimeout(() => {
           this.$refs.cart.style = `transform: translateY(50%)`;

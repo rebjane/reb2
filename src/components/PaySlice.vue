@@ -92,7 +92,7 @@ export default {
         price: this.selected.price,
         title: this.title || ""
       });
-      console.log(this.$store.state.cart);
+      // console.log(this.$store.state.cart);
     },
     handlequantity(amt) {
       this.quantity += amt;
@@ -107,7 +107,7 @@ export default {
   mounted() {
     // console.log(PayPal);
     this.selected = this.data.items[0];
-    console.log(this.data);
+    // console.log(this.data);
   }
 };
 </script>
