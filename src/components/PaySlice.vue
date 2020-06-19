@@ -12,7 +12,11 @@
     <!-- <div class="text-rows"> -->
     <!-- <transition v-for="(item, i) in data.items" :key="i"> -->
     <div class="text-row">
-      <table class="image" :style="`background-image: url(${data.primary.image_default.url})`"></table>
+      <table
+        class="image"
+        :style="`background-image: url(${data.primary.image_default.url})`"
+        v-if="$store.state.winresize.size.desktop"
+      ></table>
       <table class="body">
         <h2 class="price" v-if="selected">${{selected.price}}</h2>
         <div class="quantity">
@@ -245,11 +249,13 @@ p {
   //   }
 }
 .price {
-  padding: 1em 0;
+  @include above($tablet) {
+    padding: 1em 0;
+  }
 }
 .quantity,
 .variation {
-  border-top: 1px solid black;
+  border-top: 1px solid $lbg;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -315,9 +321,14 @@ p {
     width: 50%;
   }
   .qty-counter {
-    display: inline-block;
-    width: 50%;
-    text-align: right;
+    @include above($tablet) {
+      display: inline-block;
+      width: 50%;
+      text-align: right;
+    }
+    @include below($tablet) {
+      padding-top: 2em;
+    }
   }
   .qty {
     border-radius: 5000px;

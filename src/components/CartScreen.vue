@@ -46,9 +46,10 @@
           :currency="'CAD'"
           :client="creds"
           :items="items"
-          :env="'sandbox'"
           @payment-completed="paymentCompleted"
         />
+        <!-- :env="'sandbox'" -->
+
         <!-- REMOVE SANDBOX BEFORE YOU DEPLOY -->
       </div>
     </div>
@@ -96,14 +97,16 @@ export default {
   data() {
     return {
       creds: {
-        // sandbox:
-        //   "ARudPkpGlblcgwrFWsdfFlq0eZeHb0_YHRDWwr9jQq-4AKk9XJsEhnYWJwb_390ir5r_ClQosUz82aeS",
-        // production:
-        //   "ARutiDw--wu1dU1i2332eIOi6fBQddU1fXFIvqQwb2-ApGtoh7ef-Oe8aVq78N--iZHKivXawEpuOPt0" //that's for the legit rebjanec@gmail.com account
+        //that's for the legit rebjanec@gmail.com account
         sandbox:
           "ARudPkpGlblcgwrFWsdfFlq0eZeHb0_YHRDWwr9jQq-4AKk9XJsEhnYWJwb_390ir5r_ClQosUz82aeS",
         production:
-          "Afu7lU2kZHTbWosbO1q463icvztC4_VqfMx_Q_daaKQmhSmtDDOQrcxC4bod8JN3L0-MJmjV6TMazB_I"
+          "ARutiDw--wu1dU1i2332eIOi6fBQddU1fXFIvqQwb2-ApGtoh7ef-Oe8aVq78N--iZHKivXawEpuOPt0"
+        //this pair is for SANDBOX
+        // sandbox:
+        //   "ARudPkpGlblcgwrFWsdfFlq0eZeHb0_YHRDWwr9jQq-4AKk9XJsEhnYWJwb_390ir5r_ClQosUz82aeS",
+        // production:
+        //   "Afu7lU2kZHTbWosbO1q463icvztC4_VqfMx_Q_daaKQmhSmtDDOQrcxC4bod8JN3L0-MJmjV6TMazB_I"
       },
       buttonstyle: {
         label: "",
