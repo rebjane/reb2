@@ -173,11 +173,16 @@ export default {
   },
   mounted() {
     if (!this.globalscroll)
-      this.$nextTick(() => {
-        this.globalscroll = new Scrolly(document.getElementById("app"), "main");
-        // this.globalscroll.deafen();
-        this.globalscroll.stop();
-      });
+      setTimeout(() => {
+        this.$nextTick(() => {
+          this.globalscroll = new Scrolly(
+            document.getElementById("app"),
+            "main"
+          );
+          // this.globalscroll.deafen();
+          this.globalscroll.stop();
+        });
+      }, 1000);
 
     // mobile nav title starts with first item
     this.$emit("mobileNavTitle", this.$nav[0].title);
