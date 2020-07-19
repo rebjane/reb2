@@ -213,14 +213,14 @@ export default {
   z-index: 2;
   opacity: 1;
   margin-left: 2em;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   // transform: translateX(-50%);
 
   // color: white;
   color: white;
 
   // writing-mode: vertical-lr;
-  @include body();
+  @include mini();
 }
 .time-enter-active {
   @include ease(all);
@@ -326,7 +326,7 @@ p {
       display: inline-block;
       // padding-top: 1.5em;
       // padding-bottom: 1.5em;
-      margin-bottom: 10px;
+      // margin-bottom: 0;
 
       position: relative;
       @include mini();

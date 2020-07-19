@@ -92,7 +92,7 @@ export default {
   top: 0;
   white-space: nowrap;
   // padding-bottom: 2em;
-  margin-top: 2em;
+  margin-top: 1em;
 
   // width: 50%;
   left: 50%;
@@ -161,7 +161,7 @@ ul {
     opacity: 1;
     transform: translateY(0%);
     position: relative;
-    @include body();
+    @include mini();
 
     text-align: left;
     // width: 100px;

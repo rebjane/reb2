@@ -12,7 +12,7 @@ class Prismic {
       this.prismic
         .getApi(this.api)
         .then((api) => {
-          return api.query("");
+          return api.query("", { pageSize: 100 });
         })
         .then((response) => {
           this.data = response.results;

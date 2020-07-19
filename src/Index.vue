@@ -297,14 +297,18 @@ export default {
   mix-blend-mode: difference;
   @include above($tablet) {
     top: 0;
-    width: 5em;
-    height: 5em;
+    // width: 5em;
+    // height: 5em;
+    width: 3em;
+    height: 3em;
   }
 
   @include below($tablet) {
     bottom: 0;
-    width: 4em;
-    height: 4em;
+    // width: 4em;
+    // height: 4em;
+    width: 3em;
+    height: 3em;
   }
   z-index: 5;
   // background: black;
@@ -343,7 +347,7 @@ export default {
 }
 
 .emptycart {
-  margin-top: 18px;
+  // margin-top: 18px;
 }
 .cursor {
   z-index: 12;

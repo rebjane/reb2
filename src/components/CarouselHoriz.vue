@@ -16,7 +16,7 @@
           src: item.url,
           width: item.width,
           height: item.height,
-          heightResize: 500}"
+          heightResize: wh / 3}"
               :img="item.url"
               :ripple="false"
               :isParallax="false"
@@ -77,7 +77,8 @@ export default {
       ripple: false,
       resizeObj: {},
       items: [],
-      carouselScroll: null
+      carouselScroll: null,
+      wh: window.innerHeight
     };
   },
   methods: {
@@ -92,6 +93,15 @@ export default {
         data: data,
         i: i
       });
+    },
+    setDynamicWidth() {
+      // console.log(
+      //   this.$refs.carousel.getBoundingClientRect().width *
+      //     (this.items.length / 2)
+      // );
+      this.$refs.carousel.style = `width: ${this.$refs.carousel.getBoundingClientRect()
+        .width *
+        (this.items.length / 2)}px;`;
     },
     imagePos() {
       this.$refs.carousel.children.forEach((item, i) => {
@@ -216,6 +226,9 @@ export default {
         });
         // window.addEventListener("resize", this.imageSizing);
       });
+      this.$nextTick(() => {
+        this.setDynamicWidth();
+      });
     }
   }
 };
@@ -225,13 +238,11 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/stylesheet.scss";
 .carousel-horiz {
-  //   position: relative;
-  //   height: 100%;
-  //   overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  //   position: absolute;
+  // flex-direction: row;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 .carousel {
   //   position: absolute;
@@ -239,20 +250,29 @@ export default {
   height: 100%;
 }
 .rl {
-  padding: 0 2em;
+  // padding: 0 2em;
   display: inline-block;
-  //   width: 40%;
-  @include above($tablet) {
-    vertical-align: middle;
-    transform: translateY(-50%);
-    margin-top: 50vh;
-  }
+  // @include above($tablet) {
+  //   vertical-align: middle;
+  //   transform: translateY(-50%);
+  //   margin-top: 50vh;
+  // }
   @include below($tablet) {
     width: 80vw;
   }
 }
 .item-outer {
   position: relative;
+  // display: inline-block;
+  &:nth-child(odd) {
+    margin-top: auto;
+  }
+  &:nth-child(even) {
+    margin-bottom: auto;
+  }
+  p {
+    @include mini();
+  }
 }
 .image-wrap {
   background-size: contain;
