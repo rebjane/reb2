@@ -192,7 +192,7 @@ export default {
     noRightClick() {
       window.addEventListener("contextmenu", event => event.preventDefault());
       window.addEventListener("keydown", e => {
-        console.log(e.which);
+        // console.log(e.which);
         switch (e.which) {
           case 16: {
             this.keyShift = true;
@@ -264,7 +264,7 @@ export default {
   },
   mounted() {
     this.dowinresize();
-    // this.noRightClick();
+    this.noRightClick();
     window.addEventListener("resize", this.$dowinresize);
     // window.addEventListener("mouseup", this.$dowinresize);
   }
