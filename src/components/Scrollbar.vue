@@ -3,15 +3,17 @@
     <div class="scroll-line">
       <!-- ref="scrollline" -->
       <ul v-if=" winresize.size.desktop">
-        <transition-group appear name="in" v-for="(item, i) in menu" :key="i">
-          <li :style="`transition-delay: ${i * 50}ms`" @click="doScroll(i)" :key="i">
-            <span>
-              <router-link to :ref="item.title.toUpperCase()">{{item.title}}</router-link>
-            </span>
-            <transition v-if="timedOut" appear :name="scroll.dir > 0 ? 'left' : 'right'">
-              <div class="underline" v-if="mblNavTitle === item.title" />
-            </transition>
-          </li>
+        <transition-group appear name="in" class="link" v-for="(item, i) in menu" :key="i">
+          <div class="linkwrap link" :key="i" @click="doScroll(i)">
+            <!-- <router-link to > -->
+            <li :style="`transition-delay: ${i * 50}ms`" :ref="item.title.toUpperCase()">
+              <span class="link">{{item.title}}</span>
+              <transition v-if="timedOut" appear :name="scroll.dir > 0 ? 'left' : 'right'">
+                <div class="underline" v-if="mblNavTitle === item.title" />
+              </transition>
+            </li>
+            <!-- </router-link> -->
+          </div>
         </transition-group>
       </ul>
       <!-- <div ref="scrollbar" class="scroll-bar"></div> -->
@@ -48,7 +50,7 @@ export default {
       return ((sl - sb) / el) * pos + sb;
     },
     doScroll(i) {
-      this.$emit("scrollTo", this.$nav[i].left);
+      if (this.timedOut) this.$emit("scrollTo", this.$nav[i].left);
     }
   },
   mounted() {
@@ -85,22 +87,31 @@ export default {
 .scroll-line {
   @include above($tablet) {
     overflow: hidden;
+    left: 0;
+    text-align: center;
+    width: 8vw;
+    min-width: 100px;
+    ul {
+      flex-direction: column;
+      display: flex;
+    }
   }
   // border-top: 1px solid black;
   position: absolute;
   // bottom: 0;
   top: 0;
+
   white-space: nowrap;
   // padding-bottom: 2em;
   margin-top: 1em;
 
   // width: 50%;
   left: 50%;
-  transform: translateX(-50%);
   @include below($tablet) {
     overflow: visible;
     width: calc(100% - 80px);
     border-bottom: 1px solid white;
+    transform: translateX(-50%);
   }
 }
 .scroll-bar {
@@ -172,5 +183,8 @@ ul {
       font-family: $acuminc;
     }
   }
+}
+.linkwrap {
+  padding: 0.5em 0;
 }
 </style>

@@ -31,7 +31,7 @@ export default {
       outOfBounds: false,
       curComponent: "ArrowCursor",
       topRightStyle: "top: 0; left: -80px;",
-      centerStyle: "top: -40px; left: -40px;"
+      centerStyle: "top: -20px; left: -20px;"
     };
   },
   methods: {
@@ -98,12 +98,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .cursor {
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   // // border: 1px solid white;
   mix-blend-mode: difference;
   top: 0;
-  left: -80px;
+  left: 0;
+  // transform: translateX(50%);
   pointer-events: none;
   position: fixed;
   z-index: 10;

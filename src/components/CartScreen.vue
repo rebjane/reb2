@@ -359,7 +359,7 @@ $cpad: 6em;
       text-align: right;
       z-index: -1;
       p {
-        color: white;
+        color: black;
         font-family: $acuminc;
         margin-right: 1em;
         // @include mini();
@@ -383,5 +383,17 @@ $cpad: 6em;
   font-family: $suisse;
   margin: 0;
   @include body();
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+select,
+a {
+  color: black;
 }
 </style>

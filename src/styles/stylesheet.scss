@@ -9,7 +9,8 @@ $suisse: "SuisseWorks-Regular";
 $suisseb: "SuisseWorks-Bold";
 
 // Colors
-$bg: #161616;
+$background: black;
+$bg: white;
 $lightgrey: #a0a0a0;
 $lbg: #e5e5e5;
 $light: #f2e3e3;
@@ -161,7 +162,9 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+label,
+input {
   font-weight: normal;
   color: $bg;
   overflow-wrap: break-word;

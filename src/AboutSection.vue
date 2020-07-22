@@ -128,7 +128,7 @@ export default {
   height: calc(100% + #{$top});
   left: 0;
   top: -$top;
-  background: $bg;
+  background: $background;
   z-index: -1;
 }
 .bio {

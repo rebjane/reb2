@@ -37,10 +37,12 @@
     <transition appear name="cartscreen">
       <CartScreen v-if="showCart" class="cartscreen" />
     </transition>
-    <div ref="cart" v-if="!navOpen" class="cart link" @click="toggleCartOverlay">
-      <CartFull class="fullcart link" v-if="showFullCart" />
+    <div ref="cart" v-if="!navOpen" class="cartouter link" @click="toggleCartOverlay">
+      <div class="cartwrap">
+        <CartFull class="fullcart link" v-if="showFullCart" />
 
-      <Cart class="emptycart link" v-else />
+        <Cart class="emptycart link" v-else />
+      </div>
     </div>
     <transition appear name="popup">
       <Popup class="popup" :data="popup" v-if="popup" />
@@ -278,7 +280,7 @@ export default {
   width: 100%;
   height: 100%;
   // background: $lbg;
-  background: white;
+  background: $background;
   z-index: 9;
   height: 0;
   @include ease(height);
@@ -340,7 +342,7 @@ export default {
   height: 100vh;
   // width: 100%;
   // background: $bg;
-  background: white;
+  background: $background;
   // background: $lbg;
 }
 .cartscreen-enter,
@@ -356,17 +358,25 @@ export default {
   z-index: 3;
   max-height: 100%;
 }
-.cart {
+.cartouter {
   position: fixed;
   right: 0;
   padding: 0.25em 1em 1em 1em;
   mix-blend-mode: difference;
   @include above($tablet) {
-    top: 0;
+    top: 70%;
     // width: 5em;
     // height: 5em;
-    width: 3em;
-    height: 3em;
+    left: 0;
+    position: absolute;
+    padding: 0;
+    width: 8vw;
+    min-width: 100px;
+    .cartwrap {
+      height: 40px;
+      width: 40px;
+      margin: auto;
+    }
   }
 
   @include below($tablet) {

@@ -7,6 +7,7 @@
         <HeadText
           :title="$cms.textField(data.primary.contact_title)"
           :body="$cms.textField(data.primary.contact_body)"
+          :color="'white'"
         />
       </div>
       <div class="form focus">
@@ -35,7 +36,7 @@
           </transition>
           <div class="submit link focus">
             <input type="submit" class="link" value="submit" />
-            <Arrow class="arrow" />
+            <Arrow class="arrow" :fill="'white'" />
           </div>
         </form>
         <h3 class="message" ref="message">{{message}}</h3>
@@ -198,7 +199,7 @@ export default {
   }
 }
 p {
-  color: black;
+  color: $bg;
   padding-top: 5em;
 }
 textarea,

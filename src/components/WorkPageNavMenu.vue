@@ -8,9 +8,11 @@
     </div>
 
     <router-link to="/">
-      <div class="home-link">
-        <Reb2Logo class="logo" />
-        <!-- <p>HOME</p> -->
+      <div class="home-link-outer">
+        <div class="home-link">
+          <Reb2Logo class="logo" />
+          <!-- <p>HOME</p> -->
+        </div>
       </div>
     </router-link>
 
@@ -75,11 +77,15 @@ export default {
 .arrow-wrap {
   //   height: 3em;
   width: 20px;
-
   @include above($tablet) {
-    width: 30px;
-    margin: 2em 0 2em -1em;
+    width: 8vw;
+    min-width: 100px;
+    padding: 0;
   }
+  // @include above($tablet) {
+  //   width: 30px;
+  //   margin: 2em 0 2em -1em;
+  // }
   padding-right: 0.5em;
 
   margin: 2em 0;
@@ -103,7 +109,6 @@ export default {
   //   margin-left: 1em;
   //   margin-right: 1em;
   // }
-  position: fixed;
   // cursor: pointer;
   //   height: 50%;
   padding-left: 1em;
@@ -128,9 +133,19 @@ export default {
   padding-right: 0.5em;
 }
 .back {
+  @include above($tablet) {
+    width: 8vw;
+    min-width: 100px;
+    padding: 0;
+  }
+  position: fixed;
+
   top: 0;
   .arrow {
     transform: rotate(-90deg);
+    @include above($tablet) {
+      margin: auto;
+    }
   }
 }
 .home-link {
@@ -138,9 +153,31 @@ export default {
   transform: translateY(-50%);
 }
 .next {
+  position: fixed;
+
+  @include above($tablet) {
+    width: 8vw;
+    min-width: 100px;
+    padding: 0;
+  }
   bottom: 0;
   .arrow {
     transform: rotate(90deg);
+    @include above($tablet) {
+      margin: auto;
+    }
+  }
+}
+.home-link-outer {
+  @include above($tablet) {
+    width: 8vw;
+    min-width: 100px;
+    padding: 0;
+  }
+  position: absolute;
+  top: 50%;
+  .home-link {
+    margin: auto;
   }
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="main-menu-wrapper">
       <div class="rebecca">
         <router-link exact to="/">
-          <Reb2Logo class="logo" :fill="'white'" />
+          <Reb2Logo class="logo" :fill="winresize.size.tablet ? 'white' : 'black'" />
         </router-link>
       </div>
       <div class="header" v-if="winresize.size.tablet">
@@ -12,9 +12,9 @@
     </div>
 
     <Hamburger class="hamburger link" @click.native="toggleNav" v-if="winresize.size.tablet" />
-    <transition appear v-if="time.timeString && !winresize.size.tablet" name="time">
+    <!-- <transition appear v-if="time.timeString && !winresize.size.tablet" name="time">
       <p class="time">{{ time.timeString }}</p>
-    </transition>
+    </transition>-->
     <!-- main menu is in this component -->
 
     <Scrollbar
@@ -33,8 +33,10 @@
             :href="item.link.url ? item.link.url : null"
             :style="`transition-delay: ${i * 50}ms`"
           >
-            <li>
-              <span>{{$cms.textField(item.label)}}</span>
+            <!-- {{item.icon}} -->
+            <li class="link">
+              <span v-if="!item.icon">{{$cms.textField(item.label)}}</span>
+              <img class="link" v-else :src="item.icon.url" />
             </li>
           </a>
         </transition>
@@ -126,12 +128,20 @@ export default {
 // }
 .logo {
   pointer-events: none;
-  width: 50px;
-  margin-top: 2em;
-  margin-left: 2em;
+  // margin-top: 2em;
+  width: 40px;
+
+  // margin-left: 2em;
   top: 0;
   left: 0;
-  position: fixed;
+  position: absolute;
+  @include above($tablet) {
+    top: 50%;
+    left: 50%;
+    width: 80px;
+
+    transform: translateY(-50%) translateX(-50%);
+  }
 }
 .mainnav {
   position: fixed;
@@ -182,6 +192,12 @@ export default {
 // * {
 //   background-blend-mode: difference;
 // }
+.link {
+  img {
+    width: 20px;
+    height: auto;
+  }
+}
 .line {
   position: fixed;
   z-index: 2;
@@ -244,19 +260,27 @@ p {
   @include body();
 }
 .main-menu-wrapper {
-  mix-blend-mode: difference;
   // border-bottom: 1px solid white;
+  @include below($tablet) {
+    mix-blend-mode: difference;
+  }
   position: fixed;
   // top: 50%;
   top: 0;
   // transform: translateY(-50%);
   left: 0;
-  margin-left: 2em;
-  margin-top: 1em;
+  // margin-left: 2em;
+  // margin-top: 1em;
   overflow: visible;
-  margin-left: 1em;
+  // margin-left: 1em;
   .rebecca {
     position: relative;
+    @include above($tablet) {
+      background: white;
+      height: 100vh;
+      width: 8vw;
+      min-width: 100px;
+    }
     a {
       position: absolute;
       width: 100%;
@@ -276,6 +300,9 @@ p {
     height: 6em;
 
     float: left;
+    @include below($tablet) {
+      margin: 1em 0 0 1em;
+    }
   }
   .main-menu {
     // transform: rotate(-180deg);
@@ -308,14 +335,32 @@ p {
   }
 }
 .socials {
-  mix-blend-mode: difference;
-
   position: fixed;
+  @include above($tablet) {
+    position: absolute;
+    left: 0;
+    width: 8vw;
+    min-width: 100px;
+    a {
+      width: 50%;
+    }
+    ul {
+      display: flex;
+      // flex-direction: column;
+      text-align: center;
+      flex-wrap: wrap;
+    }
+  }
+  @include below($tablet) {
+    mix-blend-mode: difference;
+
+    transform: translateY(0%) translateX(-50%);
+  }
   bottom: 0;
   // margin-bottom: 1.5em;
   left: 50%;
-  transform: translateY(0%) translateX(-50%);
-  color: white;
+
+  color: black;
   white-space: nowrap;
   ul {
     list-style: none;
@@ -342,9 +387,17 @@ p {
 
       //   height: calc(100% + 3px);
       // }
-      li {
-        padding: 1em;
+      @include below($tablet) {
+        li {
+          padding: 1em;
+        }
       }
+      @include above($tablet) {
+        li {
+          padding: 0.5em 0;
+        }
+      }
+
       :not(:last-child) {
         padding-right: 0;
       }

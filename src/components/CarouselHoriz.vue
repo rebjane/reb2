@@ -2,32 +2,33 @@
   <div class="carousel-horiz" v-if="items.length" ref="carousel">
     <!-- <div ref="carousel" class="carousel horiz" > -->
     <transition v-for="(item, i) in items" :key="i">
-      <div class="item-outer" :style="isLastAndOdd(i, items) ? `margin-bottom: auto;` : null">
-        <!-- {{item}} -->
-        <router-link class="rl" :to="`/${data[i].type_of_work}/${data[i].uid}`">
-          <div
-            class="image-wrap horiz link"
-            @click="doWorkPageIndex(data, i)"
-            :style="winresize.size.tablet ? `background-image: url(${item.url})` : null"
-          >
-            <ImageWrap
-              class="image"
-              :imgInfo="{title: item.title,
+      <div class="bg" :style="`background-image: url(${item.url})`">
+        <div class="item-outer" :style="isLastAndOdd(i, items) ? `margin-bottom: auto; ` : null">
+          <!-- {{item}} -->
+          <router-link class="rl" :to="`/${data[i].type_of_work}/${data[i].uid}`">
+            <div class="image-wrap horiz link" @click="doWorkPageIndex(data, i)">
+              <!-- :style="winresize.size.tablet ? `background-image: url(${item.url})` : null" -->
+
+              <ImageWrap
+                class="image"
+                :imgInfo="{title: item.title,
             img: item.url,
           src: item.url,
           width: item.width,
           height: item.height,
-          heightResize: wh / 3}"
-              :img="item.url"
-              :ripple="false"
-              :isParallax="false"
-              :horiz="horiz"
-              :scrollObj="carouselScroll"
-              :style="winresize.size.tablet ? `opacity: 0` : null"
-            />
-          </div>
-          <p v-if="item.title">{{item.title}}</p>
-        </router-link>
+          heightResize: (wh / 2) - 5}"
+                :img="item.url"
+                :ripple="false"
+                :isParallax="false"
+                :horiz="horiz"
+                :scrollObj="carouselScroll"
+                :style="`opacity: 0`"
+              />
+              <!-- :style="winresize.size.tablet ? `opacity: 0` : null" -->
+            </div>
+            <!-- <p v-if="item.title">{{item.title}}</p> -->
+          </router-link>
+        </div>
       </div>
     </transition>
     <!-- </div> -->
@@ -211,6 +212,9 @@ export default {
     }
   },
   mounted() {
+    window.addEventListener("resize", () => {
+      this.wh = window.innerHeight;
+    });
     // console.log(this.data);
     if (this.data.length) {
       new Promise(res => {
@@ -262,6 +266,9 @@ export default {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  @include below($tablet) {
+    margin-top: 0;
+  }
 }
 .carousel {
   //   position: absolute;
@@ -283,20 +290,34 @@ export default {
 .item-outer {
   position: relative;
   // display: inline-block;
-  &:nth-child(odd) {
-    margin-top: auto;
-  }
-  &:nth-child(even) {
-    margin-bottom: auto;
-  }
+  max-width: calc((100vh / 2) - 10px);
+  // &:nth-child(odd) {
+  //   margin-top: auto;
+  // }
+  // &:nth-child(even) {
+  //   margin-bottom: auto;
+  // }
+
   p {
     @include mini();
   }
 }
-.image-wrap {
-  background-size: contain;
+.bg {
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  @include below($tablet) {
+    margin: auto 0;
+  }
+}
+.bg {
+  //just override the manual JS sizing, ugh too lazy
+  height: 50vh !important;
+  // width: 50vh !important;
+}
+.image-wrap {
+  // background-size: contain;
+
   @include below($tablet) {
     height: 100%;
     width: 80vw;

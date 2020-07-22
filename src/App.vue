@@ -172,23 +172,28 @@ export default {
     }
   },
   mounted() {
-    if (!this.globalscroll)
-      setTimeout(() => {
+    if (!this.globalscroll) {
+      new Promise(res => {
+        setTimeout(() => {
+          this.$nextTick(() => {
+            this.globalscroll = new Scrolly(
+              document.getElementById("app"),
+              "main"
+            );
+            // this.globalscroll.deafen();
+            this.globalscroll.stop();
+          });
+          res(this.globalscroll);
+        }, 1000);
+      }).then(() => {
+        this.$emit("mobileNavTitle", this.$nav[0].title);
         this.$nextTick(() => {
-          this.globalscroll = new Scrolly(
-            document.getElementById("app"),
-            "main"
-          );
-          // this.globalscroll.deafen();
-          this.globalscroll.stop();
+          this.getComponentSizings();
         });
-      }, 1000);
+      });
 
-    // mobile nav title starts with first item
-    this.$emit("mobileNavTitle", this.$nav[0].title);
-    this.$nextTick(() => {
-      this.getComponentSizings();
-    });
+      // mobile nav title starts with first item
+    }
   }
 };
 </script>
@@ -229,7 +234,7 @@ h6 {
   color: #2c3e50;
   /* margin-top: 60px; */
   // background: $lbg;
-  background: white;
+  background: $background;
 
   // overflow-y: hidden;
   height: 100%;

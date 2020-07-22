@@ -192,7 +192,7 @@ export default {
   margin: 2em 0;
   padding-top: 1em;
   position: relative;
-  border-top: 1px solid $bg;
+  border-top: 1px solid white;
   @include above($tablet) {
     display: table;
   }
@@ -255,7 +255,7 @@ p {
 }
 .quantity,
 .variation {
-  border-top: 1px solid $lbg;
+  border-top: 1px solid white;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -272,7 +272,7 @@ p {
   }
   .qty {
     border-radius: 5000px;
-    border: 1px solid black;
+    border: 1px solid white;
     width: 2em;
     height: 2em;
     display: inline-block;
@@ -303,7 +303,7 @@ p {
       margin: 0 10px;
       padding: 10px 0;
       &:not(:last-child) {
-        border-bottom: 1px solid $bg;
+        border-bottom: 1px solid black;
       }
     }
   }
@@ -332,7 +332,7 @@ p {
   }
   .qty {
     border-radius: 5000px;
-    border: 1px solid black;
+    border: 1px solid white;
     width: 2em;
     height: 2em;
     display: inline-block;
@@ -348,5 +348,11 @@ p {
       font-size: 20px;
     }
   }
+}
+span {
+  color: white;
+}
+.dropdown p {
+  color: black;
 }
 </style>
