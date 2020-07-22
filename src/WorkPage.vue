@@ -3,8 +3,14 @@
     <div v-if="data" class="inner" ref="scroll">
       <div class="intro-wrap">
         <div class="intro">
-          <div class="main-image" :style="`background-image: url(${data.feature_image.url})`">
-            <img :src="data.feature_image.url" />
+          <div
+            class="main-image"
+            :style="data.feature_image.url ? `background-image: url(${data.feature_image.url})` : null"
+          >
+            <img
+              :src="data.feature_image.url || data.anim_link.url"
+              :style="data.feature_image.url ? `opacity: 0` : null"
+            />
           </div>
           <h1>{{$cms.textField(data.title)}}</h1>
         </div>
@@ -57,7 +63,7 @@ export default {
       handler() {
         setTimeout(() => {
           this.scroll = new Scrolly(this.$refs.page, "v");
-        }, 1000);
+        }, 2000);
       },
       deep: true,
       immediate: true
@@ -115,8 +121,9 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  text-align: center;
   img {
-    opacity: 0;
+    // opacity: 0;
     max-width: 100%;
     max-height: 100%;
   }

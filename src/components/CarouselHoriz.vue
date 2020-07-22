@@ -2,7 +2,8 @@
   <div class="carousel-horiz" v-if="items.length" ref="carousel">
     <!-- <div ref="carousel" class="carousel horiz" > -->
     <transition v-for="(item, i) in items" :key="i">
-      <div class="item-outer">
+      <div class="item-outer" :style="isLastAndOdd(i, items) ? `margin-bottom: auto;` : null">
+        <!-- {{item}} -->
         <router-link class="rl" :to="`/${data[i].type_of_work}/${data[i].uid}`">
           <div
             class="image-wrap horiz link"
@@ -25,7 +26,7 @@
               :style="winresize.size.tablet ? `opacity: 0` : null"
             />
           </div>
-          <p>{{item.title}}</p>
+          <p v-if="item.title">{{item.title}}</p>
         </router-link>
       </div>
     </transition>
@@ -93,6 +94,12 @@ export default {
         data: data,
         i: i
       });
+    },
+    isLastAndOdd(i, items) {
+      if (i === items.length - 1 && i % 2 == 0) {
+        return true;
+      }
+      return false;
     },
     setDynamicWidth() {
       // console.log(
@@ -208,26 +215,38 @@ export default {
     if (this.data.length) {
       new Promise(res => {
         this.data.forEach(item => {
-          this.items.push({
-            url: item.feature_image.url,
-            width: item.feature_image.dimensions.width, // i expect these values to come with prismic automatically, 981 default
-            height: item.feature_image.dimensions.height, //736 default
-            title: this.$cms.textField(item.title),
-            date: item.date
-          });
+          if (item.feature_image.url) {
+            this.items.push({
+              url: item.feature_image.url,
+              width: item.feature_image.dimensions.width, // i expect these values to come with prismic automatically, 981 default
+              height: item.feature_image.dimensions.height, //736 default
+              title: this.$cms.textField(item.title),
+              date: item.date
+            });
+            //gotta create cases for External GIF (and maybe internal GIF, likely no but not sure yet)
+          } else {
+            // console.log(item.anim_link.url);
+            this.items.push({
+              url: item.anim_link.url, //palceholder for now
+              width: item.anim_link.width, // palceholder for now
+              height: item.anim_link.height, //palceholder for now
+              title: this.$cms.textField(item.title),
+              date: item.date
+            });
+          }
         });
         res(this.items);
       }).then(() => {
-        this.imagePos();
+        if (this.$refs.carousel) this.imagePos();
         this.$emit("info", {
-          title: this.items[0].title,
-          date: this.items[0].date,
+          title: this.items[0].title || "no title",
+          date: this.items[0].date || "no date",
           key: 0
         });
         // window.addEventListener("resize", this.imageSizing);
       });
       this.$nextTick(() => {
-        this.setDynamicWidth();
+        if (this.$refs.carousel) this.setDynamicWidth();
       });
     }
   }
@@ -239,7 +258,7 @@ export default {
 @import "../styles/stylesheet.scss";
 .carousel-horiz {
   // flex-direction: row;
-  height: 100%;
+  // height: 100vh;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;

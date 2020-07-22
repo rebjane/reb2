@@ -134,7 +134,12 @@ export default {
       scrollToScrollPos: null,
       showMainNav: true,
       mblNavTitle: null,
-      showFullCart: false
+      showFullCart: false,
+      keyShift: false,
+      keyCmd: false,
+      keyC: false,
+      keyOption: false,
+      keyJ: false
       // prev: 0
     };
   },
@@ -181,6 +186,66 @@ export default {
         url = url[url.length - 1];
         this.data = this.$work.filter(i => i.uid === url)[0];
       }
+    },
+    noRightClick() {
+      window.addEventListener("contextmenu", event => event.preventDefault());
+      window.addEventListener("keydown", e => {
+        console.log(e.which);
+        switch (e.which) {
+          case 16: {
+            this.keyShift = true;
+            break;
+          }
+          case 18: {
+            this.keyOption = true;
+            break;
+          }
+          case 91: {
+            this.keyCmd = true;
+            break;
+          }
+          case 67: {
+            this.keyC = true;
+            break;
+          }
+          case 74: {
+            this.keyJ = true;
+            break;
+          }
+        }
+
+        if (
+          (this.keyShift && this.keyCmd && this.keyC) ||
+          (this.keyOption && this.keyCmd && this.keyJ) ||
+          (this.keyOption && this.keyCmd && this.keyC)
+        ) {
+          e.preventDefault();
+        }
+      });
+      window.addEventListener("keyup", e => {
+        switch (e.which) {
+          case 16: {
+            this.keyShift = false;
+            break;
+          }
+          case 18: {
+            this.keyOption = false;
+            break;
+          }
+          case 91: {
+            this.keyCmd = false;
+            break;
+          }
+          case 67: {
+            this.keyC = false;
+            break;
+          }
+          case 74: {
+            this.keyJ = false;
+            break;
+          }
+        }
+      });
     }
   },
   computed: {
@@ -197,6 +262,7 @@ export default {
   },
   mounted() {
     this.dowinresize();
+    // this.noRightClick();
     window.addEventListener("resize", this.$dowinresize);
     // window.addEventListener("mouseup", this.$dowinresize);
   }
