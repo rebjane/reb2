@@ -264,7 +264,7 @@ export default {
   },
   mounted() {
     this.dowinresize();
-    this.noRightClick();
+    // this.noRightClick();
     window.addEventListener("resize", this.$dowinresize);
     // window.addEventListener("mouseup", this.$dowinresize);
   }

@@ -27,14 +27,14 @@
               <textarea
                 v-else
                 :pattern="item.regex.length ? $cms.textField(item.regex) :null"
-                required
+                :required="true"
                 :rows="item.textarea_line_count"
                 :name="$cms.textField(item.input_label)"
                 class="type"
               />
             </div>
           </transition>
-          <div class="submit link focus">
+          <div class="submit link focus" @click="testClick">
             <input type="submit" class="link" value="submit" />
             <Arrow class="arrow" :fill="'white'" />
           </div>
@@ -67,7 +67,8 @@ export default {
       newscroll: null,
       start: 0,
       startTouch: 0,
-      message: null
+      message: null,
+      canSubmit: false
     };
   },
   beforeDestroy() {},
@@ -82,15 +83,44 @@ export default {
     ])
   },
   methods: {
-    doSubmit(e) {
+    testClick() {
+      this.canSubmit = true;
+      var sendMessage = "";
+      for (let i = 0; i < this.$refs.form.length - 1; i++) {
+        // console.log(this.$refs.form[i].attributes);
+        var validFormat = this.$refs.form[i].attributes["pattern"]
+          ? new RegExp(this.$refs.form[i].attributes["pattern"].value).test(
+              this.$refs.form[i].value
+            )
+          : true;
+        // console.log(validFormat);
+        if (this.$refs.form[i].value === "") {
+          this.canSubmit = false;
+          this.message =
+            "There was a problem sending your message. Please try again.";
+          this.$refs.message.style = "color: red;";
+          setTimeout(() => {
+            this.message = null;
+          }, 3000);
+          return;
+        } else if (!validFormat) {
+          this.message = `Please enter a valid ${this.$refs.form[i].attributes["name"].nodeValue}.`;
+          this.$refs.message.style = "color: red;";
+          setTimeout(() => {
+            this.message = null;
+          }, 3000);
+          return;
+        }
+        sendMessage += `${this.$refs.form[i].value}<br/>`;
+      }
+      if (this.canSubmit) {
+        this.doSubmit(sendMessage);
+      }
+    },
+    doSubmit(msg) {
+      // console.log(e);
       new Promise(res => {
-        var message = "";
-        e.target.forEach(field => {
-          if (field.value !== "submit") {
-            message += `${field.name} : ${field.value}<br/>`;
-          }
-        });
-        res(message);
+        res(msg);
       }).then(msg =>
         this.$smtp
           .send({
@@ -206,6 +236,7 @@ textarea,
 input,
 select {
   font-family: $acumin;
+  color: white;
   @include body();
   border-style: hidden;
   background: none;

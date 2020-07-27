@@ -137,6 +137,13 @@ $mobilepad: 40px;
   transition: $what 750ms cubic-bezier(0.91, 0.02, 0.275, 1); /* custom */
 }
 
+@mixin fastease($what) {
+  -webkit-transition: $what 250ms cubic-bezier(0.91, 0.02, 0.275, 1);
+  -moz-transition: $what 250ms cubic-bezier(0.91, 0.02, 0.275, 1);
+  -o-transition: $what 250ms cubic-bezier(0.91, 0.02, 0.275, 1);
+  transition: $what 250ms cubic-bezier(0.91, 0.02, 0.275, 1); /* custom */
+}
+
 h1 {
   font-family: $acumin;
   // color: white;

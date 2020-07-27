@@ -17,7 +17,7 @@
       </transition-group>
       <div class="scroll-cta" v-if="data.primary">
         <p :ref="$cms.textField(data.primary.scroll_cta_ref)"></p>
-        <Arrow :class="`arrow ${scrollAllowed ? 'in' : null}`" />
+        <Arrow :class="`arrow ${scrollAllowed ? 'in' : null}`" :fill="'white'" />
       </div>
     </div>
   </div>
