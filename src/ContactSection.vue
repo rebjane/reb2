@@ -48,6 +48,7 @@
 
 <script>
 import { mapState } from "vuex";
+import axios from "axios";
 
 export default {
   name: "Template",
@@ -55,12 +56,12 @@ export default {
   props: {
     data: {
       type: Object,
-      default: null
+      default: null,
     },
     inview: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -68,7 +69,9 @@ export default {
       start: 0,
       startTouch: 0,
       message: null,
-      canSubmit: false
+      canSubmit: false,
+      api: `https://worldtimeapi.org/api/ip`,
+      ip: null,
     };
   },
   beforeDestroy() {},
@@ -79,13 +82,14 @@ export default {
       "loaded",
       "navOpen",
       "winresize",
-      "scroll"
-    ])
+      "scroll",
+    ]),
   },
   methods: {
     testClick() {
       this.canSubmit = true;
       var sendMessage = "";
+
       for (let i = 0; i < this.$refs.form.length - 1; i++) {
         // console.log(this.$refs.form[i].attributes);
         var validFormat = this.$refs.form[i].attributes["pattern"]
@@ -113,15 +117,18 @@ export default {
         }
         sendMessage += `${this.$refs.form[i].value}<br/>`;
       }
+      sendMessage += `ip: ${this.ip} <br/>
+      navigator info: ${window.navigator.userAgent}`;
+
       if (this.canSubmit) {
         this.doSubmit(sendMessage);
       }
     },
     doSubmit(msg) {
       // console.log(e);
-      new Promise(res => {
+      new Promise((res) => {
         res(msg);
-      }).then(msg =>
+      }).then((msg) =>
         this.$smtp
           .send({
             // Host: "smtp.gmail.com",
@@ -131,9 +138,9 @@ export default {
             To: "rebjanec@gmail.com",
             From: "rebjanec@gmail.com",
             Subject: "From Website",
-            Body: msg
+            Body: msg,
           })
-          .then(msg => {
+          .then((msg) => {
             switch (msg) {
               case "OK": {
                 this.message =
@@ -156,9 +163,13 @@ export default {
             this.$refs.form.reset();
           })
       );
-    }
+    },
   },
-  mounted() {}
+  mounted() {
+    axios.get(this.api).then((res) => {
+      this.ip = res.data.client_ip;
+    });
+  },
 };
 </script>
 
