@@ -133,14 +133,15 @@ export default {
           .send({
             // Host: "smtp.gmail.com",
             // Username: "rebjanec@gmail.com",
-            // Password: "gingstergangsteryoyoha",
-            SecureToken: "d0125a86-9991-42dd-8bc1-3e6a30fff61b",
+            // Password: "gingstergangste7",
+            SecureToken: "0d0deb43-c8e3-4bdc-bb39-edf3d90c9eca",
             To: "rebjanec@gmail.com",
             From: "rebjanec@gmail.com",
             Subject: "From Website",
             Body: msg,
           })
           .then((msg) => {
+            console.log(msg);
             switch (msg) {
               case "OK": {
                 this.message =
