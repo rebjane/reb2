@@ -32,7 +32,7 @@ export default {
   name: "Index",
   props: {
     scrollTo: Number,
-    winresize: Object
+    winresize: Object,
   },
 
   watch: {
@@ -44,7 +44,7 @@ export default {
           this.globalscroll.listen();
       },
       deep: true,
-      immediate: true
+      immediate: true,
     },
     popup: {
       handler() {
@@ -52,20 +52,20 @@ export default {
         else if (!this.popup && this.globalscroll) this.globalscroll.listen();
       },
       deep: true,
-      immediate: true
+      immediate: true,
     },
     winresize: {
       handler() {
         this.winw = window.innerWidth;
         if (this.globalscroll) this.globalscroll.size();
-      }
+      },
     },
     scrollTo: {
       handler(pos) {
         this.scrollToPos(pos);
       },
       deep: true,
-      immediate: true
+      immediate: true,
     }, //debugging
     // scroll() {
     //   console.log(this.scroll.pos);
@@ -93,15 +93,15 @@ export default {
       handler(e) {
         if (e) this.initScroll();
       },
-      deep: true
+      deep: true,
     },
 
     deep: true,
-    immediate: true
+    immediate: true,
   },
 
   components: {
-    Scrollbar
+    Scrollbar,
   },
   beforeDestroy() {
     // this.globalScroll = null;
@@ -116,7 +116,7 @@ export default {
       globalscroll: null,
       rebImg: require("./assets/reb.jpg"),
       winw: window.innerWidth,
-      vertComponents: []
+      vertComponents: [],
       // canScroll: true
     };
   },
@@ -128,8 +128,8 @@ export default {
       "scroll",
       "loaded",
       "showCart",
-      "popup"
-    ])
+      "popup",
+    ]),
   },
   methods: {
     scrollToPos(pos) {
@@ -169,11 +169,11 @@ export default {
           this.globalscroll.listen();
         }
       }
-    }
+    },
   },
   mounted() {
     if (!this.globalscroll) {
-      new Promise(res => {
+      new Promise((res) => {
         setTimeout(() => {
           this.$nextTick(() => {
             this.globalscroll = new Scrolly(
@@ -194,7 +194,7 @@ export default {
 
       // mobile nav title starts with first item
     }
-  }
+  },
 };
 </script>
 
